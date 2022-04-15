@@ -1,0 +1,50 @@
+/*.navbar-light {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+}*/
+
+#footer{
+    display:none
+}
+
+/*
+.o_footer_copyright, .o_footer{
+  background-color: rgba(0, 0, 0, 0.15) !important;
+  color:#fff !important;
+}*/
+
+
+/* Dashboard Changes */
+
+.o_portal_docs{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    grid-gap: 1.6rem;
+    padding: 0.4375rem;
+    position: relative;
+    max-height: 75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.doc_count{
+    right: -0.5rem;
+    top: -0.25rem;
+    position: absolute!important;
+}
+.doc_anchor{
+    list-style-type: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    border-radius: 0.25rem;
+    position: relative;
+}
+.doc_title{
+    text-align: center;
+    font-size: 0.85rem;
+}

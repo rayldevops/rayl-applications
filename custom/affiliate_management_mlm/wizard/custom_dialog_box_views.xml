@@ -1,0 +1,45 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="view_custom_dialog_box">
+			<field name="name">custom.dialog.box.form</field>
+			<field name="model">custom.dialog.box</field>
+
+			<field name="arch" type="xml">
+
+				<form string="Dialog Box">
+
+						<style>
+							.close{
+							display: none;
+							}
+						</style>
+
+							<script>
+	              $(document).ready(function(){
+
+								var a = $('div.modal-dialog.modal-lg')
+								a.removeClass('modal-lg')
+
+	              });
+	    				</script>
+
+
+
+
+							<!-- <div style="line-height:normal;"> -->
+								<field name="msg" widget="html" style="line-height:normal;"/>
+							<!-- </div> -->
+
+							<footer>
+	              <button string="Ok"
+	                  class="btn-primary"
+	                  special="cancel" />
+              </footer>
+
+					 </form>
+			</field>
+   	</record>
+
+  </data>
+</odoo>

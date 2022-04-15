@@ -1,0 +1,1770 @@
+<odoo>
+
+    <record model="ir.ui.view" id="project_kanban_view_extened">
+        <field name="name">project.kanban.view.extened</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban'
+                   position="replace">
+                <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors" on_create="project.open_create_project">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="color"/>
+                    <field name="task_count"/>
+                    <field name="label_tasks"/>
+                    <field name="alias_id"/>
+                    <field name="alias_name"/>
+                    <field name="alias_domain"/>
+                    <field name="is_favorite"/>
+                    <field name="rating_percentage_satisfaction"/>
+                    <field name="rating_status"/>
+                    <field name="rating_active" />
+                    <field name="analytic_account_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
+                                <div class="o_project_kanban_main">
+                                    <div class="o_kanban_card_content">
+                                        <div class="o_kanban_primary_left">
+                                            <div class="o_primary">
+                                                <span><t t-esc="record.name.value"/></span>
+                                                <span t-if="record.partner_id.value">
+                                                    <strong><t t-esc="record.partner_id.value"/></strong>
+                                                </span>
+                                            </div>
+                                            <div t-if="record.alias_name.value and record.alias_domain.value">
+                                                <span><i class="fa fa-envelope" role="img" aria-label="Domain Alias" title="Domain Alias"></i> <a t-att-href="'mailto:' + record.alias_id.value" title="Send an email"><t t-esc="record.alias_id.value"/></a></span>
+                                            </div>
+                                            <div t-if="record.rating_active.raw_value" class="mt8 text-primary" title="Percentage of happy ratings over the past 30 days." groups="project.group_project_rating">
+                                                <b>
+                                                    <a name="action_view_all_rating" type="object" context="{'search_default_rating_last_30_days':1}">
+                                                        <t t-if="record.rating_percentage_satisfaction.value != -1">
+                                                            <i class="fa fa-smile-o" role="img" aria-label="Percentage of satisfaction" title="Percentage of satisfaction"/> <t t-esc="record.rating_percentage_satisfaction.value"/>%
+                                                        </t>
+                                                    </a>
+                                                </b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_card_manage_pane dropdown-menu" groups="project.group_project_manager" role="menu">
+                                        <div class="o_kanban_card_manage_section o_kanban_manage_reports">
+                                            <div role="menuitem">
+                                                <a name="%(portal.portal_share_action)d" type="action">Share</a>
+                                            </div>
+                                            <div role="menuitem">
+                                                <a type="edit">Edit</a>
+                                            </div>
+                                        </div>
+                                        <div role="menuitem" aria-haspopup="true" class="o_no_padding_kanban_colorpicker">
+                                            <ul class="oe_kanban_colorpicker" data-field="color" role="popup"/>
+                                        </div>
+                                    </div>
+                                    <a class="o_kanban_manage_toggle_button o_left" href="#" groups="project.group_project_manager"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
+                                    <span class="o_right"><field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" /></span>
+                                </div>
+
+                                <div class="o_project_kanban_boxes">
+                                    <a class="o_project_kanban_box" name="action_view_tasks" type="object">
+                                        <div>
+                                            <span class="o_value"><t t-esc="record.task_count.value"/></span>
+                                            <span class="o_label"><t t-esc="record.label_tasks.value"/></span>
+                                        </div>
+                                    </a>
+                                    <a t-if="record.analytic_account_id.raw_value" class="o_project_kanban_box o_project_timesheet_box" name="action_view_account_analytic_line" type="object" groups="analytic.group_analytic_accounting">
+                                        <div>
+                                            <span class="o_label">Profitability</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_expense_sheet_tree_extened">
+        <field name="name">hr.expense.sheet.view.extened</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_tree"/>
+        <field name="model">hr.expense.sheet</field>
+        <field eval="2" name="priority"/>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree string="Expense Reports" js_class="hr_expense_tree_dashboard_upload">
+                    <field name="employee_id" widget="many2one_avatar_employee"/>
+                    <field name="accounting_date" optional="show" groups="account.group_account_manager"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="name" string="Expense Report"/>
+                    <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
+                    <field name="company_id" optional="show" groups="base.group_multi_company"/>
+                    <field name="activity_ids" widget="list_activity" optional="show"/>
+                    <field name="total_amount" optional="show" sum="Total Amount" decoration-bf="True"/>
+                    <field name="currency_id" optional="hide"/>
+                    <field name="journal_id" optional="hide"/>
+                    <field name="state" optional="show" decoration-info="state == 'draft'" decoration-success="state in ['submit', 'approve', 'post', 'done']" decoration-danger="state == 'cancel'" widget="badge"/>
+                    <field name="message_unread" invisible="1"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_view_task_tree_extened">
+        <field name="name">project.task.view.extened</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="model">project.task</field>
+        <field eval="2" name="priority"/>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree string="Tasks" multi_edit="1">
+                    <field name="message_needaction" invisible="1" readonly="1"/>
+                    <field name="is_closed" invisible="1"/>
+                    <field name="sequence" invisible="1" readonly="1"/>
+                    <field name="name"/>
+                    <field name="project_id" optional="show" readonly="1"/>
+                    <field name="partner_id" optional="hide"/>
+                    <field name="parent_id" groups="project.group_subtask_project" optional="hide"/>
+                    <field name="user_id" optional="show" widget="many2one_avatar_user"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                    <field name="activity_ids" widget="list_activity" optional="show"/>
+                    <field name="date_deadline" optional="hide" widget="remaining_days"
+                           attrs="{'invisible': [('is_closed', '=', True)]}"/>
+                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="stage_id" invisible="context.get('set_visible',False)" optional="show" readonly="1"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_view_task_type_tree_extened">
+        <field name="name">project.task.type.view.extened</field>
+        <field name="inherit_id" ref="project.task_type_tree"/>
+        <field name="model">project.task.type</field>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree string="Task Stage" delete="0">
+                    <field name="sequence" widget="handle" optional="show"/>
+                    <field name="name"/>
+                    <field name="fold" optional="show"/>
+                    <field name="mail_template_id" optional="show"/>
+                    <field name="rating_template_id" optional="show"/>
+                    <field name="auto_validation_kanban_state" optional="hide"/>
+                    <field name="description" optional="hide"/>
+                    <field name="project_ids" optional="show" widget="many2many_tags"
+                           options="{'color_field': 'color'}"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_project_tree_extened">
+        <field name="name">project.project.view.extened</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree decoration-muted="active == False" string="Projects" delete="0" multi_edit="1">
+                    <field name="sequence" optional="show" widget="handle"/>
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="active" invisible="1"/>
+                    <field name="name" string="Name" class="font-weight-bold"/>
+                    <field name="user_id" optional="show" string="Project Manager" widget="many2one_avatar_user"/>
+                    <field name="partner_id" optional="show" string="Customer"/>
+                    <field name="analytic_account_id" optional="hide"/>
+                    <field name="privacy_visibility" optional="hide"/>
+                    <field name="subtask_project_id" optional="hide"/>
+                    <field name="label_tasks" optional="hide"/>
+                    <field name="company_id" optional="show" groups="base.group_multi_company"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_tags_tree_view_extended">
+        <field name="name">project.tags.view.extended</field>
+        <field name="inherit_id" ref="project.project_tags_tree_view"/>
+        <field name="model">project.tags</field>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree string="Tags" editable="bottom">
+                    <field name="name"/>
+                    <field name="color" widget="color_picker"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mail_activity_type_tree_view_extended">
+        <field name="name">mail.activity.type.view.extended</field>
+        <field name="inherit_id" ref="mail.mail_activity_type_view_tree"/>
+        <field name="model">mail.activity.type</field>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree string="Activities">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="summary"/>
+                    <field name="delay_label" string="Planned in" class="text-right"/>
+                    <field name="delay_from" string="Type"/>
+                    <field name="res_model_id" groups="base.group_no_one"/>
+                    <field name="icon" groups="base.group_no_one"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_payment_tree_view_extended">
+        <field name="name">account.payment.view.extended</field>
+        <field name="inherit_id" ref="account.view_account_payment_tree"/>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree edit="false">
+                    <header>
+                        <button name="action_post" type="object" string="Confirm"/>
+                    </header>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="payment_method_id"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="amount" sum="Amount"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'"
+                           decoration-success="state == 'posted'"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_product_template_tree_view_extended">
+        <field name="name">account.product.template.view.extended</field>
+        <field name="inherit_id" ref="account.product_template_view_tree"/>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree string="Products">
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="lst_price"/>
+                    <field name="taxes_id" widget="many2many_tags"/>
+                    <field name="supplier_taxes_id" widget="many2many_tags"/>
+                    <field name="activity_exception_decoration" widget="activity_exception"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="res_partner_tree_view_extended">
+        <field name="name">res.partner.view.extended</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree string="Contacts" multi_edit="1">
+                    <field name="display_name" string="Name"/>
+                    <field name="function" invisible="1"/>
+                    <field name="phone" class="o_force_ltr" optional="show"/>
+                    <field name="email" optional="show"/>
+                    <field name="user_id" optional="show" widget="many2one_avatar_user" domain="[('share', '=', False)]"/>
+                    <field name="city" optional="show"/>
+                    <field name="state_id" optional="hide" readonly="1"/>
+                    <field name="country_id" optional="show" readonly="1"/>
+                    <field name="vat" optional="hide" readonly="1"/>
+                    <field name="category_id" optional="hide" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                    <field name="is_company" invisible="1"/>
+                    <field name="parent_id" invisible="1" readonly="1"/>
+                    <field name="active" invisible="1"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="crm_lead_tree_view_extended">
+        <field name="name">crm.lead.view.extended</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <xpath expr='//tree'
+                   position="replace">
+                <tree string="Opportunities" multi_edit="1">
+                    <field name="date_deadline" invisible="1"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="name" string="Opportunity" readonly="1"/>
+                    <field name="partner_id" optional="hide"/>
+                    <field name="contact_name" optional="show"/>
+                    <field name="email_from"/>
+                    <field name="phone" class="o_force_ltr"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                    <field name="city" optional="hide"/>
+                    <field name="state_id" optional="hide"/>
+                    <field name="country_id" optional="hide"/>
+                    <field name="user_id" widget="many2one_avatar_user" optional="show" domain="[('share', '=', False)]"/>
+                    <field name="team_id" optional="show"/>
+                    <field name="priority" optional="hide"/>
+                    <field name="activity_ids" widget="list_activity"/>
+                    <field name="activity_user_id" optional="hide" string="Activity by" widget="many2one_avatar_user"/>
+                    <field name="activity_date_deadline_my" string="My Deadline" widget="remaining_days" options="{'allow_order': '1'}"/>
+                    <field name="campaign_id" optional="hide"/>
+                    <field name="medium_id" optional="hide"/>
+                    <field name="source_id" optional="hide"/>
+                    <field name="company_currency" invisible="1"/>
+                    <field name="expected_revenue" sum="Expected Revenues" optional="show" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                    <field name="recurring_revenue_monthly" sum="Expected MRR" optional="show" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                    <field name="recurring_revenue" sum="Recurring Revenue" optional="hide" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                    <field name="recurring_plan" optional="hide"/>
+                    <field name="stage_id" optional="show" decoration-bf="1"/>
+                    <field name="active" invisible="1"/>
+                    <field name="probability" optional="hide"/>
+                    <field name="tag_ids" optional="hide" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="referred" invisible="1"/>
+                    <field name="message_needaction" invisible="1"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="crm_lead_kanban_view_extened">
+        <field name="name">crm.lead.kanban.view.extened</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban'
+                   position="replace">
+                <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban" on_create="quick_create" quick_create_view="crm.quick_create_opportunity_form"
+                    archivable="false">
+                    <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Description"}}'/>
+                    <field name="color"/>
+                    <field name="priority"/>
+                    <field name="expected_revenue"/>
+                    <field name="kanban_state"/>
+                    <field name="activity_date_deadline"/>
+                    <field name="user_email"/>
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="activity_summary"/>
+                    <field name="active"/>
+                    <field name="company_currency"/>
+                    <field name="activity_state" />
+                    <field name="activity_ids" />
+                    <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}' sum_field="expected_revenue" help="This bar allows to filter the opportunities based on scheduled activities."/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} oe_kanban_global_click">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_title">
+                                        <strong><field name="name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <t t-if="record.expected_revenue.raw_value">
+                                            <field name="expected_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                                            <span t-if="record.recurring_revenue and record.recurring_revenue.raw_value"> + </span>
+                                        </t>
+                                        <t t-if="record.recurring_revenue and record.recurring_revenue.raw_value">
+                                            <field name="recurring_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                                            <field name="recurring_plan"/>
+                                        </t>
+                                    </div>
+                                    <div>
+                                        <span t-if="record.partner_id.value" t-esc="record.partner_id.value"></span>
+                                    </div>
+                                    <div>
+                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="priority" widget="priority" groups="base.group_user"/>
+                                            <field name="activity_ids" widget="kanban_activity"/>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_expense_sheet_kanban_view_extened">
+        <field name="name">hr.expense.sheet.kanban.view.extened</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_kanban"/>
+        <field name="model">hr.expense.sheet</field>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban'
+                   position="replace">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="total_amount"/>
+                    <field name="accounting_date"/>
+                    <field name="state"/>
+                    <field name="currency_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.name.value"/></span></strong>
+                                        <strong class="o_kanban_record_subtitle float-right"><span class="text-right"><field name="total_amount" widget="monetary"/></span></strong>
+                                    </div>
+                                </div>
+                                <div class="row mt8">
+                                    <div class="col-6 text-muted">
+                                        <span><t t-esc="record.employee_id.value"/> <t t-esc="record.accounting_date.value"/></span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="float-right text-right">
+                                            <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'submit': 'default', 'cancel': 'danger', 'post': 'warning',
+                                            'done': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_partner_kanban_view_extened">
+        <field name="name">res.partner.kanban.view.extened</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban'
+                   position="replace">
+                <kanban class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <field name="color"/>
+                    <field name="name"/>
+                    <field name="title"/>
+                    <field name="email"/>
+                    <field name="parent_id"/>
+                    <field name="is_company"/>
+                    <field name="function"/>
+                    <field name="phone"/>
+                    <field name="street"/>
+                    <field name="street2"/>
+                    <field name="zip"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="mobile"/>
+                    <field name="state_id"/>
+                    <field name="category_id"/>
+                    <field name="image_128"/>
+                    <field name="type"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                                <t t-if="!record.is_company.raw_value">
+                                    <t t-if="record.type.raw_value === 'delivery'" t-set="placeholder"
+                                       t-value="'/base/static/img/truck.png'"/>
+                                    <t t-elif="record.type.raw_value === 'invoice'" t-set="placeholder"
+                                       t-value="'/base/static/img/money.png'"/>
+                                    <t t-else="" t-set="placeholder" t-value="'/base/static/img/avatar_grey.png'"/>
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_128', record.id.raw_value,  placeholder)}')">
+                                        <img class="o_kanban_image_inner_pic" t-if="record.parent_id.raw_value"
+                                             t-att-alt="record.parent_id.value"
+                                             t-att-src="kanban_image('res.partner', 'image_128', record.parent_id.raw_value)"/>
+                                    </div>
+                                    <div class="o_kanban_image d-md-none"
+                                         t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_128', record.id.raw_value,  placeholder)}')">
+                                        <img class="o_kanban_image_inner_pic" t-if="record.parent_id.raw_value"
+                                             t-att-alt="record.parent_id.value"
+                                             t-att-src="kanban_image('res.partner', 'image_128', record.parent_id.raw_value)"/>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="placeholder" t-value="'/base/static/img/company_image.png'"/>
+                                    <div class="o_kanban_image_fill_left o_kanban_image_full"
+                                         t-attf-style="background-image: url(#{kanban_image('res.partner', 'image_128', record.id.raw_value, placeholder)})"
+                                         role="img"/>
+                                </t>
+                                <div class="oe_kanban_details d-flex flex-column">
+                                    <strong class="o_kanban_record_title oe_partner_heading">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                    <ul>
+                                        <li t-if="record.parent_id.raw_value and !record.function.raw_value">
+                                            <field name="parent_id"/>
+                                        </li>
+                                        <li t-if="!record.parent_id.raw_value and record.function.raw_value">
+                                            <field name="function"/>
+                                        </li>
+                                        <li t-if="record.parent_id.raw_value and record.function.raw_value">
+                                            <field name="function"/>
+                                            at
+                                            <field name="parent_id"/>
+                                        </li>
+                                        <li t-if="record.city.raw_value or record.country_id.raw_value">
+                                            <t t-if="record.city.raw_value">
+                                                <field name="city"/>
+                                                <t t-if="record.country_id.raw_value">,</t>
+                                            </t>
+                                            <t t-if="record.country_id.raw_value">
+                                                <field name="country_id"/>
+                                            </t>
+                                        </li>
+                                        <li t-if="record.email.raw_value" class="o_text_overflow">
+                                            <field name="email"/>
+                                        </li>
+                                    </ul>
+                                    <div class="o_row">
+                                        <span class="oe_kanban_partner_links"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_template_kanban_view_extened">
+        <field name="name">product.template.kanban.view.extened</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban'
+                   position="replace">
+                <kanban>
+                    <field name="id"/>
+                    <field name="product_variant_count"/>
+                    <field name="currency_id"/>
+                    <field name="activity_state"/>
+                    <progressbar field="activity_state"
+                                 colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('product.template', 'image_128', record.id.raw_value)"
+                                         alt="Product" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <t t-if="record.default_code.value">[<field name="default_code"/>]
+                                    </t>
+                                    <div t-if="record.product_variant_count.value &gt; 1"
+                                         groups="product.group_product_variant">
+                                        <strong>
+                                            <t t-esc="record.product_variant_count.value"/>
+                                            Variants
+                                        </strong>
+                                    </div>
+                                    <div name="product_lst_price" class="mt-1">
+                                        Price:
+                                        <field name="lst_price" widget="monetary"
+                                               options="{'currency_field': 'currency_id', 'field_digits': True}"></field>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_payment_kanban_view_extened">
+        <field name="name">account.payment.kanban.view.extened</field>
+        <field name="inherit_id" ref="account.view_account_payment_kanban"/>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban'
+                   position="replace">
+                <kanban class="o_kanban_mobile" create="0" group_create="0">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row mb4">
+                                    <div class="col-6">
+                                        <strong>
+                                            <span>
+                                                <field name="name"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <strong>
+                                            <i class="fa fa-clock-o" role="img" aria-label="Date" title="Date"/>
+                                            <t t-esc="record.date.value"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            <field name="partner_id"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <field name="amount" widget='monetary'/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="float-right">
+                                            <field name="state" widget="label_selection"
+                                                   options="{'classes': {'draft': 'secondary', 'sent': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_task_type_kanban_view_extened">
+        <field name="name">project.task.type.kanban.view.extened</field>
+        <field name="inherit_id" ref="project.view_project_task_type_kanban"/>
+        <field name="model">project.task.type</field>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban'
+                   position="replace">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="fold"/>
+                    <field name="description"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong>
+                                            <t t-esc="record.name.value"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <t t-if="record.description.value">
+                                    <hr class="mt8 mb8"/>
+                                    <t t-esc="record.description.value"/>
+                                </t>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="acount_move_kanban_view_extened">
+        <field name="name">account.move.kanban.view.extened</field>
+        <field name="inherit_id" ref="account.view_account_move_kanban"/>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban'
+                   position="replace">
+                <kanban class="o_kanban_mobile">
+                    <field name="journal_id"/>
+                    <field name="partner_id"/>
+                    <field name="ref"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row mb4">
+                                    <div class="col-6 o_kanban_record_headings">
+                                        <strong>
+                                            <span>
+                                                <field name="partner_id"
+                                                       attrs="{'invisible': [('partner_id', '=', False)]}"/>
+                                                <field name="journal_id"
+                                                       attrs="{'invisible': [('partner_id', '!=', False)]}"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <strong>
+                                            <i class="fa fa-clock-o" aria-label="Date" role="img" title="Date"/>
+                                            <t t-esc="record.date.value"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            <field name="ref"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span>
+                                            <field name="amount_total" widget='monetary'/>
+                                        </span>
+                                        <span>
+                                            <field name="currency_id" invisible="1"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="float-right">
+                                            <field name="state" widget="label_selection"
+                                                   options="{'classes': {'draft': 'default', 'posted': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    Invoices  -->
+
+    <record id="account.action_move_journal_line" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a journal entry
+            </p>
+            <p>
+                A journal entry consists of several journal items, each of
+                which is either a debit or a credit transaction.
+            </p>
+        </field>
+    </record>
+    <record id="account.action_move_out_invoice_type" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a customer invoice
+            </p>
+            <p>
+                Create invoices, register payments and keep track of the discussions with your customers.
+            </p>
+        </field>
+    </record>
+    <record id="account.action_move_out_refund_type" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a credit note
+            </p>
+            <p>
+                Note that the easiest way to create a credit note is to do it directly
+                from the customer invoice.
+            </p>
+        </field>
+    </record>
+    <record id="account.action_move_in_invoice_type" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a vendor bill
+            </p>
+            <p>
+                Create invoices, register payments and keep track of the discussions with your vendors.
+            </p>
+        </field>
+    </record>
+    <record id="account.action_move_in_refund_type" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a vendor credit note
+            </p>
+            <p>
+                Note that the easiest way to create a vendor credit note it to do it directly from the vendor bill.
+            </p>
+        </field>
+    </record>
+    <record id="account.action_move_out_receipt_type" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new sales receipt
+            </p>
+            <p>
+                When the sale receipt is confirmed, you can record the customer
+                payment related to this sales receipt.
+            </p>
+        </field>
+    </record>
+    <record id="account.action_move_in_receipt_type" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Register a new purchase receipt
+            </p>
+            <p>
+                When the purchase receipt is confirmed, you can record the
+                vendor payment related to this purchase receipt.
+            </p>
+        </field>
+    </record>
+
+    <!--    Resource  -->
+
+    <record id="resource.action_resource_calendar_form" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Define working hours and time table that could be scheduled to your project members
+            </p>
+        </field>
+    </record>
+
+    <!--    Analytic Account  -->
+
+    <record id="analytic.account_analytic_tag_action" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Add a new tag
+            </p>
+        </field>
+    </record>
+    <record id="analytic.account_analytic_group_action" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Click to add a new analytic account group.
+            </p>
+            <p>
+                This allows you to classify your analytic accounts.
+            </p>
+        </field>
+    </record>
+    <record id="analytic.action_analytic_account_form" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Add a new analytic account
+            </p>
+        </field>
+    </record>
+    <record id="analytic.action_account_analytic_account_form" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Add a new analytic account
+            </p>
+        </field>
+    </record>
+
+    <!--    Account Test   -->
+    <record id="account_test.action_accounting_assert" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new accounting test
+            </p>
+        </field>
+    </record>
+
+    <!--    Base Automation  -->
+    <record id="base_automation.base_automation_act" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Setup a new automated automation
+            </p>
+            <p>
+                Use automated actions to automatically trigger actions for
+                various screens. Example: a lead created by a specific user may
+                be automatically set to a specific Sales Team, or an
+                opportunity which still has status pending after 14 days might
+                trigger an automatic reminder email.
+            </p>
+        </field>
+    </record>
+
+    <!--    Base   -->
+    <record id="base.action_ui_view_custom" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>Create a customized view</p>
+            <p>Customized views are used when users reorganize the content of their dashboard views (via web client)</p>
+        </field>
+    </record>
+
+    <!--    CRM   -->
+    <record id="crm.crm_case_form_view_salesteams_lead" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new lead
+            </p>
+            <p>
+                Use leads if you need a qualification step before creating an
+                opportunity or a customer. It can be a business card you received,
+                a contact form filled in your website, or a file of unqualified
+                prospects you import, etc.
+            </p>
+        </field>
+    </record>
+    <record id="crm.crm_case_form_view_salesteams_opportunity" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new lead
+            </p>
+            <p>
+                Odoo helps you keep track of your sales pipeline to follow
+                up potential sales and better forecast your future revenues.
+            </p>
+            <p>
+                You will be able to plan meetings and phone calls from
+                opportunities, convert them into quotations, attach related
+                documents, track all discussions, and much more.
+            </p>
+        </field>
+    </record>
+    <record id="crm.crm_stage_action" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Set a new stage in your opportunity pipeline
+            </p>
+            <p>
+                Stages allow salespersons to easily track how a specific opportunity
+                is positioned in the sales cycle.
+            </p>
+        </field>
+    </record>
+    <record id="crm.crm_recurring_plan_action" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a Recurring Plan
+            </p>
+            <p>
+                Set Recurring Plans on Opportunities to display the contracts' renewal periodicity<br/>(e.g: Monthly,
+                Yearly).
+            </p>
+        </field>
+    </record>
+    <record id="crm.crm_lost_reason_action" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Define a new lost reason
+            </p>
+            <p>
+                Use lost reasons to explain why an opportunity is lost.
+            </p>
+            <p>
+                Some examples of lost reasons: "We don't have people/skill", "Price too high"
+            </p>
+        </field>
+    </record>
+
+    <!--    HR   -->
+    <record id="hr.hr_department_kanban_action" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new department
+            </p>
+            <p>
+                Odoo's department structure is used to manage all documents
+                related to employees by departments: expenses, timesheets,
+                time off, recruitments, etc.
+            </p>
+        </field>
+    </record>
+    <record id="hr.hr_department_tree_action" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new department
+            </p>
+            <p>
+                Odoo's department structure is used to manage all documents
+                related to employees by departments: expenses, timesheets,
+                leaves, recruitments, etc.
+            </p>
+        </field>
+    </record>
+    <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Add a new employee
+            </p>
+            <p>
+                With just a quick glance on the Odoo employee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+            </p>
+        </field>
+    </record>
+    <record id="hr.act_employee_from_department" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Add a new employee
+            </p>
+            <p>
+                With just a quick glance on the Odoo employee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+            </p>
+        </field>
+    </record>
+
+    <!--    HR Holidays  -->
+    <record id="hr_holidays.hr_leave_allocation_action_my" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new time off allocation request
+            </p>
+            <p>
+                Time Off Officers allocate time off days to employees (e.g. paid time off).
+                <br/>
+                Employees request allocations to Time Off Officers (e.g. recuperation days).
+            </p>
+        </field>
+    </record>
+    <record id="hr_holidays.hr_leave_allocation_action_all" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new time off allocation request
+            </p>
+            <p>
+                Time Off Officers allocate time off days to employees (e.g. paid time off).
+                <br/>
+                Employees request allocations to Time Off Officers (e.g. recuperation days).
+            </p>
+        </field>
+    </record>
+    <record id="hr_holidays.hr_leave_allocation_action_approve_department" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new time off allocation
+            </p>
+            <p>
+                Time Off Officers allocate time off days to employees (e.g. paid time off).
+                <br/>
+                Employees request allocations to Time Off Officers (e.g. recuperation days).
+            </p>
+        </field>
+    </record>
+    <record id="hr_holidays.hr_leave_action_new_request" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Keep track of your PTOs.
+            </p>
+            <p>
+                A great way to keep track on your time off requests, sick days, and approval status.
+            </p>
+        </field>
+    </record>
+    <record id="hr_holidays.hr_leave_action_my" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Keep track of your PTOs.
+            </p>
+            <p>
+                A great way to keep track on your time off requests, sick days, and approval status.
+            </p>
+        </field>
+    </record>
+    <record id="hr_holidays.hr_leave_action_action_approve_department" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Meet the time off dashboard.
+            </p>
+            <p>
+                A great way to keep track on employee’s PTOs, sick days, and approval status.
+            </p>
+        </field>
+    </record>
+    <record id="hr_holidays.hr_leave_action_action_department" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No data yet!
+            </p>
+        </field>
+    </record>
+    <record id="hr_holidays.action_hr_available_holidays_report" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No data yet!
+            </p>
+        </field>
+    </record>
+
+    <!--    HR Expense  -->
+
+    <record id="hr_expense.hr_expense_product" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No expense products found. Let's create one!
+            </p>
+            <p>
+                Expense products can be reinvoiced to your customers.
+            </p>
+        </field>
+    </record>
+    <record id="hr_expense.action_hr_expense_sheet_my_all" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No expense report found. Let's create one!
+            </p>
+            <p>
+                Once you have created your expense, submit it to your manager who will validate it.
+            </p>
+        </field>
+    </record>
+    <record id="hr_expense.action_hr_expense_sheet_all_to_approve" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No expense reports found
+            </p>
+            <p>
+                Approve the new expense reports submitted by the employees you manage.
+            </p>
+        </field>
+    </record>
+    <record id="hr_expense.action_hr_expense_sheet_all_to_post" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No expense reports found
+            </p>
+            <p>
+                Post the journal entries of the new expense reports approved by the employees' manager.
+            </p>
+        </field>
+    </record>
+    <record id="hr_expense.action_hr_expense_sheet_all_to_pay" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No expense reports found
+            </p>
+            <p>
+                Reimburse the employees who incurred these costs or simply register the corresponding payments.
+            </p>
+        </field>
+    </record>
+    <record id="hr_expense.action_hr_expense_sheet_all" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No expense reports found. Let's create one!
+            </p>
+            <p>
+                Expense reports regroup all the expenses incurred during a specific event.
+            </p>
+        </field>
+    </record>
+    <record id="hr_expense.action_hr_expense_account" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new expense report
+            </p>
+            <p>
+                Once you have created your expense, submit it to your manager who will validate it.
+            </p>
+        </field>
+    </record>
+    <record id="hr_expense.action_hr_expense_sheet_all_all" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Create a new expense report
+            </p>
+            <p>
+                Once you have created your expense, submit it to your manager who will validate it.
+            </p>
+        </field>
+    </record>
+    <record id="hr_expense.action_hr_expense_sheet_department_filtered" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No data yet!
+            </p>
+        </field>
+    </record>
+
+    <!--    Purchase  -->
+
+    <record id="purchase.act_res_partner_2_purchase_order" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                This vendor has no purchase order. Create a new RfQ
+            </p>
+            <p>
+                The request for quotation is the first step of the purchases flow. Once
+                converted into a purchase order, you will be able to control the receipt
+                of the products and the vendor bill.
+            </p>
+        </field>
+    </record>
+    <record id="purchase.act_res_partner_2_supplier_invoices" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                Record a new vendor bill
+            </p>
+            <p>
+                Vendors bills can be pre-generated based on purchase
+                orders or receipts. This allows you to control bills
+                you receive from your vendor according to the draft
+                document in Odoo.
+            </p>
+        </field>
+    </record>
+
+    <!--    Project & Task  -->
+
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No projects found. Let's create one!
+            </p>
+            <p>
+                Projects regroup tasks on the same topic and each have their own dashboard.
+            </p>
+        </field>
+    </record>
+    <record id="project.open_view_project_all_config" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No projects found. Let's create one!
+            </p>
+            <p>
+                Projects regroup tasks on the same topic and each have their own dashboard.
+            </p>
+        </field>
+    </record>
+    <record id="project.action_view_task" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No tasks found. Let's create one!
+            </p>
+            <p>
+                To get things done, use activities and status on tasks.
+                <br/>
+                Chat in real time or by email to collaborate efficiently.
+            </p>
+        </field>
+    </record>
+    <record id="project.action_view_all_task" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p>
+                No tasks found. Let's create one!
+            </p>
+            <p>
+                To get things done, use activities and status on tasks.
+                <br/>
+                Chat in real time or by email to collaborate efficiently.
+            </p>
+        </field>
+    </record>
+
+    <!--    Sale   -->
+<!--    <record id="sale.act_res_partner_2_sale_order" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new quotation, the first step of a new sale!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Once the quotation is confirmed by the customer, it becomes a sales order.-->
+<!--                <br/>-->
+<!--                You will be able to create an invoice and collect the payment.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale.product_template_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new product-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                You must define a product for everything you sell or purchase,-->
+<!--                whether it's a storable product, a consumable or a service.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale.action_orders" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new quotation, the first step of a new sale!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Once the quotation is confirmed, it becomes a sales order.-->
+<!--                <br/>-->
+<!--                You will be able to create an invoice and collect the payment.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale.action_orders_to_invoice" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No orders to invoice found-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                You can select all orders and invoice them in batch,-->
+<!--                <br/>-->
+<!--                or check every order and invoice them one by one.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale.action_orders_upselling" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No orders to upsell found.-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                An order is to upsell when delivered quantities are above initially-->
+<!--                ordered quantities, and the invoicing policy is based on ordered quantities.-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                As an example, if you sell pre-paid hours of services, Odoo recommends you-->
+<!--                to sell extra hours when all ordered hours have been consumed.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new quotation, the first step of a new sale!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Once the quotation is confirmed by the customer, it becomes a sales order.-->
+<!--                <br/>-->
+<!--                You will be able to create an invoice and collect the payment.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale.action_quotations" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new quotation, the first step of a new sale!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Once the quotation is confirmed by the customer, it becomes a sales order.-->
+<!--                <br/>-->
+<!--                You will be able to create an invoice and collect the payment.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale.action_orders_salesteams" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new quotation, the first step of a new sale!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Once the quotation is confirmed by the customer, it becomes a sales order.-->
+<!--                <br/>-->
+<!--                You will be able to create an invoice and collect the payment.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale.action_quotations_salesteams" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new quotation, the first step of a new sale!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Once the quotation is confirmed by the customer, it becomes a sales order.-->
+<!--                <br/>-->
+<!--                You will be able to create an invoice and collect the payment.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="sale_management.sale_order_template_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create your quotation template-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Use templates to create polished, professional quotes in minutes.-->
+<!--                Send these quotes by email and let your customers sign online.-->
+<!--                Use cross-selling and discounts to push and boost your sales.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;    Stocks   &ndash;&gt;-->
+<!--    <record id="stock.product_template_action_product" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No product found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Track your stock quantities by creating storable products.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_location_form" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new location-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Define your locations to reflect your warehouse structure and-->
+<!--                organization. Odoo is able to manage physical locations-->
+<!--                (warehouses, shelves, bin, etc), partner locations (customers,-->
+<!--                vendors) and virtual locations which are the counterpart of-->
+<!--                the stock operations like the manufacturing orders-->
+<!--                consumptions, inventories, etc.-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Every stock operation in Odoo moves the products from one-->
+<!--                location to another one. For instance, if you receive products-->
+<!--                from a vendor, Odoo will move products from the Vendor-->
+<!--                location to the Stock location. Each report can be performed on-->
+<!--                physical, partner or virtual locations.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_routes_form" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new route-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                You can define here the main routes that run through-->
+<!--                your warehouses and that define the flows of your products. These-->
+<!--                routes can be assigned to a product, a product category or be fixed-->
+<!--                on procurement or sales order.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.stock_move_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No stock move found-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                This menu gives you the full traceability of inventory-->
+<!--                operations on a specific product. You can filter on the product-->
+<!--                to see all the past or future movements for the product.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.stock_picking_type_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new operation type-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                The operation type system allows you to assign each stock-->
+<!--                operation a specific type which will alter its views accordingly.-->
+<!--                On the operation type you could e.g. specify if packing is needed by default,-->
+<!--                if it should show the customer.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_picking_type_list" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No transfer found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Transfers allow you to move products from one location to another.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_picking_tree_all" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No transfer found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Transfers allow you to move products from one location to another.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.stock_picking_action_picking_type" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No transfer found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Transfers allow you to move products from one location to another.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_picking_tree_ready" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No transfer found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Transfers allow you to move products from one location to another.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_picking_tree_waiting" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No transfer found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Transfers allow you to move products from one location to another.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_picking_tree_late" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No transfer found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Transfers allow you to move products from one location to another.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_picking_tree_backorder" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No transfer found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Transfers allow you to move products from one location to another.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_picking_form" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                No transfer found. Let's create one!-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Transfers allow you to move products from one location to another.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_production_lot_form" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a lot/serial number-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Lots/Serial numbers help you tracking the path followed by your products.-->
+<!--                From their traceability report you will see the full history of their use, as well as their composition.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_package_view" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a new package-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Packages are usually created via transfers (during pack operation) and can contain different products.-->
+<!--                Once created, the whole package can be moved at once, or products can be unpacked and moved as single-->
+<!--                units again.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_stock_scrap" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Scrap products-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Scrapping a product will remove it from your stock. The product will-->
+<!--                end up in a scrap location that can be used for reporting purpose.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="stock.action_warehouse_form" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Define a new warehouse-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;     Survey &ndash;&gt;-->
+
+<!--    <record id="survey.action_survey_form" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new survey-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                You can create surveys for different purposes: customer opinion, services feedback, recruitment-->
+<!--                interviews, employee's periodical evaluations, marketing campaigns, etc.-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Design easily your survey, send invitations and analyze answers.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;     UTM &ndash;&gt;-->
+
+<!--    <record id="utm.action_view_utm_tag" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new tag-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Use tags to organize campaigns and easily filter them.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="utm.action_view_utm_stage" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a stage for your campaigns-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Stages allow you to organize your workflow (e.g. : plan, design, in progress, done, …).-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="utm.utm_campaign_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Create a campaign-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Campaigns are used to centralize your marketing efforts and track their results.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="utm.utm_medium_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Define a new UTM medium-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="utm.utm_source_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Define a new UTM source-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;    maintenance&ndash;&gt;-->
+
+<!--    <record id="maintenance.hr_equipment_request_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new maintenance request-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Follow the process of the request and communicate with the collaborator.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_request_action_link" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new maintenance request-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Follow the process of the request and communicate with the collaborator.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_request_action_from_equipment" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new maintenance request-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Follow the process of the request and communicate with the collaborator.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_todo_request_action_from_dashboard" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new maintenance request-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Follow the process of the request and communicate with the collaborator.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_request_action_cal" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new maintenance request-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Follow the process of the request and communicate with the collaborator.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.maintenance_request_action_reports" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new maintenance request-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Follow the process of the request and communicate with the collaborator.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new equipment-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Track equipments and link it to an employee or department.-->
+<!--                You will be able to manage allocations, issues and maintenance of your equipment.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_action_from_category_form" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new equipment-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                Track equipments and link it to an employee or department.-->
+<!--                You will be able to manage allocations, issues and maintenance of your equipment.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_category_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new equipment category-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_category_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new stage in the maintenance request-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.maintenance_team_action_settings" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a team in the maintenance request-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="maintenance.hr_equipment_category_action" model="ir.actions.act_window">-->
+<!--        <field name="help" type="html">-->
+<!--            <p>-->
+<!--                Add a new stage in the maintenance request-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

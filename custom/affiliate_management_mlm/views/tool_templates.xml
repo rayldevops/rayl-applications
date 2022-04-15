@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+
+    <template id="website_mlm_membership_tool" inherit_id="affiliate_management.tool">
+      <xpath expr="//ul[hasclass('navbar-nav')]/li[last()]" position="after">
+        <t  t-if="website.check_membership()">
+          <li class="nav-item">
+              <a class="nav-link" href="/affiliate/mlm_tree" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                    Tree
+              </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/affiliate/mlm_bonus" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                    Bonus
+              </a>
+          </li>
+        </t>
+      </xpath>
+    </template>
+  </data>
+</odoo>

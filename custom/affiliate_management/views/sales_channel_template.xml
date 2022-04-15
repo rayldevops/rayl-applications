@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+
+        <template id="sales_channel" name="Sales Channel">
+            <t t-call="website.layout">
+                <t t-if="user_id.partner_id.is_affiliate">
+                    <div class="oe_structure">
+                        <div class="container mt16">
+                            <a style="color: #012b6d;
+                                border: 2px solid;
+                                padding: 7px;float: right;" href="#" onclick="history.back()" id="">Back
+                            </a>
+                        </div>
+                    </div>
+                    <div class="container mt16">
+                        <h4>Sales Channel</h4>
+
+                        <form method="GET" class="form-inline o_wslides_nav_navbar_right order-lg-3"
+                              t-attf-action="/channel/search" role="search">
+                            <div class="input-group" style="padding-left: 55px !important;">
+                                <input type="search" name="search" class="form-control" placeholder="Filter by name"
+                                       aria-label="Search" t-att-value="search_term"/>
+                                <div class="input-group-append">
+                                    <button class="btn border border-left-0 oe_search_button" type="submit"
+                                            aria-label="Search" title="Search">
+                                        <i class="fa fa-search"/>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <br/>
+
+                        <div style="padding-left: 55px !important;">
+                            <table>
+                                <t t-foreach="user_dict" t-as="i">
+                                    <tr>
+                                        <td>
+                                            <h3>
+                                                <t t-if="user_dict[i]">
+                                                    <button style="padding: 0!important;
+                                                        border: none !important;background: none !important;"
+                                                        data-toggle="collapse" data-target="#demo"><b>+</b>
+                                                    </button>
+                                                </t>
+                                                <span class="accordion" t-esc="i"/>
+                                            </h3>
+                                            <div id="demo" class="collapse" style="padding-left: 55px !important;">
+                                                <table>
+                                                    <t t-foreach="user_dict[i]" t-as="iq">
+                                                        <tr>
+                                                            <td>
+                                                                <h3>
+                                                                    <span t-esc="iq"/>
+                                                                </h3>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

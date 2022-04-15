@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_terms_conditions" model="ir.ui.view">
+            <field name="name">res.config.settings.form.inherited.website</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="Website Terms And Conditions"
+                         string="Website Terms And Conditions" data-key="website_terms_and_condition"
+                         groups="website.group_website_designer">
+<!--                        <div class="icon d-none d-md-block"-->
+<!--                             style="background : url('/website_terms_conditions/static/src/image/t_c.png') no-repeat center;background-size:contain;"></div>-->
+                        <h2>Website Terms And Conditions</h2>
+                        <div class="row mt16 o_settings_container" id="website_selection_settings"
+                             title="Configure your Terms And Conditions">
+                            <group>
+                                <field name="is_terms_and_conditions"/>
+                                <field name="title" placeholder="Terms and Conditions"/>
+                                <!--                                        <field name="label" placeholder="I Agree with Terms and Conditions"/>-->
+                                <field name="terms_and_conditions"/>
+                            </group>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+    <template id="website_sale.short_cart_summary" name="Short Cart right column">
+        <div class="card js_cart_summary" t-if="website_sale_order and website_sale_order.website_order_line">
+            <div class="card-body">
+                <h4 class="d-none d-xl-block">Order Total</h4>
+                <hr class="d-none d-xl-block"/>
+                <div>
+                    <t t-call="website_sale.total">
+                        <t t-set="no_rowspan" t-value="1"/>
+                    </t>
+                    <div t-if="website_sale_order and website_sale_order.website_order_line"
+                         class="custom-control custom-checkbox float-right mt-2 oe_accept_cgv_button card-body">
+                        <input type="checkbox" id="process_checked" class="custom-control-input"
+                               t-on-click="_onClickEnableProcessCheckout"/>
+                        <label for="process_checked" class="custom-control-label">
+                            I agree to the
+                            <a target="_BLANK" href="/conditions">terms &amp; conditions</a>
+                        </label>
+                    </div>
+                    <a role="button" t-if="website_sale_order and website_sale_order.website_order_line"
+                       class="btn btn-secondary float-right d-none d-xl-inline-block" href="/shop/checkout?express=1">
+                        <span>Process Checkout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </template>
+    <!--###############################sign up##############################################-->
+    <template id="auth_signup.fields" name="Auth Signup/ResetPassword form fields">
+
+        <div class="form-group field-login">
+<!--            <label for="login">Your Email</label>-->
+            <input type="text" name="login" placeholder="Your Email" t-att-value="login" id="login" class="form-control"
+                   autofocus="autofocus"
+                   autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/>
+        </div>
+
+        <div class="form-group field-name">
+<!--            <label for="name">Your Name</label>-->
+            <input type="text" name="name" t-att-value="name" id="name" class="form-control"
+                    placeholder="First &amp; Last Name"
+                   required="required" t-att-readonly="'readonly' if only_passwords else None"
+                   t-att-autofocus="'autofocus' if login and not only_passwords else None"/>
+        </div>
+
+        <div class="form-group field-password pt-2 input-group">
+<!--            <label for="password">Password</label>-->
+            <input type="password" name="password" id="password" placeholder="Password" class="form-control"
+                   required="required" t-att-autofocus="'autofocus' if only_passwords else None"/>
+
+            <div class="input-group-append">
+                <a role="button" href="#" class="o_little_eye"><i class="fa fa-eye input-group-text" aria-label=""></i></a>
+            </div>
+        </div>
+
+
+        <div class="form-group field-confirm_password input-group">
+<!--            <label for="confirm_password">Confirm Password</label>-->
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password"  class="form-control"
+                   required="required"/>
+            <div class="input-group-append">
+                            <a role="button" href="#" class="o_little_eye"><i class="fa fa-eye input-group-text" aria-label=""></i></a>
+            </div>
+        </div>
+        <div t-if="enable1" class="custom-terms field-agree-terms">
+            <input type="checkbox" id="agree_terms_checked" required="required" t-on-click="_onClickEnableSignUp"/>
+            <label for="agree_terms_checked">
+                I agree to the
+                <a href="#" data-toggle="modal" data-target="#term_condition">terms &amp; conditions</a>
+                            <!-- Modal -->
+            </label>
+        </div>
+    </template>
+    <template id="auth_signup.signup" name="Sign up login">
+        <a t-attf-href="/web/login" t-attf-class="#{_link_class}">Sign in</a>
+<!--        <t t-call="web.login_layout">-->
+            <form class="oe_signup_form" role="form" method="post" t-if="not message">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                <t t-call="auth_signup.fields">
+                    <t t-set="only_passwords" t-value="bool(token and not invalid_token)"/>
+                </t>
+
+                <p class="alert alert-danger" t-if="error" role="alert">
+                    <t t-esc="error"/>
+                </p>
+                <input type="hidden" name="redirect" t-att-value="redirect"/>
+                <input type="hidden" name="token" t-att-value="token"/>
+                <div class="text-center oe_login_buttons pt-3">
+                    <button type="submit" class="btn btn-primary btn-block disabled o_sign_up_button" style="background: linear-gradient(to left, #136a8a, #1dd3d3);
+    border-color: #1dd3d3;">Sign up</button>
+                    <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link btn-sm" role="button">Already
+                        have an account?
+                    </a>
+                    <div class="o_login_auth"/>
+                </div>
+            </form>
+            <div class="modal fade" id="term_condition" role="dialog">
+                    <div class="modal-dialog">
+
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Terms and Conditions</h4>
+                          <button type="button" class="close" data-dismiss="modal">X</button>
+                        </div>
+                        <div class="modal-body">
+                          <t t-raw="web_term_condition"></t>
+                        </div>
+                           <div class="modal-footer">
+                               <form action="/report/pdf/terms_receipt_download" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <center>
+                                        <button type="submit" class="btn btn-primary">
+                                            <b>Download</b>
+                                        </button>
+                                    </center>
+                                </form>
+                            </div>
+                      </div>
+                    </div>
+            </div>
+<!--        </t>-->
+    </template>
+    <!--    #######################terms and condition template######################################-->
+
+    <template id="terms_condition" name="Terms &amp; Conditions">
+        <!--        <t t-call="website.layout">-->
+        <div id="wrap">
+            <div class="oe_structure" id="oe_structure_website_sale_terms_2">
+                <!--                <section class="s_title" data-vcss="001">-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <center>
+                                <h1 class="text-center">Terms &amp;amp; Conditions</h1>
+                            </center>
+                            <span t-raw="setting"/>
+                            <div class="card s_well clearfix">
+                                <form action="report/pdf/terms_receipt_download" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <center>
+                                        <button type="submit" class="btn btn-primary float-center mb32 "
+                                                style="background-color: #4d7828; color:white; width: 8em; height: 3em;">
+                                            <b>Download</b>
+                                        </button>
+                                    </center>
+                                </form>
+                                <!--                               <small class="text-muted float-right">Source: https://termsfeed.com/blog/sample-terms-and-conditions-template</small>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        </t>-->
+    </template>
+
+    <template id="pdf_terms_and_conditions" name="Ticket Receipt">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div>
+                    <center>
+                        <strong>Terms and Conditions:</strong>
+                    </center>
+                    <!--                    <table class="table table-bordered" style="width:100%;">-->
+                    <!--                        <tr>-->
+                    <!--                            <td>-->
+                    <!--                                <span t-esc="o.title"/>-->
+                    <!--                            </td>-->
+                    <!--                             <td>-->
+                    <!--                                 <span t-esc="o.label"/>-->
+                    <!--                            </td>-->
+                    <!--                        </tr>-->
+                    <!--                    </table>-->
+                    <br/>
+                    <span t-raw="o.value"/>
+                </div>
+            </t>
+        </t>
+
+    </template>
+
+    <!--    <template id="website_sale.payment_sale_note" name="Accept Terms &amp; Conditions" customize_show="True" active="False">-->
+    <!--        <xpath expr="//div[@id='payment_method'][hasclass('js_payment')]" position="after">-->
+    <!--            <div class="custom-control custom-checkbox float-right mt-2 oe_accept_cgv_button">-->
+    <!--                <input type="checkbox" id="chec kbox_cgv" class="custom-control-input"/>-->
+    <!--                <label for="checkbox_cgv" class="custom-control-label" style="display:none">-->
+    <!--                    I agree to the <a target="_BLANK" href="/shop/terms">terms &amp; conditions</a>-->
+    <!--                </label>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
+
+
+    <!--     <template id="payment_sale_note_inherit" inherit_id="website_sale.payment_sale_note">-->
+    <!--         <xpath expr="//label" position="inside">-->
+    <!--            <label for="checkbox_cgv" class="custom-control-label" style="display:none">-->
+    <!--                    I agree to the <a target="_BLANK" href="/shop/terms">terms &amp; conditions</a>-->
+    <!--            </label>-->
+    <!--&lt;!&ndash;         <xpath expr="//input[@type='checkbox']" position="after">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <attribute name="invisible">1</attribute>&ndash;&gt;-->
+    <!--        </xpath>-->
+    <!--    </template>-->
+    <!--    #########################process checkout#################################################-->
+    <template id="short_cart_inherit_form" inherit_id="website_sale.cart" name="Short Cart inherit">
+        <xpath expr="//a[2][@role='button']" position="replace">
+            <a role="button" t-if="website_sale_order and website_sale_order.website_order_line"
+               class="btn btn-primary float-right d-none d-xl-inline-block disabled o_cart_process_checkout"
+               id="cart_process_checkout" href="/shop/checkout?express=1">
+                <span class="">Process Checkout</span>
+                <span class="fa fa-chevron-right"/>
+            </a>
+        </xpath>
+    </template>
+
+    <template id="short_cart_summary_inherit_form" inherit_id="website_sale.short_cart_summary"
+              name="Short Cart right column inherit">
+        <xpath expr="//a[@role='button']" position="replace">
+            <div>
+                <a role="button" t-if="website_sale_order and website_sale_order.website_order_line"
+                   class="btn btn-secondary float-right d-none d-xl-inline-block disabled o_cart_summary_process_checkout"
+                   id="cart_summary_process" t-on-click="_onClickCartSummary" href="/shop/checkout?express=1">
+                    <span>Process Checkout</span>
+                </a>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="accept_terms_backend" inherit_id="website.assets_frontend">
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/website_terms_conditions/static/src/js/website.js"/>
+        </xpath>
+    </template>
+
+</odoo>

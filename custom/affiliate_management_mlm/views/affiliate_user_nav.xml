@@ -1,0 +1,104 @@
+<odoo>
+  <data>
+    <template id="mlm_tree_affiliate_user_nav" name="Affiliate User Navigation Tree">
+
+      <div class="oe_structure">
+        <div class="container mt16">
+          <div class="container">
+
+            <div class="navbar navbar-expand-md navbar-light bg-light">
+                                      <div>
+
+                                        <ul class="navbar-nav">
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/about" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                      About
+<!--                                                      <i class="fa fa-home fa-2x"></i>-->
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/report" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                      Reports
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/payment" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                      Payments
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/tool" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                    Tools
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/mlm_tree" style="color:#005452;">
+                                                    Tree
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/mlm_bonus" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                    Bonus
+                                                    </a>
+                                              </li>
+
+                                            </ul>
+                                      </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</template>
+
+    <template id="mlm_bonus_affiliate_user_nav" name="Affiliate User Navigation RAP Bonus">
+
+      <div class="oe_structure">
+        <div class="container mt16">
+          <div class="container">
+
+            <div class="navbar navbar-expand-md navbar-light bg-light">
+                                      <div>
+
+                                        <ul class="navbar-nav">
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/about" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                      About
+<!--                                                      <i class="fa fa-home fa-2x"></i>-->
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/report" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                      Reports
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/payment" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                      Payments
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/tool" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                    Tools
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/mlm_tree" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">
+                                                    Tree
+                                                    </a>
+                                              </li>
+                                              <li class="nav-item">
+                                                  <a class="nav-link" href="/affiliate/mlm_bonus" style="color:#005452;">
+                                                    Bonus
+                                                    </a>
+                                              </li>
+
+                                            </ul>
+                                      </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </template>
+</data>
+</odoo>

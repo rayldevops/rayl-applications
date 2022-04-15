@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+"access_res_config_settings","access.res.config.settings","base.model_res_config_settings","rayl_custom.saas_security_manager_group",1,1,1,0
+rayl_access_ir_module_module,rayl.access.ir.module.module,base.model_ir_module_module,rayl_custom.saas_security_manager_group,1,1,0,0
+rayl_access_ir_config_parameter,rayl.access.ir.config_parameter,base.model_ir_config_parameter,rayl_custom.saas_security_manager_group,1,1,0,0
+rayl_access_ir_actions_act_window,rayl.access.ir.actions.act_window,base.model_ir_actions_act_window,rayl_custom.saas_security_manager_group,1,1,0,0
+rayl_access_res_company,rayl.access.res.company,base.model_res_company,rayl_custom.saas_security_manager_group,1,1,0,0
+rayl_access_ir_mail_server,rayl.access.ir.mail_server,base.model_ir_mail_server,rayl_custom.saas_security_manager_group,1,1,1,1
+rayl_access_fetchmail_server,rayl.access.fetchmail.server,fetchmail.model_fetchmail_server,rayl_custom.saas_security_manager_group,1,1,1,1
+rayl_access_ir_cron,rayl.access.ir.cron,base.model_ir_cron,rayl_custom.saas_security_manager_group,1,1,1,1
+rayl_access_mail_mail,rayl.access.mail,mail.model_mail_mail,rayl_custom.saas_security_manager_group,1,1,1,1
+rayl_access_ir_module_module_dependency,rayl.access.ir.module.module.dependency,base.model_ir_module_module_dependency,rayl_custom.saas_security_manager_group,1,1,1,1

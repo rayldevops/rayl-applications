@@ -1,0 +1,37 @@
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
+<odoo>
+    <data>
+        <record id="view_saas_partner_inherit_detail_form" model="ir.ui.view">
+            <field name="name">res.partner.saas.property.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="priority">3</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <page name="sales_purchases" position="after">
+                    <page name="saas_instance" string="SaaS Instance Details">
+                        <group>
+                            <group string="Instance" name="instance">
+                                <field name="is_saas_user"/>
+                                <field name="is_saas_contract"/>
+                                <field name="is_saas_client"/>
+                                <field name="saas_url"/>
+                                <field name="client_url" invisible="1"/>
+                                <field name="login" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="saas_user_id"/>
+                                <field name="saas_contract_id"/>
+                                <field name="saas_domain_name"/>
+                                <field name="password" invisible="1"/>
+                                <button name="action_create_instance"  string="Create Instance" type="object"
+						        attrs="{'invisible':[('is_saas_client','=', True)]}"
+                                groups="affiliate_management.affiliate_security_manager_group" invisible="1"/>
+                                <button name="login_to_client_instance"  string="Update Data" type="object" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+    </data>
+</odoo>

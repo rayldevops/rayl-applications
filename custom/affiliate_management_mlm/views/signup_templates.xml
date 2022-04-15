@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+    <template id="affiliate_management_signup" inherit_id="affiliate_management.register">
+
+      <xpath expr="//form/div[5]" position="after">
+        <div id="key-inp" class="form-group field-password" style="display:none;">
+          <label id="aff_key_label"  for="aff_key" class="control-label"> Enter Affiliate Referral Key</label>
+          <input type="text" name="aff_key" id="aff_key" class="form-control" autofocus="autofocus"  maxlength="8"/>
+        </div>
+        <p class="alert alert-danger" id="aff_ref_key_er" style="display:none">
+
+        </p>
+      </xpath>
+
+      <xpath expr="//form/div[5]" position="after">
+
+        <div class="checkbox">
+        <label>
+          <input type="checkbox" id="ref-code-signup-checkbox"/>
+               <span style="color:#333333;">
+                Have an Affiliate Referral Code?
+                <a href='#' class="terms_link terms_condition" data-toggle="modal" data-target="#myModal2">
+                Know More
+                </a>
+              </span>
+           </label>
+
+           <div id="myModal2" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header" style="background-color:#CCCCCC; border-radius:5px;" >
+                  <h4 class="modal-title text-center"><em><u><strong>About Affiliate Referral Code</strong></u></em></h4>
+                  <button type="button" class="close" data-dismiss="modal">x</button>
+
+                </div>
+                <div class="modal-body">
+                  <!-- <div class="terms"> -->
+                  <t t-if="not about_ref_code">
+                    about Affiliate Referral code.
+                  </t>
+                  <t t-if="about_ref_code">
+                       <t t-raw="about_ref_code"/>
+                  </t>
+                <!-- </div> -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+         </div>
+      </xpath>
+
+
+    </template>
+  </data>
+</odoo>

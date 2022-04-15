@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_product_paypal_inheritss" model="ir.ui.view">
+        <field name="name">product.product.paypal.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="paypal_plan_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="product_inherit" name="Product Bread Template" inherit_id="website_sale.product">
+        <xpath expr="//form" position="before">
+            <script type="text/javascript"
+                    src="https://www.paypal.com/sdk/js?client-id=ARudoJr-eUBYZjuWZ09NylFUb9VX2mkASKlvBnpsfUg_y4gVMrczM6QH9y4Nqn8HHJGgGR_YydkAiUCC&amp;vault=true&amp;intent=subscription"></script>
+            <script type="text/javascript" src="/paypal_subscription/static/src/js/paypal.js"/>
+        </xpath>
+        <xpath expr="//form//input[@name='product_id']" position="after">
+            <input type="hidden" id="product_plan_id" name="product_plan_id"
+                   t-att-value="product_variant.paypal_plan_id"/>
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+        </xpath>
+        <xpath expr="//a[@id='add_to_cart']" position="after">
+            <div>
+                <br/>
+                <div id="paypal-button-container"></div>
+                <script>
+                    console.log("Starting to customizing in product page");
+                </script>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="shop_payment_inherit" name="Shop Payment Paypal" inherit_id="website_sale.cart_summary">
+<!--        <xpath expr="//form" position="before">-->
+        <xpath expr="//div[@class='card']" position="before">
+            <script type="text/javascript"
+                    src="https://www.paypal.com/sdk/js?client-id=ARudoJr-eUBYZjuWZ09NylFUb9VX2mkASKlvBnpsfUg_y4gVMrczM6QH9y4Nqn8HHJGgGR_YydkAiUCC&amp;vault=true&amp;intent=subscription"></script>
+            <script type="text/javascript" src="/paypal_subscription/static/src/js/paypal.js"/>
+        </xpath>
+<!--        <xpath expr="//form//input[@name='product_id']" position="after">-->
+        <xpath expr="//div[@class='card']" position="before">
+<!--            <input type="hidden" id="product_plan_id" name="product_plan_id"-->
+<!--                   t-att-value="product_variant.paypal_plan_id"/>-->
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+        </xpath>
+        <xpath expr="//div[@class='card']" position="after">
+            <div>
+                <br/>
+                <div id="paypal-button-container">
+                    <style type="text/css">
+                        .paypal-powered-by {
+                        display:none !important;
+                        }
+                    </style>
+                </div>
+                <script>
+                    console.log("Starting to customizing in product page");
+                </script>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

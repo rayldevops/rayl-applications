@@ -1,0 +1,172 @@
+<odoo>
+  <data>
+
+    <template id="mlm_bonus" name="Tree View">
+      <t t-call="website.layout">
+      	<t t-if="user_id.partner_id.is_affiliate">
+          <t t-call="affiliate_management_mlm.mlm_bonus_affiliate_user_nav"/>
+          <div class="container mt16">
+                <h3 class="page-header">Your Bonus</h3>
+                    <t t-if="not debit_transactions">
+                        <p>There is currently no Bonus awarded to you.</p>
+                    </t>
+                    <t t-if="debit_transactions">
+                      <div class="col-md-5">
+                          <strong>Total Bonus Amount: </strong><t t-esc="currency_id.symbol"/><t t-esc="total_bonus"/>
+                          <span></span><br/>
+                      </div>
+                        <table class="table table-hover o_my_status_table">
+                            <thead>
+                              <tr class="active">
+                                <th>Transaction</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>State</th>
+                                <th>Bonus Summary</th>
+                              </tr>
+                            </thead>
+                            <t t-foreach="debit_transactions" t-as="tran">
+                              <!-- <t t-if="tran.state == 'paid' and tran.debit"> -->
+                                <tr>
+                                    <td>
+                                        <a t-attf-href="/my/bonus/{{tran.id}}?{{keep_query()}}"><t t-esc="tran.name"/></a>
+                                    </td>
+                                    <td><span t-field="tran.tran_invoice_id.invoice_date"/></td>
+                                    <td><span t-field="tran.debit"/></td>
+                                    <td><span t-field="tran.state"/></td>
+                                    <t t-if="tran.bonus_type == 'fcb'">
+                                      <td>First Child Bonus, Invoice Number: <span t-field="tran.tran_invoice_id.name"/></td>
+                                    </t>
+                                    <t t-else="">
+                                      <td>Level Completion Bonus, Invoice Number: <span t-field="tran.tran_invoice_id.name"/></td>
+                                    </t>
+                                </tr>
+                              <!-- </t> -->
+                            </t>
+                        </table>
+                        <div t-if="pager" class="o_portal_pager text-center">
+                            <t t-call="website.pager"/>
+                        </div>
+                    </t>
+                  </div>
+        </t>
+      </t>
+    </template>
+
+    <template id="bonus_transaction_form" name="Bonus Transaction Show">
+    <t t-call="website.layout">
+      <t t-if="user_id.partner_id.is_affiliate">
+          <t t-if="tran">
+              <div class="oe_structure">
+                    <div class="container mt16">
+                      <div class="container">
+                        <div class="navbar navbar-default">
+                                <div class="collapse navbar-collapse" id="oe-help-navbar-collapse">
+                                    <ul class="nav navbar-nav o_portal_submenu">
+                                      <li>
+                                        <a href="/affiliate/about">
+                                          About
+<!--                                          <i class="fa fa-home fa-2x"></i>-->
+                                        </a>
+                                      </li>
+
+                                          <li>
+                                              <a  href="/affiliate/mlm_bonus">RAP Bonus </a>
+                                              </li>
+
+                                              <li>
+                                                <a t-attf-href="/my/bonus/{{tran.id}}?{{keep_query()}}">Transaction <t t-esc="tran.name"/></a>
+                                              </li>
+                                     </ul>
+                                </div>
+                            </div>
+                      </div>
+                    </div>
+                  </div>
+                </t>
+
+                <div class="container mt16">
+                  <div class="panel-body">
+                            <div class="mb8">
+                              <strong>Date :</strong> <span t-field="tran.tran_invoice_id.invoice_date" t-options='{"widget": "date"}'/>
+                            </div>
+
+                            <div class="mb8">
+                              <strong>Transaction State :</strong> <span t-field="tran.state"/>
+                            </div>
+
+                            <!-- <t t-if="invoice.aff_visit_id.sales_order_line_id">
+                                <div class="mb8">
+                                  <strong>Source :</strong> <span t-field="invoice.aff_visit_id.sales_order_line_id.order_id.name"/>
+                                </div>
+                            </t> -->
+                            <hr/>
+                            <h1>Transaction <span t-field="tran.name"/></h1>
+
+                                <table class="table table-hover o_my_status_table">
+                                    <thead>
+                                      <tr class="active">
+
+                                        <th>Bonus Type</th>
+                                        <th>Payment Date</th>
+                                        <!-- <th>Payment Method</th> -->
+                                        <!-- <t t-if="invoice.aff_visit_id.sales_order_line_id"> -->
+                                        <th>Invoice Number</th>
+                                        <!-- </t> -->
+                                        <th>Transaction Amount</th>
+
+                                      </tr>
+                                    </thead>
+
+                                    <tr>
+                                      <t t-if="tran.bonus_type == 'fcb'">
+                                        <td>First Child Bonus</td>
+                                      </t>
+                                      <t t-elif="tran.bonus_type == 'level_commission'">
+                                        <td>Level Commission</td>
+                                      </t>
+                                      <t t-else="">
+                                        <td>Level Completion Bonus</td>
+                                      </t>
+
+
+                                        <td>
+                                            <t t-esc="tran.tran_invoice_id.invoice_date"/>
+                                        </td>
+
+                                        <!-- <td>
+                                            <t t-esc="tran.tran_invoice_id.payment_ids[0].payment_method_id.name"/>
+                                        </td> -->
+
+                                        <td>
+                                          <a t-attf-href="/my/invoice/{{tran.tran_invoice_id.id}}?{{keep_query()}}">
+                                            <t t-esc="tran.tran_invoice_id.name"/>
+                                          </a>
+                                        </td>
+
+                                        <t t-if="tran.credit">
+                                          <td><t t-esc="tran.credit"/></td>
+                                        </t>
+                                        <t t-else="">
+                                          <td><t t-esc="tran.debit"/></td>
+                                        </t>
+
+                                    </tr>
+
+                                </table>
+
+
+
+                                <hr/>
+
+
+
+                  </div>
+          </div>
+        </t>
+    </t>
+  </template>
+
+
+  </data>
+</odoo>

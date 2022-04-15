@@ -1,0 +1,80 @@
+<odoo>
+  <data>
+    <template id="assets_frontend" inherit_id="website.assets_frontend">
+      <xpath expr="." position="inside">
+        <script type="text/javascript" src="/affiliate_management_mlm/static/src/js/validation.js"/>
+        <!-- <link rel="stylesheet" href="/affiliate_management_mlm/static/src/css/mlm_tree_1.css"/> -->
+        <link rel="stylesheet" type="text/css" href="/affiliate_management_mlm/static/src/css/mlm_tree_2.css"/>
+      </xpath>
+    </template>
+
+    <template id="mlm_tree" name="Tree View">
+      <t t-call="website.layout">
+      	<t t-if="user_id.partner_id.is_affiliate">
+          <t t-call="affiliate_management_mlm.mlm_tree_affiliate_user_nav"/>
+
+          <div class="container">
+
+            <div style="height:30em; border:solid #e7e7e7 1px;margin-top:15px;overflow-x:auto; overflow-y:auto;">
+              <t t-call="affiliate_management_mlm.mlm_tree_root"/>
+            </div>
+
+          </div>
+        </t>
+      </t>
+    </template>
+
+    <!-- Tree Logic Start -->
+
+    <template id="root_childs" name="Tree Root Childs View">
+      <t t-if="not left_child and not right_child">
+        <!-- Empty if there is no child -->
+      </t>
+
+      <t t-else="">
+        <ul>
+          <t t-call="affiliate_management_mlm.root_child">
+            <t t-set="child" t-value="left_child"/>
+          </t>
+          <t t-call="affiliate_management_mlm.root_child">
+            <t t-set="child" t-value="right_child"/>
+          </t>
+        </ul>
+      </t>
+    </template>
+
+    <template id="mlm_tree_root" name="Tree Root View">
+      <div class="tree" t-attf-style="width:{{website.tree_width(user_partner_id)}}em;">
+           <ul>
+               <li>
+                 <div><t t-esc="user_partner_id.name"/></div>
+                   <t t-call="affiliate_management_mlm.root_childs">
+                     <t t-set="left_child" t-value="user_partner_id.left_child_aff"/>
+                     <t t-set="right_child" t-value="user_partner_id.right_child_aff"/>
+                   </t>
+               </li>
+           </ul>
+       </div>
+    </template>
+
+    <template id="root_child" name="Tree Root Child View">
+      <t t-if="child">
+        <li>
+          <div><t t-esc="child.name"/></div>
+          <t t-call="affiliate_management_mlm.root_childs">
+            <t t-set="left_child" t-value="child.left_child_aff"/>
+            <t t-set="right_child" t-value="child.right_child_aff"/>
+          </t>
+
+        </li>
+      </t>
+
+      <t t-else="">
+        <!-- Empty if child is missing-->
+      </t>
+
+    </template>
+
+    <!-- Tree Logic End -->
+  </data>
+</odoo>

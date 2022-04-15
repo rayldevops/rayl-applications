@@ -1,0 +1,36 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="rayl_floating_social_share_buttons.all">
+        <div role="dialog" class="modal fade" id="gtica_social_share_modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="background-color: rgba(0,0,0,.6);">
+                    <header class="modal-header mb0" role="status" style="border-bottom: solid 3px rgba(0,132,255,0.9);">
+                        <h3 class="modal-title" style="color: #fff;margin-left:auto; text-align: center;">Share on your favorite social network<br/><span style="font-weight: bold;">Enjoy right now..!</span></h3>
+                        <button type="button"  class="close" data-dismiss="modal">
+                            <span style="color: #fff;" role="img" aria-label="Close">x</span>
+                        </button>
+                    </header>
+                    <main class="container modal-body">
+                        <div class="share-icons text-center">
+                            <t t-foreach="medias" t-as="media">
+                                <div class="containerssButtons ">
+                                    <a t-attf-class="fa-stack fa-3x ssButtons" t-attf-data-social="#{media}" t-attf-aria-label="Share on #{media}"  >
+                                        <span t-attf-class="fa fa-square fa-stack-2x ssButtons#{media}Background"></span>
+                                        <span t-attf-class="ssButtonsSharingSvg ssButtons#{media}Svg fa fa-stack-1x fa-inverse"></span>
+                                    </a>
+                                    <span class="title" t-esc="media"/>
+                                </div>
+                            </t>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="rayl_floating_social_share_buttons.social_hover">
+        <div class="text-nowrap css_editable_mode_hidden">
+            <p class="o_default_snippet_text"><b class="o_default_snippet_text" t-esc="name_media" /></p>
+
+        </div>
+    </t>
+</templates>

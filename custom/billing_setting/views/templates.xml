@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--    #######################terms and condition template######################################-->
+        <template id="portal.portal_layout" name="Portal Layout">
+            <t t-call="portal.frontend_layout">
+                <t t-set="is_portal" t-value="True"/>
+
+                <div t-if="not no_breadcrumbs and not my_details and not breadcrumbs_searchbar"
+                     class="o_portal container mt-3">
+                    <div class="row align-items-center bg-white no-gutters border rounded">
+                        <div class="col-10">
+                            <t t-call="portal.portal_breadcrumbs"></t>
+                        </div>
+                        <div t-if="prev_record or next_record" class="col-2 flex-grow-0 text-center">
+                            <t t-call='portal.record_pager'/>
+                        </div>
+                    </div>
+                </div>
+                <div id="wrap" class='o_portal_wrap'>
+                    <div class="container mb64">
+                        <t t-if="my_details">
+                            <div class="row justify-content-between mt-4">
+                                <div t-attf-class="col-12 col-md col-lg-6">
+                                    <t t-raw="0"/>
+                                </div>
+                                <div id="o_my_sidebar"
+                                     class="pt-3 pt-lg-0 col-12 col-md col-lg-4 col-xl-3 o_my_sidebar">
+                                    <div class="o_my_contact" t-if="sales_user">
+                                        <t t-call="portal.portal_contact"/>
+                                    </div>
+                                    <div class="o_portal_my_details">
+                                        <h4>Your Details
+                                            <a role="button" href="/my/account" class="btn btn-sm btn-link">
+                                                <i class="fa fa-pencil"/>
+                                                Edit
+                                            </a>
+                                        </h4>
+                                        <hr class="mt-1 mb-0"/>
+                                        <div t-field="user_id.partner_id"
+                                             t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/>
+                                    </div>
+                                    <div class="o_portal_my_security mt-3" style="margin-top: 76px !important;">
+                                        <h4>Account Security</h4>
+                                        <hr class="mt-1 mb-1"/>
+                                        <span>
+                                            <a href="/my/security">Edit Security Settings</a>
+                                        </span>
+                                        <br/>
+                                        <!--                                    <a href="/billing_form">Billing Settings</a>-->
+                                        <span>
+                                            <a href="/my/billing">Billing Settings</a>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            <a href="/my/payout">Payout Settings</a>
+                                        </span>
+                                        <div class="text-center" id="affilaite_member"
+                                             style="margin-top: 76px !important;">
+                                            <t t-if="not user_id.partner_id.is_affiliate">
+                                                <p>
+                                                    <!--                                            <a href='/affiliate/membership' class='btn btn-success'-->
+                                                    <!--                                               style='width:250px;height:37px;position:relative;'>Activate Membership-->
+                                                    <!--                                            </a>-->
+                                                    <button t-att-id="'yes_btn_uid_%s'%(user_id.id)"
+                                                            class="btn btn-success"
+                                                            style="width:250px;height:47px;">Activate Membership
+                                                    </button>
+                                                </p>
+                                            </t>
+                                            <t t-if="user_id.partner_id.is_affiliate">
+                                                <t t-if="not user_id.partner_id.bought_membership">
+                                                    <a href='/affiliate/membership' class="btn btn-success"
+                                                       style="width:250px;height:47px;">Purchase Subscription
+                                                    </a>
+                                                </t>
+                                                <t t-if="user_id.partner_id.stripe_subscription_id">
+                                                    <t t-if="user_id.partner_id.bought_membership and not user_id.partner_id.upgrade_membership">
+                                                        <a href='/affiliate/upgrade_membership/' class="btn btn-success"
+                                                           style="width:250px;height:47px;">Upgrade Subscription
+                                                        </a>
+                                                    </t>
+                                                </t>
+
+                                            </t>
+                                            <br/>
+                                            <t t-if="user_id.partner_id.mlm_order_id and not user_id.partner_id.saas_url">
+                                                <div class="form-group">
+                                                    <form action="/saas/domain_check_available" method="post">
+                                                        <input type="hidden" name="csrf_token"
+                                                               t-att-value="request.csrf_token()"/>
+                                                        <label for="fname">Your RAYL Domain Name:</label>
+                                                        <input type="text" id="usr_saas_domain" name="saas_domain_name"
+                                                               style="width: 60%;">.rayl.app
+                                                        </input>
+                                                        <br/>
+                                                        <br/>
+                                                        <button type="submit" class="btn btn-success"
+                                                                style="width:250px;height:47px;">
+                                                            Launch Apptive
+                                                        </button>
+                                                        <br/>
+                                                        <br/>
+                                                    </form>
+                                                </div>
+                                            </t>
+                                            <t t-if="user_id.partner_id.saas_url and user_id.partner_id.mlm_order_id">
+                                                <a t-attf-href="https://{{user_id.partner_id.saas_url}}"
+                                                   class="btn btn-success"
+                                                   style="width:250px;height:47px;" target="_blank">Access Apptive
+                                                </a>
+                                            </t>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <t t-raw="0"/>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="billing_setting_form">
+            <t t-name="billing_setting.billing_form">
+                <t t-call="portal.portal_layout">
+                    <div class="o_portal_security_body">
+                        <t t-set="additional_title">Billing</t>
+                        <t t-set="no_breadcrumbs" t-value="1"/>
+                        <br></br>
+                        <t t-if="error" t-foreach="error.get('error_message', [])" t-as="err">
+                            <h5 class="text-danger" t-esc="err"/>
+                        </t>
+                        <t t-if="message" t-foreach="message.get('success_message', [])" t-as="msg">
+                            <h5 class="text-success" t-esc="msg"/>
+                        </t>
+                        <h1>Add Billing Details</h1>
+                        <section>
+                            <div class="form-group field-payoption">
+                                <select class="form-control" id="payment_option" placeholder="Payment Option">
+                                    <option value="">Choose Payment Option</option>
+                                    <!--                                    <option value="electronic_funds_transfer">Electronic Funds Transfer</option>-->
+                                    <option value="credit_card">Credit or Debit Card</option>
+                                </select>
+                            </div>
+                            <!--                            <form class="" action="/my/bank/submit" id="billing" role="form" method="post">-->
+                            <!--                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+                            <!--                                <input type="hidden" name="payment_option" value="electronic_funds_transfer"/>-->
+
+                            <!--                                <div id="electronic_funds_transfer" style="display:none">-->
+                            <!--                                    <div class="tab1">-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <select class="form-control" id="bank_id" placeholder="Bank Name"-->
+                            <!--                                                    name="bank_id">-->
+                            <!--                                                <t t-foreach="values" t-as="vals">-->
+                            <!--                                                    <option t-att-name="x_membre_interne" t-att-value="vals.id">-->
+                            <!--                                                        <t t-esc="vals.bank_name"/>-->
+                            <!--                                                    </option>-->
+                            <!--                                                </t>-->
+                            <!--                                                &lt;!&ndash;                                    <option value="electronic_funds_transfer">Bank 1</option>&ndash;&gt;-->
+                            <!--                                                &lt;!&ndash;                                    <option value="credit_card">Bank 2</option>&ndash;&gt;-->
+                            <!--                                            </select>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <input class="form-control" id="branch_transit_number"-->
+                            <!--                                                   placeholder="Branch Transit Number" name="branch_transit_number"-->
+                            <!--                                                   required="required"/>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <input class="form-control" id="bank_account_number"-->
+                            <!--                                                   placeholder="Bank Account Number" name="bank_account_number"-->
+                            <!--                                                   required="required"/>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <input class="form-control" placeholder="Confirm Bank Account Number"-->
+                            <!--                                                   id="confirm_bank_account_number" name="confirm_bank_account_number"-->
+                            <!--                                                   required="required"/>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <button name="" class="btn btn-primary">Add Account</button>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </form>-->
+                            <form class="" action="/my/card/submit" id="billing" role="form" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="payment_option" value="credit_card"/>
+                                <div id="credit_card" style="display:none">
+                                    <div class="form-group">
+                                        <input required="required" class="form-control" name="card_number"
+                                               placeholder="Card Number" id="card_number"
+                                               pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$"/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select required="required" class="form-control" name="exp_month"
+                                                        id="exp_month" placeholder="Exp. Month">
+                                                    <option value="">Exp. Month</option>
+                                                    <option value="01">01</option>
+                                                    <option value="02">02</option>
+                                                    <option value="03">03</option>
+                                                    <option value="04">04</option>
+                                                    <option value="05">05</option>
+                                                    <option value="06">06</option>
+                                                    <option value="07">07</option>
+                                                    <option value="08">08</option>
+                                                    <option value="09">09</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
+                                                <!--                                                <input required="required" class="form-control" name="exp_month"-->
+                                                <!--                                                       id="exp_month" placeholder="Exp. Month"/>-->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select required="required" class="form-control" placeholder="Exp. Year"
+                                                        name="exp_year" id="exp_year">
+                                                    <option value="">Exp. Year</option>
+                                                    <option value="21">2021</option>
+                                                    <option value="22">2022</option>
+                                                    <option value="23">2023</option>
+                                                    <option value="24">2024</option>
+                                                    <option value="25">2025</option>
+                                                    <option value="26">2026</option>
+                                                    <option value="27">2027</option>
+                                                    <option value="28">2028</option>
+                                                    <option value="29">2029</option>
+                                                    <option value="30">2030</option>
+                                                </select>
+                                                <!--                                                <input required="required" class="form-control" placeholder="Exp. Year"                                                      name="exp_year" id="exp_year"/>-->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input required="required" class="form-control" placeholder="Card Code"
+                                                       name="card_code" id="card_code"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input required="required" class="form-control"
+                                                       placeholder="Street Address" name="street_address"
+                                                       id="street_address"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input required="required" class="form-control" placeholder="Post Code"
+                                                       name="post_code" id="post_code"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button name="" class="btn btn-primary">Add Account</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="user_details_form">
+            <t t-name="billing_setting.user_details">
+                <t t-call="portal.portal_layout">
+                    <div class="o_portal_security_body">
+                        <t t-set="additional_title">User Details</t>
+                        <t t-set="no_breadcrumbs" t-value="1"/>
+                        <br></br>
+                        <t t-if="error" t-foreach="error.get('error_message', [])" t-as="err">
+                            <h5 class="text-danger" t-esc="err"/>
+                        </t>
+                        <t t-if="message" t-foreach="message.get('success_message', [])" t-as="msg">
+                            <h5 class="text-success" t-esc="msg"/>
+                        </t>
+                        <h1>Update User Details</h1>
+                        <section>
+                            <form class="" action="/my/user_details/submit" id="billing" role="form" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div id="user_details_form">
+
+                                    <div class="form-group">
+
+                                        <input class="form-control" id="address" placeholder="Address" name="address"
+                                               t-att-value="user_id.partner_id.street" required="required"/>
+
+                                    </div>
+                                    <!--                            </div>-->
+                                    <div class="form-group">
+
+                                        <input class="form-control" id="city" placeholder="City" name="city"
+                                               t-att-value="user_id.partner_id.city" required="required"/>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <select id="country_id" name="country_id" placeholder="Country*"
+                                                t-attf-class="form-control" mode="edit">
+                                            <option value="">Country...</option>
+                                            <t t-foreach="countries" t-as="c">
+                                                <option t-att-value="c.id"
+                                                        t-att-selected="c.id == (country and country.id or -1)">
+                                                    <t t-esc="c.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                        <!--                                        <input class="form-control" placeholder="Country" id="country," name="country" t-att-value="user_id.partner_id.country_id.name" required="required"/>-->
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input class="form-control" id="postal_code" placeholder="PostalCode"
+                                               name="postal_code" t-att-value="user_id.partner_id.zip"
+                                               required="required"/>
+
+                                    </div>
+                                    <div class="form-group"
+                                         t-att-style="(not country or not country.state_ids) and 'display: none'">
+                                        <select name="state_id" placeholder="State / Province"
+                                                t-attf-class="form-control"
+                                                data-init="1">
+                                            <option value="">State / Province...</option>
+                                            <t t-foreach="country_states" t-as="s">
+                                                <option t-att-value="s.id"
+                                                        t-att-selected="s.id == ('state_id' in user_details and country and user_details['state_id'] != '' and int(user_details['state_id']))">
+                                                    <t t-esc="s.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                        <!--                                        <input class="form-control" id="province" placeholder="Province" name="country_states" t-att-value="user_id.partner_id.province" required="required"/>-->
+
+                                    </div>
+                                    <div class="form-group">
+                                        <button name="" class="btn btn-primary">Update Account</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="billing_assets_common_minimal_js" inherit_id="web.assets_common_minimal_js">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>
+                <script type="text/javascript" src="/billing_setting/static/src/js/index.js"/>
+            </xpath>
+        </template>
+
+        <template id="payout_setting_form">
+            <t t-call="website.layout">
+                <link href="/web_login_background/static/src/css/style.css" rel="stylesheet" media="all"/>
+                <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-header start -->
+                                    <div class="page-header card">
+                                        <div class="card-block">
+                                            <h5 class="m-b-10">Payout Details</h5>
+                                            <ul class="breadcrumb-title b-t-default p-t-10 pull-left" style="width:100%">
+                                                 <li class="breadcrumb-item pull-left">
+                                                    <a href="/my/home"> <i class="fa fa-home"></i> </a>
+                                                </li>
+                                                <li class="breadcrumb-item pull-left"><a href="/affiliate/about"> My Affiliate</a>
+                                                </li>
+                                                <li class="breadcrumb-item pull-left"><a href="/payout/account">Payout List</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Page-header end -->
+                                      <!-- Page body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <!-- Basic Form Inputs card start -->
+                                                <div class="card">
+                                                        <div class="card-block">
+                                                            <h4 class="sub-title">Payout Details Form</h4>
+                                                            <form method="POST" action="/my/payout/submit">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-2 col-form-label">Payment Type</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                                        <select class="form-control" id="payment_option" placeholder="Payment Option"
+                                            name="payment_option">
+                                            <option value="electronic_funds_transfer">Electronic Funds Transfer</option>
+                                            </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-2 col-form-label">Bank Account Type</label>
+                                                                    <div class="col-sm-10">
+
+                                                                        <select class="form-control" id="bank_account_type" placeholder="Bank Account Type"
+                                        name="bank_account_type">
+                                    <option value="">Bank Account Type</option>
+                                    <option value="Personal">Personal</option>
+                                    <option value="Business">Business</option>
+                                </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="company_name_form_group"  style="display:none">
+                                                                    <label class="col-sm-2 col-form-label">Company Name</label>
+                                                                    <div class="col-sm-10">
+                                                                       <input class="form-control" id="company_name"
+                                           placeholder="Company Name" name="company_name"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-2 col-form-label">Bank Name</label>
+                                                                    <div class="col-sm-10">
+                                                                        <select class="form-control" id="bank_id" placeholder="Bank Name"
+                                            name="bank_id" required="required">
+                                        <option value="">Select Bank Name</option>
+                                        <t t-foreach="values" t-as="vals">
+                                            <option t-att-name="x_membre_interne" t-att-value="vals.id">
+                                                <t t-esc="vals.bank_name" widget="many2many_tags"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="bank_name_form_group" style="display:none">
+                                                                    <label class="col-sm-2 col-form-label">Other Bank Name</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input class="form-control" id="other_bank_name"
+                                           placeholder="Other Bank Name" name="other_bank_name"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="branch_default" style="display:none">
+                                                                    <label class="col-sm-2 col-form-label">Branch Transit Number</label>
+                                                                        <div class="col-sm-10">
+                                                                            <select id="branch_transit_number_sl" name="branch_transit_number" placeholder="Branch Transit Number"
+                                                        t-attf-class="form-control"
+                                                        data-init="0" required="required"></select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row" id="branch_other">
+                                                                        <label class="col-sm-2 col-form-label">Branch Transit Number</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input class="form-control" id="branch_transit_number_in"
+                                               placeholder="Branch Transit Number" name="branch_transit_number"
+                                               required="required"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-2 col-form-label">Bank Account Number</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input class="form-control" id="bank_account_number"
+                                           placeholder="Bank Account Number" name="bank_account_number"
+                                           required="required"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-2 col-form-label">Confirm Bank Account Number</label>
+                                                                            <div class="col-sm-10">
+                                                                                <input class="form-control" placeholder="Confirm Bank Account Number"
+                                           id="confirm_bank_account_number" name="confirm_bank_account_number"
+                                           required="required"/>
+                                                                            </div>
+                                                                    </div>
+                                                                <div class="form-group row">
+                                                                            <div class="col-sm-12">
+                                                                                <button class="btn btn-primary" type="submit">Add Account</button>
+                                                                            </div>
+                                                                </div>
+                                                                        </form>
+                                                                        </div>
+                                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </t>
+        </template>
+
+        <!--        <template id="payout_form_submit" name="Payout Form Successfully Submitted.">-->
+        <!--            <t t-call="website.layout">-->
+        <!--                <div id="wrap">-->
+        <!--                    <div class="container">-->
+        <!--                        <div class="col-md-12">-->
+        <!--                            <div class="alert alert-success">-->
+        <!--                                Payout successfully.-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </t>-->
+        <!--        </template>-->
+
+        <template id="portal_my_home_billing" name="Show Bills" inherit_id="portal.portal_my_home" customize_show="True"
+                  priority="50">
+            <xpath expr="." position="inside">
+                    <link rel='stylesheet' href='/billing_setting/static/src/css/style.css'/>
+            </xpath>
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Billing Accounts</t>
+                    <t t-set="url" t-value="'/billing/account'"/>
+                    <t t-set="placeholder_count" t-value="'billing_details_count'"/>
+                    <t t-set="doc_icon" t-value="'fa fa-credit-card fa-4x'"/>
+                </t>
+            </xpath>
+        </template>
+
+
+
+        <template id="billing_account_list" name="Billing">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <br></br>
+                    <div class="container">
+                        <div class="col-md-12">
+                            <t t-if="error" t-foreach="error.get('error_message', [])" t-as="err">
+                                <h5 class="text-danger" t-esc="err"/>
+                            </t>
+                            <t t-if="message" t-foreach="message.get('success_message', [])" t-as="msg">
+                                <h5 class="text-success" t-esc="msg"/>
+                            </t>
+                            <h1>Billing Account</h1>
+                            <div t-if="billing_heading.user_id.partner_id.is_affiliate and user_id.partner_id.bought_membership">
+                                <b>
+                                    <header>You have purchased the for a monthly fee of<t
+                                            t-esc="billing_heading.user_id.affiliate_program_id.display_name"/>.
+                                        You will be billed on the
+                                        <t t-esc="datetime.datetime.strptime(str(billing_heading.user_id.sale_order_ids.create_date), '%Y-%m-%d %H:%M:%S.%f').strftime('%B %d,%Y')"/>
+                                        of each month, your next billing date is
+                                        <t t-esc="datetime.datetime.strptime(str(billing_heading.user_id.sale_order_ids.create_date + relativedelta(months=+1)), '%Y-%m-%d %H:%M:%S.%f').strftime('%B %d,%Y')"/>
+                                    </header>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                    <div class="container">-->
+                    <!--                        <div class="col-md-12">-->
+                    <!--                            <br></br>-->
+                    <!--                            <br></br>-->
+                    <!--                            <h2>Bank Details</h2>-->
+                    <!--                            <t t-call="portal.portal_table">-->
+                    <!--                                <thead>-->
+                    <!--                                    <tr class="active">-->
+                    <!--                                        <th>Default</th>-->
+                    <!--                                        <th>Bank Name #</th>-->
+                    <!--                                        <th>Account Number</th>-->
+                    <!--                                        <th/>-->
+                    <!--                                        &lt;!&ndash;                                            <th><button name="" class="btn btn-primary">Remove</button></th>&ndash;&gt;-->
+                    <!--                                        <th/>-->
+                    <!--                                    </tr>-->
+                    <!--                                </thead>-->
+                    <!--                                <tbody>-->
+                    <!--                                    <t t-foreach="billing_details_eft" t-as="bill_dl">-->
+                    <!--                                        <tr>-->
+                    <!--                                            <td>-->
+                    <!--                                                <div t-if="not bill_dl.default_billing_id">-->
+                    <!--                                                    <form class="" action="/set_default/billing/bank" id="set_default" role="form"-->
+                    <!--                                                          method="post">-->
+                    <!--                                                        <input type="hidden" name="billing_setting_id"-->
+                    <!--                                                               t-att-value="bill_dl.id"/>-->
+                    <!--                                                        <input type="hidden" name="csrf_token"-->
+                    <!--                                                               t-att-value="request.csrf_token()"/>-->
+                    <!--                                                        <button name="" class="btn btn-primary o_form_button_delete">Set-->
+                    <!--                                                            Default-->
+                    <!--                                                        </button>-->
+                    <!--                                                    </form>-->
+                    <!--                                                </div>-->
+                    <!--                                                <div t-if=" bill_dl.default_billing_id">-->
+                    <!--                                                    Default-->
+                    <!--                                                </div>-->
+                    <!--                                            </td>-->
+                    <!--                                            <td>-->
+                    <!--                                                <t t-esc="bill_dl.bank_id.bank_name"/>-->
+                    <!--                                            </td>-->
+                    <!--                                            <td>-->
+                    <!--&lt;!&ndash;                                                <t t-esc="bill_dl.mask_bank_account_number"/>&ndash;&gt;-->
+                    <!--                                            </td>-->
+                    <!--                                            <td>-->
+                    <!--                                                <div t-if="not bill_dl.default_billing_id">-->
+                    <!--                                                    <form class="" action="/remove/billing/bank" id="billing"-->
+                    <!--                                                          role="form" method="post">-->
+                    <!--                                                        <input type="hidden" name="billing_setting_id"-->
+                    <!--                                                               t-att-value="bill_dl.id"/>-->
+                    <!--                                                        <input type="hidden" name="csrf_token"-->
+                    <!--                                                               t-att-value="request.csrf_token()"/>-->
+                    <!--                                                        <button name="" class="btn btn-primary o_form_button_delete">-->
+                    <!--                                                            Remove-->
+                    <!--                                                        </button>-->
+                    <!--                                                    </form>-->
+                    <!--                                                </div>-->
+                    <!--                                            </td>-->
+                    <!--                                        </tr>-->
+                    <!--                                    </t>-->
+                    <!--                                </tbody>-->
+                    <!--                            </t>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <br></br>
+                    <br></br>
+                    <div class="container">
+                        <div class="col-md-12">
+                            <h2>Card Details</h2>
+                            <t t-call="portal.portal_table">
+                                <thead>
+                                    <tr class="active">
+                                        <th>Default</th>
+                                        <th>Card Name #</th>
+                                        <th>Card Number</th>
+                                        <th/>
+                                        <!--                                            <th><button name="" class="btn btn-primary">Remove</button></th>-->
+                                        <th/>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="billing_details_cc" t-as="bill_dl">
+                                        <tr>
+                                            <td>
+                                                <div t-if="not bill_dl.default_billing_id">
+                                                    <form class="" action="/set_default/billing/card" id="set_default"
+                                                          role="form"
+                                                          method="post">
+                                                        <input type="hidden" name="billing_setting_id"
+                                                               t-att-value="bill_dl.id"/>
+                                                        <input type="hidden" name="csrf_token"
+                                                               t-att-value="request.csrf_token()"/>
+                                                        <button name="" class="btn btn-primary o_form_button_delete">Set
+                                                            Default
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div t-if=" bill_dl.default_billing_id">
+                                                    Default
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <t t-esc="bill_dl.stripe_card_brand"/>
+                                            </td>
+                                            <td>
+                                                <span>####</span>
+                                                <t t-esc="bill_dl.stripe_card_last4"/>
+                                            </td>
+                                            <td>
+                                                <div t-if="not bill_dl.default_billing_id">
+                                                    <form class="" action="/remove/billing/card" id="billing"
+                                                          role="form" method="post">
+                                                        <input type="hidden" name="billing_setting_id"
+                                                               t-att-value="bill_dl.id"/>
+                                                        <input type="hidden" name="csrf_token"
+                                                               t-att-value="request.csrf_token()"/>
+                                                        <button name="" class="btn btn-primary o_form_button_delete">
+                                                            Remove
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+                <br></br>
+            </t>
+        </template>
+
+        <template id="portal_my_home_payout" name="Show Bills" inherit_id="portal.portal_my_home" customize_show="True"
+                  priority="50">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Payout Accounts</t>
+                    <t t-set="url" t-value="'/payout/account'"/>
+                    <t t-set="placeholder_count" t-value="'payout_details_count'"/>
+                    <t t-set="doc_icon" t-value="'fa fa-credit-card fa-4x'"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="payout_account_list" name="Payout">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container">
+                        <t t-if="error" t-foreach="error.get('error_message', [])" t-as="err">
+                            <h5 class="text-danger" t-esc="err"/>
+                        </t>
+                        <t t-if="message" t-foreach="message.get('success_message', [])" t-as="msg">
+                            <h5 class="text-success" t-esc="msg"/>
+                        </t>
+                        <h1>Payout Accounts</h1>
+                        <div class="col-md-12">
+                            <br></br>
+                            <t t-call="portal.portal_table">
+                                <thead>
+                                    <tr class="active">
+                                        <th>Default</th>
+                                        <th>Bank Name #</th>
+                                        <th>Account Number</th>
+                                        <th/>
+                                        <!--                                            <th><button name="" class="btn btn-primary">Add Account</button></th>-->
+                                        <th/>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="payout_details" t-as="payout">
+                                        <tr>
+                                            <td>
+                                                <div t-if="not payout.default_payout_id">
+                                                    <form class="" action="/set_default/payout/bank" id="set_default"
+                                                          role="form" method="post">
+                                                        <input type="hidden" name="payout_setting_id"
+                                                               t-att-value="payout.id"/>
+                                                        <input type="hidden" name="csrf_token"
+                                                               t-att-value="request.csrf_token()"/>
+                                                        <button name="" class="btn btn-primary o_form_button_delete">Set
+                                                            Default
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div t-if=" payout.default_payout_id">
+                                                    Default
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <t t-esc="payout.bank_id.bank_name"/>
+                                                <div t-if="payout.other_bank_name">- (
+                                                    <t t-esc="payout.other_bank_name"/>
+                                                    )
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <t t-esc="payout.mask_bank_account_number"/>
+                                            </td>
+                                            <td>
+                                                <div t-if="not payout.default_payout_id">
+                                                    <form class="" action="/remove/payout/bank" id="payout"
+                                                          role="form" method="post">
+                                                        <input type="hidden" name="payout_setting_id"
+                                                               t-att-value="payout.id"/>
+                                                        <input type="hidden" name="csrf_token"
+                                                               t-att-value="request.csrf_token()"/>
+                                                        <button name="" class="btn btn-primary o_form_button_delete">
+                                                            Remove
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+            </t>
+            `
+        </template>
+
+        <record id="view_manual_subscription_inherit_detail_form" model="ir.ui.view">
+            <field name="name">res.partner.property.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="priority">6</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <page name="internal_notes" position="after">
+                    <page name="manual_subscription" string="Manual Subscription"
+                          attrs="{'invisible': [('stripe_customer_id', '=', False),('bought_membership', '=', False)]}">
+                        <group string="Manual Subscription" name="subscription" readonly="1">
+                            <group>
+                                <field name="manual_start_date"
+                                       attrs="{'readonly': [('stripe_subscription_id', '!=', False)]}"/>
+                                <field name="manual_affiliate_program" domain="[('stripe_plan_id','!=',False)]"
+                                       attrs="{'readonly': [('stripe_subscription_id', '!=', False)]}"/>
+                                <button name="create_manual_sub" string="Create Subscription" type="object"
+                                        attrs="{'invisible': [('stripe_subscription_id', '!=', False)]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+        <template id="upgrade_plan_success" name="Payout Form Successfully Submitted.">
+            <t t-call="website.layout">
+                <div class="oe_structure">
+                    <div class="container mt16">
+                        <a style="color: #012b6d;
+                                border: 2px solid;
+                                padding: 7px;float: right;" href="/my" id="">Back
+                        </a>
+                    </div>
+                </div>
+                <div id="wrap">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="alert alert-success">
+                                Upgrade Plan successfully.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <record id="view_move_form_inherit_payment_gateway_reference" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='edi_state']" position="after">
+                <field name="payment_gateway_reference" />
+            </xpath>
+        </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,65 @@
+<odoo>
+    <data>
+        <template id="domain_check" name="Domain Check">
+            <t t-call="website.layout">
+                <div class="oe_structure">
+                    <div class="container mt16">
+                        <a style="color: #012b6d;
+                                border: 2px solid;
+                                padding: 7px;float: right;" href="/my" id="">Back
+                        </a>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div class="container mt16">
+                    <t t-if="domain">
+                        <h4>
+                            <center>
+                                <b>
+                                    <t t-esc="domain_name"/>
+                                </b>
+                                Domain is already used In Rayl.App. Please use another domain to Launch your Instance.
+                            </center>
+                        </h4>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </t>
+                    <t t-if = "dot_in_domain">
+                        <h4>
+                            <center>
+                                Do not use <b>.</b> in domain name. Please try to use single word.
+                            </center>
+                        </h4>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </t>
+                    <t t-if = "check_domain">
+                        <h4>
+                            <center>
+                                Please Enter a Domain name first.
+                            </center>
+                        </h4>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </t>
+                    <t t-if = "saas_automation">
+                        <h4>
+                            <center>
+                                Your RAYL Apptive will launch in moments, please check your email for Account Setup. <br/>
+                                If encounter any issue, please contact to our support.
+                            </center>
+                        </h4>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

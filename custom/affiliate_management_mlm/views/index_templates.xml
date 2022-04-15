@@ -1,0 +1,14 @@
+<odoo>
+  <data>
+    <template id="affiliate_management_mlm_membership" inherit_id="affiliate_management.affiliate">
+      <xpath expr="//p[2]" position="after">
+          <t t-if="affiliate_website and not website.check_membership()">
+            <t t-call="affiliate_management_mlm.membership_click"/>
+          </t>
+          <t t-elif="affiliate_website and website.get_affiliate_request().bought_membership and not website.get_affiliate_request().parent_aff_key">
+            <t t-call="affiliate_management_mlm.apply_ref_code"/>
+          </t>
+      </xpath>
+    </template>
+  </data>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="share_buttons_list_view_tree" model="ir.ui.view">
+        <field name="name">share.social.list.view.tree</field>
+        <field name="model">share.social.list</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" create="false" edit="true" import="false" string="Buttons Social Media">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="domain_media"/>
+                <field name="image_svg" widget="html"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="share_buttons_list_action" model="ir.actions.act_window">
+        <field name="name">Share Buttons list</field>
+        <field name="res_model">share.social.list</field>
+        <field name="view_mode">tree</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

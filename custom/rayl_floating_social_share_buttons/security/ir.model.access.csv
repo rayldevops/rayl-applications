@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_share_social_list,share.social_user.list,rayl_floating_social_share_buttons.model_share_social_list,base.group_user,1,1,1,1
+access_share_social_list_portal,share.social.list_portal,rayl_floating_social_share_buttons.model_share_social_list,base.group_portal,1,1,1,1
+access_share_social_list_public,share.social.list_public,rayl_floating_social_share_buttons.model_share_social_list,base.group_public,1,1,1,0
+access_share_social_list_website_public,share.social.list_website,rayl_floating_social_share_buttons.model_share_social_list,,1,0,0,0

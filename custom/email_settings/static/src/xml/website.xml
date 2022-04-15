@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template>
+<!--    <t t-name="AcceptTerms" >-->
+     <template id="website_terms_condition_form_inherit" inherit_id="website_sale.cart">
+        <xpath expr="//div[@id='oe_structure_website_sale_cart_1']" position="inside">
+            <div class ="terms_conditions">
+
+<!--                  <div class="mt16">-->
+<!--                        <field name="is_terms" attrs="{'invisible': [('is_terms_and_conditions','==','False')]}"/>-->
+<!--                  </div>-->
+                    <input type="checkbox" id="terms_and_conditions_id" name = "terms_and_conditions" class="opt_in_checkbox"/>
+<!--                      <input att-type="'checkbox' if is_terms_and_conditions == 'False' else 'True'" type="hidden">-->
+                            <a href='#' class="terms_link terms_condition" data-toggle="modal" data-target="#myModal1">
+                                I agree to all Terms and Conditions
+                            </a>
+<!--                      </input>-->
+<!--                    I agree to the terms &amp; conditions. See Terms and Conditions-->
+            </div>
+        </xpath>
+    </template>
+<!--    </t>-->
+
+</template>

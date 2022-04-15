@@ -1,0 +1,131 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="mlm_transaction_view_form">
+			<field name="name">mlm.transaction.form</field>
+			<field name="model">mlm.transaction</field>
+			<field name="arch" type="xml">
+				<form create="false" edit="false">
+					<header >
+						<button name="transaction_approve"  string="Approve" type="object"
+							attrs="{'invisible':['|','|',('state','=','cancel'),('state','=','approve'),('state','=','invoice'),'|',('state','=','paid')]}"
+							groups="base.group_system, affiliate_management.affiliate_security_manager_group"/>
+						<button name="transaction_cancel" type="object" string="Cancel"
+							attrs="{'invisible':['|',('state','=','invoice'),('state','=','paid'),'|',('state','=','cancel')]}"
+							groups="base.group_system,affiliate_management.affiliate_security_manager_group"/>
+
+						<field name="state" widget="statusbar" statusbar_visible="pending,approve,cancel,invoice,paid"/>
+					</header>
+
+			      <sheet>
+							<div class="oe_button_box" name="button_box"/>
+							<widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+							<field name="active" invisible="1"/>
+							<!-- <h1>Transaction</h1>
+
+							<label for="name"/>
+							<field name="name" readonly="1"/> -->
+              <div class="oe_title">
+                 <h1>
+                     <field name="name" default_focus="1" placeholder="Record name"/>
+                 </h1>
+               </div>
+
+
+							<group>
+								<group col="2">
+									<field name="partner_id"/>
+									<field name="bonus_type"/>
+									<field name="summary"/>
+									<field name="tran_invoice_id" readonly="1"/>
+					      	</group>
+
+									<group col="2">
+                    <field name="create_date"/>
+										<field name="credit"/>
+										<field name="debit"/>
+						      </group>
+
+								</group>
+
+			     	 </sheet>
+					 </form>
+			</field>
+   	</record>
+
+		<record model="ir.ui.view" id="mlm_transaction_view_tree">
+			<field name="name">mlm.transaction.tree</field>
+			<field name="model">mlm.transaction</field>
+			<field name="arch" type="xml">
+				<tree create="false">
+          <field name="name"/>
+					<field name="partner_id"/>
+					<field name="create_date"/>
+					<field name="credit"/>
+					<field name="debit"/>
+					<field name="summary"/>
+					<field name="state"/>
+				</tree>
+			</field>
+	  </record>
+
+    <record id="view_mlm_transaction_filter" model="ir.ui.view">
+        <field name="name">view.mlm.transaction.filter</field>
+        <field name="model">mlm.transaction</field>
+        <field name="arch" type="xml">
+            <search string="Search RAP Transaction">
+							<field name="partner_id"/>
+							<field name="create_date"/>
+							<filter name="fcb" string="First Child Bonus" domain="[('bonus_type','=','fcb')]"/>
+              <filter name="lcb" string="Level Bonus" domain="[('bonus_type', '=', 'lcb')]"/>
+							<filter name="level_commission" string="Level Commissions" domain="[('bonus_type', '=', 'level_commission')]"/>
+              <separator/>
+              <filter name="credit" string="Credit Transactions" domain="[('credit', '>', 0.0)]"/>
+							<filter name="debit" string="Debit Transactions" domain="[('debit', '>', 0.0)]"/>
+              <separator/>
+              <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+							<group expand="0" string="Group By">
+								<filter string="Bonus" name="groupby_bonus_type" domain="[]" context="{'group_by': 'bonus_type'}"/>
+							</group>
+            </search>
+        </field>
+    </record>
+
+		<record model="ir.actions.act_window" id="bonus_transaction_action">
+			<field name="name">RAP Transactions</field>
+			<field name="res_model">mlm.transaction</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_groupby_bonus_type': 1}</field>
+		</record>
+
+    <!-- show transaction action  on click of MLM Transactions button-->
+    <record id="mlm_transaction_form" model="ir.actions.act_window">
+        <field name="name">RAP Transactions</field>
+        <field name="res_model">mlm.transaction</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('partner_id','=', active_id)]</field>
+        <field name="context">{'search_default_groupby_bonus_type': 1}</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="mlm_bonus_transaction_submenu_root"
+      parent="affiliate_management.affiliate_manager_menu_base_root"
+        name="RAP Transactions"
+				groups="affiliate_management.affiliate_security_user_group"
+					sequence = "2"
+            />
+
+		<menuitem id="mlm_bonus_transaction_sub_menu"
+      parent="mlm_bonus_transaction_submenu_root"
+        name="Transaction"
+        action='bonus_transaction_action'
+				groups="affiliate_management.affiliate_security_user_group"
+      	  sequence = "1"
+            />
+
+  </data>
+</odoo>

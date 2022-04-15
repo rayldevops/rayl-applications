@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+admin_affiliate_request,admin_access_affiliate_request,affiliate_management_mlm.model_affiliate_request,,1,1,1,1
+admin_affiliate_program,admin_access_affiliate_program,affiliate_management_mlm.model_affiliate_program,,1,1,1,1
+admin_custom_dialog_box,admin_access_custom_dialog_box,affiliate_management_mlm.model_custom_dialog_box,,1,1,1,1
+admin_mlm_transaction,admin_mlm_transaction,affiliate_management_mlm.model_mlm_transaction,,1,1,1,1
+admin_mlm_level_commission,admin_mlm_level_commission,affiliate_management_mlm.model_level_commission,,1,1,1,1
+access_select_parent_aff,access_select_parent_aff,model_select_parent_aff,base.group_user,1,1,1,1 
+

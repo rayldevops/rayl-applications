@@ -1,0 +1,63 @@
+<odoo>
+  <data>
+    <template id="website_mlm_membership_about" inherit_id="affiliate_management.about">
+
+<!--      <xpath expr="//ul[hasclass('navbar-nav')]/li[last()]" position="after">-->
+<!--        <t  t-if="website.check_membership()">-->
+<!--          <li class="nav-item">-->
+<!--              <a class="nav-link" href="/affiliate/mlm_tree" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">-->
+<!--                    Tree-->
+<!--              </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--              <a class="nav-link" href="/affiliate/mlm_bonus" style="color:#00A09D;" onMouseOver="this.style.color='#1d5352'" onMouseOut="this.style.color='#00A09D'">-->
+<!--                    Bonus-->
+<!--              </a>-->
+<!--          </li>-->
+<!--        </t>-->
+<!--      </xpath>-->
+
+      <!-- <xpath expr="//a[@href='/affiliate/mlm_tree']/.." position="before">
+        <li>
+          <a  href="/affiliate/mlm_bonus">RAP Bonus</a>
+        </li>
+      </xpath> -->
+
+      <!-- <xpath expr="//div[@class='row'][2]" position="after">
+        <div class="row" >
+          <div class="col-md-offset-2 col-md-8">
+            <div style="padding:20px">
+              <center>
+                <h3>How RAP Work?</h3>
+              </center>
+              <t t-raw="mlm_work_title"/>
+            </div>
+              <div class=" col-md-8">
+                 <t t-raw="mlm_work_text"/>
+              </div>
+          </div>
+        </div>
+      </xpath> -->
+
+<!--      <xpath expr="//div[@class='row justify-content-center'][4]" position="after">-->
+<!--          <div class="row justify-content-md-center" style="text-align: left;">-->
+<!--            <div class="col-md-4" style="padding:35px">-->
+<!--                <h3>Multi Level Marketing Bonus</h3>-->
+<!--                With our MLM membership, one will be able to avail bonus for creating affiliate members under them. One can also keep track of his/her affiliates members and bonus availed. The bonuses will be provided for the first child that will be created and for the level completion.-->
+<!--              <t  t-if="website.check_membership()">-->
+<!--                <div style="text-align:left">-->
+<!--                  <a href="/affiliate/mlm_bonus/" class="btn btn-default" style="background-color:#00A09D;color:white;">View Your RAP Bonus</a>-->
+<!--                </div>-->
+<!--              </t>-->
+<!--              <t t-else="">-->
+<!--                <a href="/affiliate/membership/" target="_blank">Know More</a>-->
+<!--              </t>-->
+<!--            </div>-->
+
+<!--            <img src="/affiliate_management_mlm/static/src/img/Bonus.svg" class="col-lg-3" style="height: 180px;style=padding:35px"/>-->
+
+<!--        </div>-->
+<!--      </xpath>-->
+    </template>
+  </data>
+</odoo>

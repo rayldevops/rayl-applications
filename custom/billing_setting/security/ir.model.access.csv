@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_billing_setting,Access Billing Setting,billing_setting.model_billing_setting,,1,1,1,1
+access_payout_setting,Access Payout Setting,billing_setting.model_payout_setting,,1,1,1,1
+access_bank_details,Access Bank Details,billing_setting.model_bank_details,,1,1,1,1
+access_branch_transit,Access Branch Transit,billing_setting.model_branch_transit,,1,1,1,1

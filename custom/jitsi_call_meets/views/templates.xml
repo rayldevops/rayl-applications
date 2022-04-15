@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="manon_assets_backend" inherit_id="web.assets_backend">
+<!--        <xpath expr="//link[last()]" position="after">-->
+<!--            <link rel="stylesheet" type="text/scss" href="/jitsi_call_meets/static/src/scss/manon_theme.scss"/>-->
+<!--        </xpath>-->
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/jitsi_call_meets/static/src/js/theme.js"></script>
+        </xpath>
+    </template>
+</odoo>

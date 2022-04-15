@@ -1,0 +1,68 @@
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_scheduler_mlm_bonus_action" model="ir.cron">
+            <field name="name">Automated RAP bonus scheduler</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field name="model_id" ref="model_mlm_transaction"/>
+            <field name="state">code</field>
+            <field name="code">model.mlm_bonus_transactions()</field>
+        </record>
+
+        <record id="ir_cron_scheduler_transaction_invoice_action" model="ir.cron">
+            <field name="name">Automated transaction invoice scheduler</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field name="model_id" ref="model_affiliate_program"/>
+            <field name="state">code</field>
+            <field name="code">model.transaction_invoice_scheduler()</field>
+        </record>
+
+        <record id="product_template_mlm_membership" model="product.template">
+            <field name="name">RAP Membership</field>
+            <field name="type">service</field>
+            <field name="description">Demo RAP membership product.</field>
+            <field name="description_sale">Buy this Membership in order to become a RAP affiliate.</field>
+            <field name="sale_ok">False</field>
+            <field name="purchase_ok">True</field>
+            <field name="website_published">True</field>
+            <field name="list_price">1</field>
+            <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/Multi-Level-Marketing-Membership.png"/>
+        </record>
+        
+        <!-- Level commissions -->
+
+        <record id="bonus_level_1" model="level.commission">
+            <field name="level">1</field>
+        </record>
+
+        <record id="bonus_level_2" model="level.commission">
+            <field name="level">2</field>
+        </record>
+
+        <record id="bonus_level_3" model="level.commission">
+            <field name="level">3</field>
+        </record>
+
+        <record id="bonus_level_4" model="level.commission">
+            <field name="level">4</field>
+        </record>
+
+        <record id="bonus_level_5" model="level.commission">
+            <field name="level">5</field>
+        </record>
+
+        <function
+            model="affiliate.program"
+            name="set_default_mlm_configuration"/>
+
+   </data>
+</odoo>

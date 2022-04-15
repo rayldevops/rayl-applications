@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <function
+            model="affiliate.program"
+            name="set_admin_affiliate"/>
+
+    </data>
+</odoo>

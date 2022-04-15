@@ -1,0 +1,72 @@
+<odoo>
+  <data>
+
+    <template id="mlm_upgrade_membership" name="Membership">
+      <t t-call="website.layout">
+          <div id="wrap">
+            <div class="container">
+<!--              <div class="row" >-->
+
+<!--                        <div class="container-fluid">-->
+<!--                          <div style="padding:20px">-->
+<!--                            <center>-->
+<!--                              <h3>What is the RAYL Affiliate Program?</h3>-->
+<!--                            </center>-->
+<!--                            <t t-raw="mlm_work_title"/>-->
+<!--                          </div>-->
+<!--                            <div class=" col-md-8">-->
+<!--                               <t t-raw="mlm_work_text"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                </div>-->
+                <t t-if="error" t-foreach="error.get('error_message', [])" t-as="err">
+                    <h5 class="text-center text-danger" t-esc="err"/>
+                </t>
+                <t t-if="message" t-foreach="message.get('success_message', [])" t-as="msg">
+                    <h5 class="text-center text-success" t-esc="msg"/>
+                </t>
+              <h2 class="text-center text-muted">Upgrade Membership</h2>
+              <div class="row" style="margin-bottom:15px;">
+                <div class="col-md-4 offset-md-4 ">
+                  <div class="card" style="border-color:#00B3DD;">
+                    <div class="card-body text-center" style="background-color:#00B3DD !important;color:#fff">
+                      <div>
+                        <h3> <t t-esc="product_temp_id.name"/></h3>
+                      </div>
+                    </div>
+                    <div style='max-width: 150px; maxheight:150px;margin:auto;'>
+                      <span t-field="product_temp_id.image_1920" t-options='{"widget": "image"}'/>
+                    </div>
+                    <div class="card-body text-center" style="background-color:#00B3DD !important;color:#fff">
+                      <h3><t t-esc="product_temp_id.currency_id.symbol"/> <t t-esc="'%.2f'% product_temp_id.list_price"/> </h3>
+                    </div>
+                    <p class="text-center" style="margin-bottom:0rem;"> <t t-esc="product_temp_id.description_sale"/> </p>
+
+                    <!-- <ul class="list-group">
+                      <li class="list-group-item">
+                         <b>Time Duration:</b>
+                        <i></i>
+                        from the date of purchasing.
+                      </li>
+                    </ul>  -->
+                    <div class="card-footer text-center" style="background-color:#00B3DD;color:#fff">
+                      <a id="by_mlm_upgrade" class="btn btn-default btn-lg a-submit">
+                        <span class="fa fa-shopping-cart"/>
+                        Upgrade Now
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+            <div id="en_f" class="alert alert-danger text-center" style="margin-bottom: -0px; display:none;">
+              <strong>You,</strong> need to be an <em>Affiliate</em> in order to buy this membership.<a href="/affiliate/"> Go back to Affiliate</a>
+            </div>
+          </div>
+      </t>
+    </template>
+  </data>
+</odoo>
+<!-- #7ac5eb -->

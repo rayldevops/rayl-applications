@@ -1,0 +1,294 @@
+<odoo>
+	<data noupdate="1">
+
+<!-- res users -->
+<record model="res.users" id="mlm_demouser_res_partner_6" context="{'no_reset_password': True}">
+  <field name="name">Demo6</field>
+  <field name="login">Demo6@example.com</field>
+  <field name="password">webkul</field>
+  <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
+  <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
+  <field name="company_id" ref="base.main_company"/>
+  <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/res_partner_1-image.png"/>
+  <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+</record>
+
+<record model="res.users" id="mlm_demouser_res_partner_7" context="{'no_reset_password': True}">
+  <field name="name">Demo7</field>
+  <field name="login">Demo7@example.com</field>
+  <field name="password">webkul</field>
+  <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
+  <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
+  <field name="company_id" ref="base.main_company"/>
+  <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/res_partner_2-image.png"/>
+  <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+</record>
+
+<record model="res.users" id="mlm_demouser_res_partner_8" context="{'no_reset_password': True}">
+  <field name="name">Demo8</field>
+  <field name="login">Demo8@example.com</field>
+  <field name="password">webkul</field>
+  <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
+  <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
+  <field name="company_id" ref="base.main_company"/>
+  <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/res_partner_2-image.png"/>
+  <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+</record>
+
+<record model="res.users" id="mlm_demouser_res_partner_9" context="{'no_reset_password': True}">
+  <field name="name">Demo9</field>
+  <field name="login">Demo9@example.com</field>
+  <field name="password">webkul</field>
+  <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
+  <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
+  <field name="company_id" ref="base.main_company"/>
+  <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/res_partner_3-image.jpeg"/>
+  <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+</record>
+
+<!-- affiliate request -->
+<record id="affiliate_request_6" model="affiliate.request">
+      <field name="password">webkul</field>
+      <field name="name">Demo6@example.com</field>
+      <field name="state">aproove</field>
+      <field name="user_id" ref="mlm_demouser_res_partner_6"/>
+</record>
+
+<record id="affiliate_request_7" model="affiliate.request">
+      <field name="password">webkul</field>
+      <field name="name">Demo7@example.com</field>
+      <field name="state">aproove</field>
+      <field name="user_id" ref="mlm_demouser_res_partner_7"/>
+</record>
+
+<record id="affiliate_request_8" model="affiliate.request">
+      <field name="password">webkul</field>
+      <field name="name">Demo8@example.com</field>
+      <field name="state">aproove</field>
+      <field name="user_id" ref="mlm_demouser_res_partner_8"/>
+</record>
+
+<record id="affiliate_request_9" model="affiliate.request">
+      <field name="password">webkul</field>
+      <field name="name">Demo9@example.com</field>
+      <field name="state">aproove</field>
+      <field name="user_id" ref="mlm_demouser_res_partner_9"/>
+</record>
+
+<!-- res_partner -->
+<record id="res_partner_6" model="res.partner">
+      <field name="name">Demo6</field>
+      <field name="is_company">1</field>
+      <field name="city">DemoCity6</field>
+      <field name="zip">106234</field>
+      <field name="country_id" ref="base.tw"/>
+      <field name="street">6 Demo6 city  street</field>
+      <field name="email">Demo6@example.com</field>
+      <field name="phone">(+886) (02) 6666 6666</field>
+      <field name="website">http://www.DemoUser6.com</field>
+      <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/res_partner_1-image.png"/>
+      <field name="is_affiliate">True</field>
+      <field name="res_affiliate_key">SH48QFO2</field>
+      <field name="affiliate_program_id" ref="affiliate_management.affiliate_program_1"/>
+
+      <field name="bought_membership">True</field>
+      <field name="membership_state">approve</field>
+      <field name="bonus_level">1</field>
+      <field name="is_dispute">True</field>
+      <field name="dispute_remark">Parent affiliate is missing.</field>
+</record>
+
+<record id="res_partner_7" model="res.partner">
+      <field name="name">Demo7</field>
+      <field name="is_company">1</field>
+      <field name="city">DemoCity7</field>
+      <field name="zip">106290</field>
+      <field name="country_id" ref="base.tw"/>
+      <field name="street">7 Demo7 city  street</field>
+      <field name="email">Demo6@example.com</field>
+      <field name="phone">(+886) (02) 7777 7777</field>
+      <field name="website">http://www.DemoUser7.com</field>
+      <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/res_partner_2-image.png"/>
+      <field name="is_affiliate">True</field>
+      <field name="res_affiliate_key">HJTY2E43</field>
+      <field name="affiliate_program_id" ref="affiliate_management.affiliate_program_1"/>
+
+      <field name="bought_membership">True</field>
+      <field name="membership_state">approve</field>
+</record>
+
+<record id="res_partner_8" model="res.partner">
+      <field name="name">Demo8</field>
+      <field name="is_company">1</field>
+      <field name="city">DemoCity8</field>
+      <field name="zip">172290</field>
+      <field name="country_id" ref="base.tw"/>
+      <field name="street">8 Demo8 city  street</field>
+      <field name="email">Demo6@example.com</field>
+      <field name="phone">(+886) (02) 8888 8888</field>
+      <field name="website">http://www.DemoUser8.com</field>
+      <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/res_partner_2-image.png"/>
+      <field name="is_affiliate">True</field>
+      <field name="res_affiliate_key">WASDRT4T</field>
+      <field name="affiliate_program_id" ref="affiliate_management.affiliate_program_1"/>
+
+      <field name="bought_membership">True</field>
+      <field name="membership_state">approve</field>
+</record>
+
+<record id="res_partner_9" model="res.partner">
+      <field name="name">Demo9</field>
+      <field name="is_company">1</field>
+      <field name="city">DemoCity9</field>
+      <field name="zip">189560</field>
+      <field name="country_id" ref="base.tw"/>
+      <field name="street">9 Demo9 city  street</field>
+      <field name="email">Demo9@example.com</field>
+      <field name="phone">(+886) (02) 9999 9999</field>
+      <field name="website">http://www.DemoUser9.com</field>
+      <field name="image_1920" type="base64" file="affiliate_management_mlm/static/src/img/res_partner_3-image.jpeg"/>
+      <field name="is_affiliate">True</field>
+      <field name="res_affiliate_key">RTW34QER</field>
+      <field name="affiliate_program_id" ref="affiliate_management.affiliate_program_1"/>
+
+      <field name="bought_membership">True</field>
+      <field name="membership_state">approve</field>
+</record>
+
+<!-- membership sale orders -->
+<record id="sale_order_6" model="sale.order">
+  <field name="partner_id" ref="affiliate_management_mlm.res_partner_6"/>
+  <field name="state">sale</field>
+  <field name="team_id" ref="sales_team.salesteam_website_sales"/>
+</record>
+
+<record id="sale_order_7" model="sale.order">
+  <field name="partner_id" ref="affiliate_management_mlm.res_partner_7"/>
+  <field name="state">sale</field>
+  <field name="team_id" ref="sales_team.salesteam_website_sales"/>
+</record>
+
+<record id="sale_order_8" model="sale.order">
+  <field name="partner_id" ref="affiliate_management_mlm.res_partner_8"/>
+  <field name="state">sale</field>
+  <field name="team_id" ref="sales_team.salesteam_website_sales"/>
+</record>
+
+<record id="sale_order_9" model="sale.order">
+  <field name="partner_id" ref="affiliate_management_mlm.res_partner_9"/>
+  <field name="state">sale</field>
+  <field name="team_id" ref="sales_team.salesteam_website_sales"/>
+</record>
+
+<!-- assign product id for sale order line -->
+<function
+      model="sale.order.line"
+      name="set_default_sale_order_line"/>
+
+<!-- assign partner_id to res users -->
+<record model="res.users" id="mlm_demouser_res_partner_6">
+  <field name="partner_id" ref="res_partner_6"/>
+</record>
+
+<record model="res.users" id="mlm_demouser_res_partner_7">
+  <field name="partner_id" ref="res_partner_7"/>
+</record>
+
+<record model="res.users" id="mlm_demouser_res_partner_8">
+  <field name="partner_id" ref="res_partner_8"/>
+</record>
+
+<record model="res.users" id="mlm_demouser_res_partner_9">
+  <field name="partner_id" ref="res_partner_9"/>
+</record>
+
+<!-- assign partner_id to affiliate requests -->
+<record id="affiliate_request_6" model="affiliate.request">
+      <field name="partner_id" ref="res_partner_6"/>
+</record>
+
+<record id="affiliate_request_7" model="affiliate.request">
+      <field name="partner_id" ref="res_partner_7"/>
+</record>
+
+<record id="affiliate_request_8" model="affiliate.request">
+      <field name="partner_id" ref="res_partner_8"/>
+</record>
+
+<record id="affiliate_request_9" model="affiliate.request">
+      <field name="partner_id" ref="res_partner_9"/>
+</record>
+
+
+<!-- assign childs and parents -->
+<record id="res_partner_7" model="res.partner">
+      <field name="parent_aff" ref="affiliate_management_mlm.res_partner_6"/>
+</record>
+
+<record id="res_partner_8" model="res.partner">
+      <field name="parent_aff" ref="affiliate_management_mlm.res_partner_6"/>
+</record>
+
+<record id="res_partner_9" model="res.partner">
+      <field name="parent_aff" ref="affiliate_management_mlm.res_partner_7"/>
+</record>
+
+<record id="res_partner_6" model="res.partner">
+      <field name="left_child_aff" ref="affiliate_management_mlm.res_partner_7"/>
+</record>
+
+<record id="res_partner_6" model="res.partner">
+      <field name="right_child_aff" ref="affiliate_management_mlm.res_partner_8"/>
+</record>
+
+<record id="res_partner_7" model="res.partner">
+      <field name="left_child_aff" ref="affiliate_management_mlm.res_partner_9"/>
+</record>
+
+<!-- assign mlm order id -->
+<record id="res_partner_6" model="res.partner">
+      <field name="mlm_order_id" ref="affiliate_management_mlm.sale_order_6"/>
+</record>
+
+<record id="res_partner_7" model="res.partner">
+      <field name="mlm_order_id" ref="affiliate_management_mlm.sale_order_7"/>
+</record>
+
+<record id="res_partner_8" model="res.partner">
+      <field name="mlm_order_id" ref="affiliate_management_mlm.sale_order_8"/>
+</record>
+
+<record id="res_partner_9" model="res.partner">
+      <field name="mlm_order_id" ref="affiliate_management_mlm.sale_order_9"/>
+</record>
+
+<!-- Bonus Transactions -->
+<record id="mlm_transaction_1" model="mlm.transaction">
+      <field name="name">Demo6</field>
+      <field name="partner_id" ref="affiliate_management_mlm.res_partner_6"/>
+      <field name="credit">100.00</field>
+      <field name="summary">First Child Bonus</field>
+      <field name="state">approve</field>
+      <field name="bonus_type">fcb</field>
+</record>
+
+<record id="mlm_transaction_2" model="mlm.transaction">
+      <field name="name">Demo6</field>
+      <field name="partner_id" ref="affiliate_management_mlm.res_partner_6"/>
+      <field name="credit">200.00</field>
+      <field name="summary">Level 1 Bonus</field>
+      <field name="state">pending</field>
+      <field name="bonus_type">lcb</field>
+</record>
+
+<record id="mlm_transaction_3" model="mlm.transaction">
+      <field name="name">Demo7</field>
+      <field name="partner_id" ref="affiliate_management_mlm.res_partner_7"/>
+      <field name="credit">100.00</field>
+      <field name="summary">First Child Bonus</field>
+      <field name="state">approve</field>
+      <field name="bonus_type">fcb</field>
+</record>
+
+	</data>
+</odoo>

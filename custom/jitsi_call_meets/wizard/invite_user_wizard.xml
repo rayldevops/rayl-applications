@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<odoo>
+	<data>
+
+		<!-- Partial Payment Wizard Form View  -->
+		<record model="ir.ui.view" id="wizard_invite_user_form_view">
+			<field name="name">invite_user</field>
+			<field name="model">invite.user</field>
+			<field name="arch" type="xml">
+				<form string="Add Participant">
+					<group>
+                    	<field name="participant_ids"/>
+					</group>
+<!--					<footer>-->
+<!--						<button name="submit" string="Yes" type="object" class="oe_highlight"/>-->
+<!--						or-->
+<!--						<button string="Cancel" class="oe_link" special="cancel"/>-->
+<!--					</footer>-->
+				</form>
+			</field>
+		</record>
+
+<!--		Action for partial payment Wizard-->
+		<record id="open_wizard_action_invite_user" model="ir.actions.act_window">
+			<field name="name">wizard</field>
+			<field name="res_model">invite.user</field>
+<!--			<field name="view_type">form</field>-->
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+<!--		<act_window id="action_invite_user_wizard" name="Create Participant"-->
+<!--			res_model="invite.user"-->
+<!--			src_model="invite.user"-->
+<!--			view_mode="form"-->
+<!--			target="new"-->
+<!--			key2="client_action_multi"/>-->
+
+
+	</data>
+</odoo>

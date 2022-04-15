@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+              <record id="affiliate_program_view_inherit_form" model="ir.ui.view">
+                  <field name="name">affiliate.program.view.inherit.form</field>
+                  <field name="model">affiliate.program</field>
+                  <field name="inherit_id" ref="affiliate_management.affiliate_program_view_form" />
+                  <field name="arch" type="xml">
+
+                    <xpath expr="sheet/notebook/page[2]" position="after">
+                            <page name="mlm_config" string="RAP Configuration">
+                                <group>
+
+                                <field name="insertion_type" invisible="1"/>
+                                <field name="mlm_membership_product" required="1"/>
+                                <field name="upgrade_membership_product"/>
+                                <field name="bundle_membership_product"/>
+                                <field name="root" attrs="{'invisible': [('insertion_type', '=', 'poi')]}" required="1"/>
+                                <field name="bonus_schedule" readonly="1"/>
+
+                                </group>
+                                <div style="margin-top: 1em;">
+
+                                 <button
+                                  name="transaction_invoice_scheduler"
+                                  type="object"
+                                  string="Transaction Invoice"
+                                  style="position: relative;float: left; margin-right:3em;"
+                                   />
+
+                                   <p class='text-muted'>
+                                       On the click of the Transaction Invoice all the transactions which are in approved state for a particular user will be invoiced.
+                                   </p>
+
+                               </div>
+                               <group>
+                                 <field name="about_ref_code"/>
+                               </group>
+                            </page>
+                    </xpath>
+
+                    <xpath expr="//page[@name='mlm_config']" position="after">
+                      <page name="mlm_ext_bonus" string="RAP Extra Bonus">
+                          <group>
+                              <group>
+                              <field name="level_commission_ids">
+                                  <!-- <form create="false" delete="false"> -->
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <!-- <field name="level" readonly="1"/> -->
+                                                <field name="level"/>
+                                                <field name="matrix_type"/>
+                                                <label for="amount"/>
+                                                  <div>
+                                                    <field name="amount" class="oe_inline"/>&#x2063;
+                                                    <span attrs="{'invisible': [('matrix_type','=','p')]}">
+                                                        <field name="currency_id" readonly="1" class="oe_inline" />
+                                                    </span>
+                                                    <span attrs="{'invisible': [('matrix_type','=','f')]}">
+                                                        <b>%</b>
+                                                    </span>
+                                                  </div>
+                                            </group>
+                                        </group>
+                                    </form>
+
+                                    <!-- <tree string="Level Commission" decoration-info="1" create="false" delete="false"> -->
+                                    <tree string="Level Commission" decoration-info="1">
+                                        <field name="level"/>
+                                        <field name="amount"/>
+                                        <field name="matrix_type"/>
+                                    </tree>
+                              </field>
+                              <!-- <field name="level_depth" readonly="1"/> -->
+                              </group>
+                          </group>
+                          <group>
+                              <div>
+                              <group col="2" string="First Child Bonus">
+                                  <field name="allow_fcb_bonus"/>
+                                  <field name="fcb_matrix_type" attrs="{'invisible':[('allow_fcb_bonus','=',False)]}"/>
+                                  <label for="fcb_bonus_amount" attrs="{'invisible':[('allow_fcb_bonus','=',False)]}"/>
+                                    <div attrs="{'invisible':[('allow_fcb_bonus','=',False)]}">
+              			      			<field name="fcb_bonus_amount" class="oe_inline"/>&#x2063;
+                                        <span attrs="{'invisible': [('fcb_matrix_type','=','p')]}">
+                                            <field name="currency_id" readonly="1" class="oe_inline" />
+                                        </span>
+                                        <span attrs="{'invisible': [('fcb_matrix_type','=','f')]}">
+						      				<b>%</b>
+						      			</span>
+                                    </div>
+
+    	      	              </group>
+                              <p class="text-muted" attrs="{'invisible':[('allow_fcb_bonus','=',False)]}" style="padding-right:2em; text-align:justify;">First child bonus is provided for the first child that becomes the affiliate under you.</p>
+                            </div>
+
+                            <div>
+                              <group col="2" string="Level Completion Bonus">
+                                  <!-- Kept for future use -->
+                                  <!-- <field name="level_bonus_ids" class="oe_inline" widget="many2many_tags"/> -->
+                                  <field name="allow_lcb_bonus"/>
+                                  <field name="lcb_matrix_type" attrs="{'invisible':[('allow_lcb_bonus','=',False)]}"/>
+                                  <label for="level_bonus_amount" attrs="{'invisible':[('allow_lcb_bonus','=',False)]}"/>
+                                    <div attrs="{'invisible':[('allow_lcb_bonus','=',False)]}">
+                                        <field name="level_bonus_amount" class="oe_inline"/>&#x2063;
+                                        <span attrs="{'invisible': [('lcb_matrix_type','=','p')]}">
+                                            <field name="currency_id" readonly="1" class="oe_inline" />
+                                        </span>
+                                        <span attrs="{'invisible': [('lcb_matrix_type','=','f')]}">
+						      				<b>%</b>
+						      			</span>
+                                    </div>
+    	      	              </group>
+                              <p class="text-muted" attrs="{'invisible':[('allow_lcb_bonus','=',False)]}" style="text-align:justify;">Level bonus is provided for every successfull completion of level.<br/>
+                                  <br/>
+                                  <strong>Example</strong>: You have successfully added two affiliates under you so
+                                  you will be provided with level completion bonus and as your both childs will
+                                  add two affiliates below them then another level bonus is provided to you and so on.
+                              </p>
+                          </div>
+                         </group>
+                      </page>
+                    </xpath>
+
+                    <xpath expr="//page[@name='mlm_config']" position="before">
+                            <page name="how_mlm_works" string="How RAP works?">
+                                <group>
+
+                                <field name="mlm_work_title"/>
+                                <field name="mlm_work_text"/>
+
+                                </group>
+                            </page>
+                    </xpath>
+
+                  </field>
+              </record>
+
+              <record id="affiliate_request_view_inherit_tree" model="ir.ui.view">
+                    <field name="name">affiliate.request.view.inherit.tree</field>
+                    <field name="model">affiliate.request</field>
+                    <field name="inherit_id" ref="affiliate_management.affiliate_request__view_tree" />
+                    <field name="arch" type="xml">
+                     <xpath expr="//field[@name='state']" position="after">
+
+                          <field name="bought_membership"/>
+
+                      </xpath>
+
+                    </field>
+                </record>
+
+                <record id="affiliate_request_view_inherit_form" model="ir.ui.view">
+                      <field name="name">affiliate.request.view.inherit.form</field>
+                      <field name="model">affiliate.request</field>
+                      <field name="inherit_id" ref="affiliate_management.affiliate_request_view_form" />
+                      <field name="arch" type="xml">
+
+                       <xpath expr="//field[@name='user_id']" position="after">
+
+                            <field name="bought_membership"/>
+                            <field name="upgrade_membership"/>
+                            <field name="parent_aff_key"/>
+
+                        </xpath>
+
+                        <xpath expr="//group" position="after">
+
+                            <group>
+                                <field name="is_dispute" attrs="{'invisible':[('is_dispute','=',False)]}"/>
+                            </group>
+
+                            <div attrs="{'invisible':[('is_dispute','=',False)]}">
+
+                                <span>
+                                    <field name='dispute_remark' style='color:red;'/>
+                                </span>
+
+                               <button
+                               name="%(affiliate_management_mlm.action_select_parent_aff)d"
+                               type="action"
+                               string="set parent"
+                               attrs="{'invisible':[('state','=','aproove')]}"
+                               style="position: relative;left: .2em;"
+                                 />
+                            </div>
+
+
+                         </xpath>
+
+                      </field>
+                  </record>
+
+                <record id="view_partner_inherit_form2" model="ir.ui.view">
+                   <field name="name">view.partner.inherit.form2</field>
+                   <field name="model">res.partner</field>
+                   <field name="inherit_id" ref="affiliate_management.view_partner_form2" />
+                   <field name="arch" type="xml">
+
+                       <xpath expr="//div[@name='button_box']" position="inside">
+                           <button class="oe_stat_button" type="action" name="%(mlm_transaction_form)d" icon="fa-book" string="RAP Transactions" />
+                       </xpath>
+
+                       <xpath expr="//page[@name='internal_note']" position="after">
+                         <page name="mlm_details" string="RAP Details">
+                             <field name="is_dispute" invisible="1"/>
+                             <field name="is_parent_set" invisible="1"/>
+
+                              <group col="6">
+
+                                  <!-- <group colspan="6"> -->
+
+                                      <group colspan="2">
+                                          <field name="parent_aff" readonly="1"/>
+                                      </group>
+                                      <group colspan="1">
+                                          <button
+                                          name="set_root"
+                                          type="object"
+                                          string="set root"
+                                          attrs="{'invisible':[('is_parent_set','=',True)]}"
+                                          style="position: relative;left: .2em;"
+                                          invisible="0"
+                                            />
+
+                                      </group>
+
+                                      <group colspan="3">
+                                          <span class="text-muted" attrs="{'invisible':[('is_parent_set','=',True)]}">
+                                            set root will automatically set parent for this partner in relation with the configured root in settings.
+                                          </span>
+                                        </group>
+
+
+                                  <!-- </group> -->
+
+                                  <group colspan="3">
+                                       <field name="left_child_aff" readonly='1'/>
+                                       <field name="right_child_aff" readonly='1'/>
+                                  </group>
+
+                                  <group colspan="3">
+                                      <!-- <field name="membership_state"/> -->
+                                      <field name="mlm_order_id"/>
+                                      <field name="bought_membership"/>
+                                      <field name="upgrade_membership"/>
+
+
+                                      <field name="aff_request_id" invisible="1"/>
+                                      <field name="is_dispute" invisible="1"/>
+                                  </group>
+
+                                  <field name="dispute_remark" placeholder='Dispute remark...' style='color:red;' attrs="{'invisible':[('is_dispute','=',False)]}"/>
+
+                                  <group colspan="6">
+                                    <group colspan="6">
+                                        <field name="bonus_level"/>
+                                    </group>
+
+                                    <div invisible="1">
+                                        <strong>RAP Transanctions</strong>
+                                        <field name="transaction_ids"/>
+
+                                        <group colspan="6" class="oe_subtotal_footer oe_right">
+                                            <field name="total_amount_left"/>
+                                        </group>
+                                    </div>
+
+                                    <group>
+                                        <label for="total_amount_left" string="Bonus Amount Left"/>
+                                        <div>
+                                            <field name="total_amount_left"/>
+                                        </div>
+                                    </group>
+
+
+                                  </group>
+                              </group>
+                         </page>
+                       </xpath>
+                   </field>
+               </record>
+
+               <record id="mlm_view_search" model="ir.ui.view">
+	  	      	<field name="name">RAP Affiliates Search</field>
+	  	      	 <field name="model">res.partner</field>
+	  	      	 <field name="inherit_id" ref="base.view_res_partner_filter"/>
+	  	      	 <field name="arch" type="xml">
+	  	      	        <filter name="is_affiliate" position="after">
+		  	      	 		<filter string="RAP Affiliate Customers" name="is_mlm_affiliate" domain="[('is_affiliate','=',True),('bought_membership','=',True)]"/>
+	  	      			</filter>
+
+	  	      	 </field>
+	  	      	</record>
+
+    </data>
+</odoo>

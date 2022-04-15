@@ -1,0 +1,140 @@
+<odoo>
+  <data>
+    <template id="mlm_payment_form" name="RAP Payment Show">
+        <t t-call="website.layout">
+          <t t-if="user_id.partner_id.is_affiliate">
+              <t t-if="invoice">
+                  <div class="oe_structure">
+                        <div class="container mt16">
+                          <div class="container">
+                            <div class="navbar navbar-default">
+                                    <div class="collapse navbar-collapse" id="oe-help-navbar-collapse">
+                                        <ul class="nav navbar-nav o_portal_submenu">
+                                          <li>
+                                            <a href="/affiliate/about">
+                                              About
+<!--                                              <i class="fa fa-home fa-2x"></i>-->
+                                            </a>
+                                          </li>
+
+                                            <!-- <li>
+                                                <a  href="/affiliate/report">Reports </a>
+                                                </li> -->
+
+                                              <li>
+                                                  <a  href="/affiliate/payment">Payment </a>
+                                                  </li>
+
+                                                  <li>
+                                                    <a t-attf-href="/my/invoice/{{invoice.id}}?{{keep_query()}}">Invoice <t t-esc="invoice.name"/></a>
+                                                  </li>
+                                         </ul>
+                                    </div>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                    </t>
+
+                    <div class="container mt16">
+                      <div class="panel-body">
+                                <div class="mb8">
+                                  <strong>Date :</strong> <span t-field="invoice.invoice_date" t-options='{"widget": "date"}'/>
+                                </div>
+
+                                <div class="mb8">
+                                  <strong>Invoice State :</strong> <span t-field="invoice.state"/>
+                                </div>
+
+                                <!-- <t t-if="invoice.aff_visit_id.sales_order_line_id">
+                                    <div class="mb8">
+                                      <strong>Source :</strong> <span t-field="invoice.aff_visit_id.sales_order_line_id.order_id.name"/>
+                                    </div>
+                                </t> -->
+                                <hr/>
+                                <h1>Invoice <span t-field="invoice.name"/></h1>
+
+
+
+                                    <table class="table table-hover o_my_status_table">
+                                        <thead>
+                                          <tr class="active">
+
+                                            <th>Click To Check Details</th>
+                                            <!-- <th>Transaction Name</th> -->
+                                            <th>Bonus Type</th>
+                                            <th>Transaction Date</th>
+                                            <th>Transaction Type</th>
+                                            <!-- <t t-if="invoice.aff_visit_id.sales_order_line_id"> -->
+                                            <!-- <th>Commission Matrix</th> -->
+                                            <!-- </t> -->
+                                            <th>Bonus Value</th>
+
+                                          </tr>
+                                        </thead>
+                                        <t t-foreach="invoice.mlm_transaction_id" t-as="i">
+                                            <tr>
+                                                <!-- <t t-if="i.sales_order_line_id"> -->
+                                                  <td>
+                                                    <a t-attf-href="/my/bonus/{{i.id}}?{{keep_query()}}">
+                                                      <t t-esc="i.name"/>
+                                                    </a>
+                                                  </td>
+                                                <!-- </t> -->
+                                                <!-- <td><span t-field="i.name"/></td> -->
+                                                <!-- <td><span t-field="i.name"/></td> -->
+                                                <t t-if="i.bonus_type == 'fcb'">
+                                                  <td>First Child Bonus</td>
+                                                </t>
+                                                <t t-elif="i.bonus_type == 'level_commission'">
+                                                  <td>Level Commission</td>
+                                                </t>
+                                                <t t-else="">
+                                                  <td>Level Completion Bonus</td>
+                                                </t>
+
+                                                <td><span t-field="i.create_date" /></td>
+
+                                                <t t-if="i.credit">
+                                                  <td>Credit</td>
+                                                </t>
+                                                <t t-else="">
+                                                  <td>Debit</td>
+                                                </t>
+
+                                                <t t-if="i.credit">
+                                                  <td><span t-field="i.credit" /></td>
+                                                </t>
+                                                <t t-else="">
+                                                  <td><span t-field="i.debit" /></td>
+                                                </t>
+
+
+
+                                            </tr>
+                                        </t>
+                                    </table>
+
+
+
+                                    <hr/>
+                                    <div class="row">
+
+                                            <span class="col-md-10 text-right">
+                                              <strong>Total :</strong>
+                                            </span>
+                                            <span class="col-md-2 text-right">
+                                                  <span t-field="invoice.amount_total"/>
+                                            </span>
+
+
+                                      </div>
+
+
+                      </div>
+              </div>
+            </t>
+        </t>
+      </template>
+  </data>
+</odoo>

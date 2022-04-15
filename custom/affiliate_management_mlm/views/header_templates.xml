@@ -1,0 +1,58 @@
+<odoo>
+  <data>
+    <template id="website_mlm_membership" inherit_id="affiliate_management.show_sign_in">
+      <xpath expr="//header" position="after">
+          <t t-if="not affiliate_website and not website.check_membership() ">
+            <div>
+              <t t-call="affiliate_management_mlm.membership_click"/>
+            </div>
+          </t>
+          <t t-elif="affiliate_about and not affiliate_website and website.get_affiliate_request().bought_membership and not website.get_affiliate_request().parent_aff_key">
+            <div>
+              <t t-call="affiliate_management_mlm.apply_ref_code"/>
+            </div>
+          </t>
+      </xpath>
+    </template>
+
+    <template id="membership_click" name='Membership Click'>
+      <!-- <t t-set="last_so_id" t-value="website.env.user.last_website_so_id"/> -->
+      <t t-if="affiliate_about and website.get_affiliate_request().partner_id.membership_state == 'draft'">
+        <div class="alert alert-info" style="margin-bottom: -0px;">
+          <strong>Your,</strong> <em>Membership Order</em> is in draft state. You would be able to see your Bonus and Tree when your order is approved.
+        </div>
+      </t>
+
+      <t t-elif="website.get_affiliate_request().partner_id.membership_state == 'cancel'">
+        <div class="alert alert-danger" style="margin-bottom: -0px;">
+          <strong>Your,</strong> <em>RAP Membership Order</em> is canceled.
+        </div>
+      </t>
+
+      <t t-elif="website.get_affiliate_request().partner_id.membership_state == 'initial' and website.get_affiliate_request().partner_id.is_affiliate and not website.get_affiliate_request().parent_aff_key">
+<!--        <div class="alert alert-info" style="margin-bottom: -0px;">-->
+<!--          <strong>Buy,</strong> <em>Membership</em> to get the Benefits of Multi Level Marketing.<a href="/affiliate/membership" style="color:darkolivegreen;" target="_blank"> Click here to know more.</a>-->
+<!--        </div>-->
+      </t>
+
+      <t t-elif="website.get_affiliate_request().partner_id.membership_state == 'initial' and not website.get_affiliate_request().partner_id.is_affiliate and website.get_affiliate_request().parent_aff_key">
+        <div class="alert alert-info" style="margin-bottom: -0px;">
+          <strong>You,</strong> need to buy <em>Multi Level Marketing Membership</em>.<a href="/affiliate/membership" style="color:darkolivegreen;" target="_blank"> Click here to buy.</a>
+        </div>
+      </t>
+    </template>
+
+    <template id="apply_ref_code" name='Affiliate Referal Code'>
+      <!-- <t t-set="last_so_id" t-value="website.env.user.last_website_so_id"/> -->
+      <!-- <t t-if="not last_so_id.check_partner_product()"> -->
+        <div class="alert alert-info" style="margin-bottom: -0px;">
+          Have an Affiliate Referral Code.
+          <input type="text" name="aff_key" id="aff_ref_key" autofocus="autofocus"  maxlength="8" style="border-radius:.3em;border-width:1px;color:#8a989e;"/>
+          <button id="js_ref_code" style="border-radius:.3em;border-width:1px;color:#3e3333;">Submit</button>
+          <span id="er_ref" style="display:none;"></span>
+        </div>
+      <!-- </t> -->
+    </template>
+
+  </data>
+</odoo>

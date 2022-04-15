@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="assets_backend" inherit_id="web.assets_backend" name="Rayl Social-Share Editor">
+    <xpath expr="." position="inside">
+
+        <link rel="stylesheet" type="text/scss" href="/rayl_floating_social_share_buttons/static/src/scss/website_social_share.scss"/>
+    </xpath>
+</template>
+
+<template id="assets_frontend" inherit_id="website.assets_frontend" name="Rayl Social-Share assets">
+    <xpath expr="." position="inside">
+        <link rel="stylesheet" type="text/scss" href="/rayl_floating_social_share_buttons/static/src/scss/website_social_share.scss"/>
+        <script type="text/javascript" src="/rayl_floating_social_share_buttons/static/src/js/social_share.js"/>
+    </xpath>
+</template>
+
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="gtica_share_buttons_floating" name="GTICA Share buttons floating" inherit_id="web.frontend_layout" priority="20">
+    <xpath expr="//div[@id='wrapwrap']/footer" position="after">
+        <div t-if="website.activate_share_buttons" class="ssButtons_sharing_container ssButtons_vertical_sharing ssButtons_bottom_sharing" t-attf-style="width:44px;#{website.alignment_floating}: #{website.left_bar_floating}px;top: #{website.top_bar_floating}px;-webkit-box-shadow:none;box-shadow:none;">
+              <ul class="ssButtons_sharing_ul">
+                 <t t-foreach="website.buttons_share_ids" t-as="media">
+                  <li>
+                      <i t-attf-class="fa-stack text-center ssButtonsBar #{'ssButtons'+media.name+'Background' if website.buttons_color == 'classic' else 'ssButtons'+media.name+'Hover btn-link'}" t-attf-style="font-size: #{website.size_icon_bar}px;" t-attf-data-social="#{media.name}" t-attf-aria-label="Share on #{media.name}"  >
+                          <span t-attf-class="fa fa-#{website.icon_shape} fa-stack-2x"></span>
+                          <span t-attf-class="ssButtonsSharingSvg ssButtons#{media.name}Svg fa fa-stack-1x fa-inverse"></span>
+                      </i>
+                  </li>
+                </t>
+                  <t t-if="website.more_buttons">
+                    <li>
+                      <i t-attf-class="fa-stack text-center oe_share_call" t-attf-style="font-size: #{website.size_icon_bar}px;" title="More buttons to share" t-attf-aria-label="Share More"  >
+                          <span t-attf-class="fa fa-#{website.icon_shape} fa-stack-2x btn-link"></span>
+                          <span t-attf-class="ssButtonsSharingSvg ssButtonsMoreSvg fa fa-stack-1x fa-inverse"></span>
+                      </i>
+                    </li>
+                  </t>
+              </ul>
+
+          <div class="ssButtonsClear"></div>
+        </div>
+        <div class="ssButtons_mobile ssButtons_vertical_sharing ssButtons_bottom_sharing" t-attf-style="width:44px;-webkit-box-shadow:none;box-shadow:none;">
+
+              <ul class="ssButtons_sharing_ul">
+                    <li>
+                      <i t-attf-class="fa-stack text-center oe_share_call  btn-link" t-attf-style="font-size: 30px;" title="More buttons to share" t-attf-aria-label="Share More"  >
+                          <span t-attf-class="fa fa-circle fa-stack-2x"></span>
+                          <span t-attf-class="ssButtonsSharingSvg ssButtonsMoreSvg fa fa-stack-1x fa-inverse"></span>
+                      </i>
+                    </li>
+
+              </ul>
+        </div>
+    </xpath>
+</template>
+
+</odoo>

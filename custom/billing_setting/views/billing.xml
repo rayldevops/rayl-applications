@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_billing_setting" model="ir.ui.view">
+        <field name="name">billing.setting.form</field>
+        <field name="model">billing.setting</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Configuration">
+                <sheet>
+                    <group>
+                        <field name="user_id"/>
+                        <field name="bank_id"/>
+                        <field name="payment_option"/>
+                        <field name="branch_transit_number"/>
+<!--                        <field name="mask_bank_account_number"/>-->
+                        <field name="stripe_card_brand"/>
+                        <field name="stripe_card_exp_month"/>
+                        <field name="stripe_card_exp_year"/>
+                        <field name="stripe_card_last4"/>
+                        <field name="street_address"/>
+<!--                        <field name="post_code"/>-->
+<!--                        <field name="address"/>-->
+<!--                        <field name="city"/>-->
+<!--                        <field name="country"/>-->
+<!--                        <field name="postal_code"/>-->
+<!--                        <field name="province"/>-->
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tree_smtp_configuration" model="ir.ui.view">
+        <field name="name">billing.setting</field>
+        <field name="model">billing.setting</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Configuration">
+                        <field name="branch_transit_number"/>
+                        <field name="user_id"/>
+                        <field name="bank_id"/>
+                        <field name="payment_option"/>
+<!--                        <field name="mask_bank_account_number"/>-->
+                        <field name="stripe_card_brand"/>
+                        <field name="stripe_card_exp_month"/>
+                        <field name="stripe_card_exp_year"/>
+                        <field name="stripe_card_last4"/>
+                        <field name="street_address"/>
+<!--                        <field name="post_code"/>-->
+<!--                        <field name="address"/>-->
+<!--                        <field name="city"/>-->
+<!--                        <field name="country"/>-->
+<!--                        <field name="postal_code"/>-->
+<!--                        <field name="province"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_billing" model="ir.actions.act_window">
+        <field name="name">Billing Settings</field>
+        <field name="res_model">billing.setting</field>
+        <field name="view_mode">tree,form</field>
+<!--        <field name="view_id" ref="tree_smtp_configuration"/>-->
+    </record>
+
+<!--    <menuitem name="Billing"-->
+<!--              id="menu_billing"-->
+<!--              sequence="99"-->
+<!--              groups="base.group_user"/>-->
+
+    <menuitem id="res_partner_menu_contacts_inherit"
+              name="Billing Account"
+              action="action_billing"
+              parent="affiliate_management.configuration_submenu_root"
+              sequence="4"/>
+    <!--              parent="menu_billing"-->
+
+     <record id="partner_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="stripe_customer_id" readonly="1"/>
+                <field name="stripe_subscription_id" />
+                <field name="stripe_subscription_plan_description"/>
+                <field name="stripe_subscription_start_date" readonly="1"/>
+                <field name="stripe_subscription_end_date" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

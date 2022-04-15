@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	    <template id="login_layout" inherit_id="web.frontend_layout">
+            <xpath expr="//div[@id='wrapwrap']" position="attributes">
+                <attribute name="t-att-style">background_src</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('o_footer_copyright')]/child::div/child::div" position="inside">
+                <a href="https://app.rayl.community" target="_blank" class="mr-3 nav-item" data-v-6ffd45e8="">
+                <font style="" class="text-o-color-3">Apptive.Pro</font>
+                </a>
+                <a href="https://apptive.rayl.com/slides" target="_blank" class="nav-item mr-3" data-v-6ffd45e8="">
+                <font style="" class="text-o-color-3">University</font>
+                </a>
+                <a href="https://rayl.cloud/events.html" target="_blank" class="nav-item mr-3" data-v-6ffd45e8="">
+                <font style="" class="text-o-color-3">Events</font>
+                </a>
+                <a href="https://rayl.tawk.help/" target="_blank" class="nav-item mr-3" data-v-6ffd45e8="">
+                <font style="" class="text-o-color-3">Support</font>
+                </a>
+            </xpath>
+            <xpath expr="//div[hasclass('o_footer_copyright')]" position="attributes">
+                <attribute name="t-att-style">footer_color if footer_color else 'color:#F7F7F9 !important;'</attribute>
+            </xpath>
+            <xpath expr="//header//nav[hasclass('navbar-light')]" position="attributes">
+                <attribute name="t-att-style">nav_color if nav_color else 'background:#00B3DD !important;'</attribute>
+            </xpath>
+            <xpath expr="//footer" position="attributes">
+                <attribute name="t-att-style">nav_color if nav_color else 'background:#00B3DD !important;'</attribute>
+            </xpath>
+            <xpath expr="//*[hasclass('o_footer_copyright_name')]" position="attributes">
+                <attribute name="t-att-style">'color:#F7F7F9 !important;'</attribute>
+            </xpath>
+    	</template>
+
+<!--        <template id="website_logo" inherit_id="website.layout">-->
+<!--            <xpath expr="//header//nav[hasclass('navbar-light')]" position="attributes">-->
+<!--                <attribute name="t-att-style">nav_color</attribute>-->
+<!--            </xpath>-->
+<!--&lt;!&ndash;            <xpath expr="//header//a[hasclass('navbar-brand')]" position="replace">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a href="/" class="navbar-brand logo">&ndash;&gt;-->
+<!--&lt;!&ndash;<img src="/web_login_background/static/src/img/rayl_white.png" class="img img-fluid" alt="RAYL BUSINESS SOLUTIONS" loading="lazy"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </xpath>&ndash;&gt;-->
+<!--            <xpath expr="//footer" position="attributes">-->
+<!--                <attribute name="t-att-style">nav_color</attribute>-->
+<!--            </xpath>-->
+<!--        </template>-->
+
+        <data>
+            <template id="assets_rayl_website_css" inherit_id="website.assets_frontend" name="Assets RAYL Frontend Review">
+                <xpath expr="." position="inside">
+                    <link rel='stylesheet' href='/web_login_background/static/src/css/loginpage.css'/>
+                </xpath>
+            </template>
+<!--            <template id="assets_rayl_website_css_portal" inherit_id="portal.assets_frontend" name="Assets RAYL Frontend Review">-->
+<!--                <xpath expr="." position="inside">-->
+<!--                    <link rel='stylesheet' href='/web_login_background/static/src/css/style.css'/>-->
+<!--                </xpath>-->
+<!--            </template>-->
+        </data>
+
+<!--        <template id="portal_nav_design" inherit_id="portal.frontend_layout">-->
+<!--            <xpath expr="//header//nav[hasclass('navbar-light')]" position="attributes">-->
+<!--                <attribute name="t-att-style">'background:linear-gradient(to right, #0071f3, #73b4ff);color:#fff !important;'</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//footer" position="attributes">-->
+<!--                <attribute name="t-att-style">'background:linear-gradient(to right, #0071f3, #73b4ff);color:#fff !important;'</attribute>-->
+<!--            </xpath>-->
+
+<!--            <xpath expr="//div[hasclass('o_footer_copyright')]" position="attributes">-->
+<!--                <attribute name="t-att-style">'background:linear-gradient(to right, #0071f3, #73b4ff) !important;color:#fff !important;'</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//*[hasclass('o_footer_copyright_name')]" position="attributes">-->
+<!--                <attribute name="t-att-style">'color:#fff !important;'</attribute>-->
+<!--            </xpath>-->
+<!--        </template>-->
+
+
+
+<!--        <data inherit_id="website.layout" name="Centered" active="False">-->
+<!--            <xpath expr="//div[@id='footer']" position="replace">-->
+<!--            <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer" style=""/>-->
+<!--            </xpath>-->
+<!--        </data>-->
+
+
+</odoo>

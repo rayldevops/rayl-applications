@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="res_config_settings_share_buttons" model="ir.ui.view">
+            <field name="name">res.config.settings.share.buttons</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority">21</field>
+            <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('app_settings_block')]/div[@id='website_settings']" position="after">
+
+                    <h2>Floating Sharing Buttons</h2>
+                     <div class="row mt16 o_settings_container" id="share_buttons_floating_settings">
+                         <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="activate_share_buttons"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="activate_share_buttons"/>
+                                <span class="fa fa-lg fa-globe" title="..."/>
+                                <div class="text-muted">
+                                     Enable floating sharing widget
+                                </div>
+                            </div>
+
+                             <div class="o_setting_right_pane">
+                                    <label for="alignment_floating"/>
+                                    <field name="alignment_floating" widget="selection"/>
+                                    <div class="text-muted">
+                                        Horizontal alignment of the sharing interface
+                                    </div>
+                                </div>
+                                <div attrs="{'invisible': [('alignment_floating', '=', 'right')]}" class="o_setting_right_pane">
+                                    <label for="left_bar_floating"/>
+                                    <field name="left_bar_floating"/>
+
+                                </div>
+                                <div attrs="{'invisible': [('alignment_floating', '=', 'left')]}" class="o_setting_right_pane">
+                                    <label for="right_bar_floating"/>
+                                    <field name="right_bar_floating"/>
+
+                                </div>
+                               <div class="o_setting_right_pane">
+                                    <label for="top_bar_floating"/>
+                                    <field name="top_bar_floating" />
+                               </div>
+                             <div class="o_setting_right_pane">
+                                <label for="size_icon_bar"/>
+                                <field name="size_icon_bar"/>
+                            </div>
+                             <div class="o_setting_right_pane">
+                                <label for="icon_shape"/>
+                                <field name="icon_shape" widget="selection"/>
+                             </div>
+                              <div class="o_setting_right_pane">
+                                <label for="more_buttons"/>
+                                <field name="more_buttons"/>
+                                <div class="text-muted">
+                                    Allows user to open PopUp and select more social media options
+                                </div>
+                            </div>
+
+                        </div>
+                         <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Rearrange icons</span>
+                                <div class="text-muted">
+                                    Organize your social networks, hierarchy in popup and main bar
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt8">
+                                        <button name="%(rayl_floating_social_share_buttons.share_buttons_list_action)d" string="Buttons Social Media" type="action" class="oe_link" icon="fa-arrow-right"/>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="o_setting_right_pane">
+                                    <label for="buttons_share_ids"/>
+                                      <div class="text-muted">
+                                         Select the buttons that appear in the floating main bar
+                                    </div>
+                                    <field name="buttons_share_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+
+                                </div>
+
+                              <div class="o_setting_right_pane">
+                                    <label for="buttons_color"/>
+                                    <field name="buttons_color" widget="selection"/>
+                                    <div class="text-muted">
+                                    </div>
+                                </div>
+                        </div>
+
+                     </div>
+                </xpath>
+            </field>
+     </record>
+</odoo>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+          <record id="view_affiliate_partner_inherit_detail_form" model="ir.ui.view">
+              <field name="name">view.affiliate.partner.inherit.detail.form</field>
+              <field name="model">res.partner</field>
+              <field name="inherit_id" ref="base.view_partner_form" />
+              <field name="arch" type="xml">
+                <xpath expr="//page[@name='affilite_detail']" position="after">
+                  <page name="mlm_details" string="RAP Details" attrs="{'invisible':[('is_affiliate','=',False)]}">
+                      <field name="is_dispute" invisible= '1'/>
+                      <field name="is_parent_set" invisible="1"/>
+                    <group col="6">
+
+                        <group colspan="2">
+                            <field name="parent_aff"/>
+                        </group>
+                        <group colspan="1">
+                            <button
+                            name="set_root"
+                            type="object"
+                            string="set root"
+                            attrs="{'invisible':[('is_parent_set','=',True)]}"
+                            style="position: relative;left: .2em;"
+                            invisible="0"
+                              />
+                        </group>
+                        <group colspan="3">
+                           <span class="text-muted" attrs="{'invisible':[('is_parent_set','=',True)]}">
+                             set root will automatically set parent for this partner in relation with the configured root in settings.
+                           </span>
+                         </group>
+
+                        <group colspan="3">
+                             <field name="child_aff" widget="many2many_tags"/>
+<!--                                <tree string="Child" editable="bottom">-->
+<!--                                    <field name="name" />-->
+<!--                                </tree>-->
+<!--                             </field>-->
+                             <field name="left_child_aff" invisible='1'/>
+                             <field name="right_child_aff" invisible='1'/>
+                        </group>
+
+                        <group colspan="3">
+                            <field name="mlm_order_id"/>
+                            <field name="bought_membership"/>
+                            <field name="upgrade_membership"/>
+                            <field name="aff_request_id" invisible="1"/>
+                            <field name="is_dispute" invisible="1"/>
+                        </group>
+
+                        <field name="dispute_remark" placeholder='Dispute remark...' style='color:red;' attrs="{'invisible':[('is_dispute','=',False)]}"/>
+
+                        <group colspan="6">
+                           <group colspan="6">
+                               <field name="bonus_level"/>
+                           </group>
+
+                           <group>
+                               <label for="total_amount_left" string="Bonus Amount Left"/>
+                               <div>
+                                   <field name="total_amount_left"/>
+                                   <button icon="fa-arrow-right" type="action" name="%(mlm_transaction_form)d" class="oe_inline">
+                                        <span>
+                                          Transactions
+                                        </span>
+                                  </button>
+                               </div>
+                           </group>
+                        </group>
+                    </group>
+
+                  </page>
+                </xpath>
+
+              </field>
+          </record>
+
+    </data>
+</odoo>

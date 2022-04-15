@@ -1,0 +1,150 @@
+<odoo>
+    <data>
+        <template id="about" name="About Us">
+            <t t-call="website.layout">
+                <t t-if="user_id.partner_id.is_affiliate">
+                    <link href="/web_login_background/static/src/css/style.css" rel="stylesheet" media="all"/>
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <!-- Page-header start -->
+                                    <div class="page-header card">
+                                        <div class="card-block">
+                                            <h5 class="m-b-10">Affiliate Details</h5>
+                                            <ul class="breadcrumb-title b-t-default p-t-10 pull-left" style="width:100%">
+                                                 <li class="breadcrumb-item pull-left">
+                                                    <a href="/my/home"> <i class="fa fa-home"></i> </a>
+                                                </li>
+                                                <li class="breadcrumb-item pull-left"><a href="/affiliate/about"> My Affiliate</a>
+                                                </li>
+                                                <li class="breadcrumb-item pull-left"><a href="/payout/account">Payout List</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Page-header end -->
+                                      <!-- Page body start -->
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <!-- Basic Form Inputs card start -->
+                                                <div class="card">
+                                                        <div class="card-block">
+                                                            <h4 class="sub-title">Affiliate Details Form</h4>
+                                                            <form>
+                                                                <div class="form-group row" id="affiliate_code_inp">
+                                                                    <label class="col-sm-2 col-form-label">Your Referral Code:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                            <input type="text" class="form-control" id="usr_aff_code" name="code"
+                                                                            t-att-value="affiliate_key" readonly='1'/>
+                                                                                <div class="input-group-append">
+                                                                                    <button type="copy" class="btn btn-primary" id="cpy_cde">
+                                                                                    copy
+                                                                                    </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <a class="btn btn-primary" href="" id="url_anchor">Generate Referral Link
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="affiliate_url_inp" style="display:none;">
+                                                                    <label class="col-sm-2 col-form-label">Get Referral Link :</label>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="input-group">
+                                                                                <input type="link" class="form-control" id="usr_aff_url" name="aff_link"
+                                                                                t-att-value="url" style="width: 120%;" readonly='1'/>
+                                                                            <div class="input-group-append">
+                                                                                <button type="copy" class="btn btn-primary" id="cpy_url">copy
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <a class="btn btn-primary" href="" id="code_anchor">Click here to get Referral Code
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="bank_name_form_group" >
+                                                                    <label class="col-sm-2 col-form-label">Earnings by order (PPS):</label>
+                                                                    <div class="col-sm-2">
+                                                                         <t t-if="pps_count">
+                                           <h1><span class='badge badge-primary'>
+                                                <t t-esc="pps_count"/>
+                                            </span> </h1>
+                                        </t>
+                                        <t t-if="not pps_count">
+                                           <h1> <span class='badge badge-primary'>
+                                                0
+                                            </span> </h1>
+                                        </t>
+                                                                    </div>
+                                                                    <div class="col-sm-8">
+                                                                        <a class="btn btn-info" href="/affiliate/channel">
+                                                <u>(View Channel)</u>
+                                            </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="bank_name_form_group" >
+                                                                    <label class="col-sm-2 col-form-label">Pending Amount:</label>
+                                                                    <div class="col-sm-10">
+
+                                    <span>
+                                        <t t-esc="currency_id.symbol"/>
+                                        <t t-esc="'%.2f'% pending_amt"/>
+                                    </span>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="bank_name_form_group" >
+                                                                    <label class="col-sm-2 col-form-label">Approved Amount:</label>
+                                                                    <div class="col-sm-10">
+                                <span>
+                                    <t t-esc="currency_id.symbol"/>
+                                    <t t-esc="'%.2f'% approved_amt"/>
+                                </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="bank_name_form_group" >
+                                                                    <label class="col-sm-2 col-form-label">Paid Amount:</label>
+                                                                    <div class="col-sm-2">
+                                <span>
+                                    <t t-esc="currency_id.symbol"/>
+                                    <t t-esc="'%.2f'% paid_amt"/>
+                               </span>
+                                                                    </div>
+                                                                    <div class="col-sm-8">
+                                                                        <a class="btn btn-info" href="/affiliate/payment">
+                                                <u>(View Payouts)</u>
+                                            </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row" id="bank_name_form_group" >
+<!--                                                                    <label class="col-sm-2 col-form-label"></label>-->
+                                                                    <div class="col-sm-12">
+<a class="btn btn-primary" href="/apptive/saas">Apptive SaaS</a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+
+        <!--  -->

@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record id="product_product_view_form" model="ir.ui.view">
+            <field name="name">product.product.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <field name='categ_id' position='after'>
+                    <field name="stripe_plan_id"/>
+                    <field name="stripe_product_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="transaction_list_inherit" model="ir.ui.view">
+            <field name="name">payment.transaction.list.inherit</field>
+            <field name="model">payment.transaction</field>
+            <field name="inherit_id" ref="payment.transaction_list"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Payment Transactions" create="false">
+                    <field name="stripe_payment_intent"/>
+                    <field name="stripe_subscription_id"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    <template id="manon_assets_backend" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="//script[last()]" position="after">-->
+<!--            <script type="text/javascript" src="/commission_listing/static/src/js/commission.js"></script>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+    <template id="assets_backend" name="xls_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/commission_listing/static/src/js/export.js"/>
+            </xpath>
+    </template>
+
+<!--    <report-->
+<!--        id="action_print_xlsx"-->
+<!--        model="ir.config_parameter"-->
+<!--        string="Download"-->
+<!--        report_type="xlsx"-->
+<!--        name="commission_listing.action_export_data"-->
+<!--        file="commission_listing.action_export_data"-->
+<!--        attachment_use="False"-->
+<!--    />-->
+
+</odoo>

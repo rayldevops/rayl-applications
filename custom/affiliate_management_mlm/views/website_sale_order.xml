@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="mlm_membership_product_view_order_line" inherit_id="website_sale.cart_lines"  name="Cart Lines">
+
+    		<xpath expr="//table//tbody//tr/td[3]/div" position="replace">
+                <t t-if="line.product_id.is_mlm_product">
+        				<strong id="mlm_membership" t-esc="line.product_id.with_context(display_default_code=False).display_name"/>
+        	   	</t>
+
+    		    <t t-if="not line.product_id.is_mlm_product">
+    				<a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }">
+      	                 <strong t-esc="line.product_id.with_context(display_default_code=False).display_name"/>
+    	            </a>
+    	        </t>
+    	    </xpath>
+
+            <xpath expr="//table//tbody//tr/td[6]" position="replace">
+                <t t-if="line.product_id.is_mlm_product">
+                  <td class="td-action">
+                        </td>
+                  </t>
+
+    		    <t t-if="not line.product_id.is_mlm_product">
+    				  <td class="td-action">
+                <a href='#' aria-label="Remove from cart" title="Remove from cart" class='js_delete_product no-decoration'> <small><i class='fa fa-trash-o'></i></small></a>
+              </td>
+    	      </t>
+    	    </xpath>
+
+        	<xpath expr="//table//tbody//td[@class='text-center td-qty']" position="replace">
+        		<t t-set="temp" t-value="line.id"/>
+            <t t-if="line.product_id.is_mlm_product">
+    	        <td class="text-center td-qty">
+                <span class="mlm_membership_product_remove">
+                  <a type="button" t-att-href="'/shop/cart/mlm_product/remove/'+str(temp)" class="btn btn-danger fa fa-trash">
+                  </a>
+            	  </span>
+              </td>
+            </t>
+            
+            <t t-if="not line.product_id.is_mlm_product">
+                <td class="text-center td-qty">
+                    <div class="css_quantity input-group mx-auto">
+                        <div class="input-group-prepend">
+                            <a t-attf-href="#" class="btn btn-link js_add_cart_json d-none d-md-inline-block" aria-label="Remove one" title="Remove one">
+                                <i class="fa fa-minus"></i>
+                            </a>
+                        </div>
+                        <input type="text" class="js_quantity form-control quantity" t-att-data-line-id="line.id" t-att-data-product-id="line.product_id.id" t-att-value="int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty" />
+                        <div class="input-group-append">
+                            <a t-attf-href="#" class="btn btn-link float_left js_add_cart_json d-none d-md-inline-block" aria-label="Add one" title="Add one">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+              </t>
+       	    </xpath>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_saas_user,saas.user,model_saas_user,base.group_user,1,1,1,1
+access_saas_domain_check,saas.domain.check,model_saas_domain_check,base.group_user,1,1,1,1
+access_saas_configuration,saas.configuration,model_saas_configuration,,1,1,1,1

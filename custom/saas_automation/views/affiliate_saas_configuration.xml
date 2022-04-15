@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="affiliate_saas_configuration_view_form">
+            <field name="name">saas.configuration.form</field>
+            <field name="model">saas.configuration</field>
+            <field name="arch" type="xml">
+                <form >
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,connected"/>
+                        <button name="action_check_connectivity" string="Check Connectivity" type="object"
+                                attrs="{'invisible':[('state','=','connected')]}"/>
+                        <button name="action_reset_draft" string="Reset To Draft" type="object"
+                                attrs="{'invisible':[('state','=','draft')]}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="url" placeholder="https://rayl.app"/>
+                            <field name="db" placeholder="production_db"/>
+                        </group>
+                        <group>
+                            <field name="username" placeholder="admin"/>
+                            <field name="password" password="True"/>
+                        </group>
+                        <group>
+                            <field name="invoice_product" />
+                            <field name="server_id" />
+                            <field name="plan_id" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="affiliate_saas_configuration_view_tree">
+            <field name="name">saas.configuration.tree</field>
+            <field name="model">saas.configuration</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="url"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="affiliate_saas_configuration_action">
+            <field name="name">SaaS Configuration</field>
+            <field name="res_model">saas.configuration</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="view_id" ref="affiliate_request_view_form"/> -->
+        </record>
+
+        <menuitem name="SaaS Configuration" id="affiliate_saas_configuration" parent="affiliate_management.affiliate_manager_menu_base_root"
+                  sequence='5'/>
+
+        <menuitem name="Configuration"
+                  id="affiliate_saas_configuration_menu"
+                  parent="affiliate_saas_configuration"
+                  action='affiliate_saas_configuration_action'
+                  sequence="1"
+                  groups="base.group_system,affiliate_management.affiliate_security_manager_group"
+        />
+    </data>
+</odoo>

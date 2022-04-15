@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <template id="assets_frontend" inherit_id="web.assets_frontend" name="Whatsapp Assets">
+            <xpath expr="//script[last()]" position="after">
+                    <script src="https://meet.jit.si/external_api.js"></script>
+                    <script>
+                        var domain = $('#domain').attr('name');
+                        var options = {
+                        roomName: $('#hash').attr('name'),
+                        height: 600,
+                        interfaceConfigOverwrite: { filmStripOnly: false },
+                        parentNode: document.querySelector('#meet')
+                        };
+                        if ($('#hash').attr('name')){
+                        var api = new JitsiMeetExternalAPI(domain, options);
+                        }
+                    </script>
+            </xpath>
+        </template>
+        <template id="meet" inherit_id="portal.frontend_layout" name="Meet">
+            <xpath expr="//t[@t-raw='0']" position="after">
+                <t t-if="data">
+                    <div id="meet" name="meet"></div>
+                    <div id="name" t-att-name="data.name"></div>
+                    <div id="domain" t-att-name="data.domain"></div>
+                    <div id="hash" t-att-name="data.hash"></div>
+                </t>
+            </xpath>
+        </template>
+        <template id="meet_closed" name="Closed">
+          <t t-call="portal.frontend_layout">
+            <div id="wrap">
+                <div class="oe_structure">
+                     <img src="/se_jitsi_meet/static/closed.jpg" style = "display:block; margin-left: auto; margin-right: auto;"/>
+
+                </div>
+
+            </div>
+            </t>
+            </template>
+
+    </data>
+</odoo>

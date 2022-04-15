@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="product_description_form_view_extend">
+        <field name="name">product.template.description.website.form_extend</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='product_template_images']" position="after">
+                 <group name="website_description" string="Website Description">
+                    <field name="website_description" class="o_mail_body" widget="html"
+                                    options="{
+                            'style-inline': true,
+                            'snippets': 'website.snippets',
+                            'cssEdit': 'website.snippets',
+
+                        }" nolabel="1"/>
+                 </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

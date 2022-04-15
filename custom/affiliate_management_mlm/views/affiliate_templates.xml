@@ -1,0 +1,39 @@
+<!--<odoo>-->
+<!--  <data>-->
+<!--    <template id="website_mlm_membership_affiliate" inherit_id="affiliate_management.affiliate">-->
+      <!-- <xpath expr="//div[@class='row'][2]" position="after">
+        <div class="row" >
+          <div class="col-md-offset-2 col-md-8">
+            <div style="padding:20px">
+              <center>
+                <h3>How MLM Work?</h3>
+              </center>
+              <t t-raw="mlm_work_title"/>
+            </div>
+              <div class=" col-md-8">
+                 <t t-raw="mlm_work_text"/>
+              </div>
+          </div>
+        </div>
+      </xpath> -->
+
+<!--      <xpath expr="//div[@class='row justify-content-md-center'][4]" position="after">-->
+<!--        <div class="row justify-content-md-center" style="text-align: left;">-->
+<!--          <div class="col-md-4" style="padding:35px">-->
+<!--              <h3>Multi Level Marketing Bonus</h3>-->
+<!--              With our MLM membership, one will be able to avail bonus for creating affiliate members under them. One can also keep track of his/her affiliates members and bonus availed. The bonuses will be provided for the first child that will be created and for the level completion.-->
+<!--              <a href="/affiliate/membership/" target="_blank">Know More</a>-->
+<!--          </div>-->
+<!--          <img src="/affiliate_management_mlm/static/src/img/Bonus.svg" class="col-lg-3" style="height: 180px;style=padding:35px"/>-->
+<!--       </div>-->
+<!--      </xpath>-->
+
+<!--      <xpath expr="//div[@class='row justify-content-md-center'][2]" position="before">-->
+<!--        <div class="alert text-center" style="margin-bottom: -0px; background-color: #d9edf7;">-->
+<!--          <h3>Affiliate Program Also Supports Multi Level Marketing</h3>-->
+<!--        </div>-->
+<!--      </xpath>-->
+
+<!--    </template>-->
+<!--  </data>-->
+<!--</odoo>-->

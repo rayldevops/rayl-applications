@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_payout_setting" model="ir.ui.view">
+        <field name="name">payout.setting.form</field>
+        <field name="model">payout.setting</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Configuration">
+                <header><button string="Set to Default" type="object" name="set_bank_default" attrs="{'invisible': [('is_default', '=', True)]}"/></header>
+                <sheet>
+                    <group>
+                        <field name="user_id"/>
+                        <field name="bank_name"/>
+                        <field name="other_bank_name" attrs="{'invisible': [('other_bank_name', '=', '')]}"/>
+                        <field name="institution_number" attrs="{'invisible': [('other_bank_name', '=', '')]}" />
+                        <field name="institution_number_bank_details" attrs="{'invisible': [('other_bank_name', '!=', '')]}"/>
+                        <field name="payment_option"/>
+                        <field name="branch_transit_number"/>
+                        <field name="mask_bank_account_number"/>
+                        <field name="is_default" />
+                        <field name="bank_account_type"/>
+                        <field name="company_name"/>
+<!--                        <field name="confirm_bank_account_number"/>-->
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tree_payout_setting" model="ir.ui.view">
+        <field name="name">payout.setting</field>
+        <field name="model">payout.setting</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Configuration">
+                <field name="user_id"/>
+                <field name="bank_id"/>
+                <field name="compute_bank_name"/>
+                <field name="compute_institution_number" />
+                <field name="payment_option"/>
+                <field name="branch_transit_number"/>
+                <field name="mask_bank_account_number"/>
+                <field name="bank_account_type"/>
+                <field name="company_name"/>
+<!--                <field name="confirm_bank_account_number"/> attrs="{'invisible': [('other_bank_name', '=', '')]}"-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_payout" model="ir.actions.act_window">
+        <field name="name">Payout Settings</field>
+        <field name="res_model">payout.setting</field>
+        <field name="view_mode">tree,form</field>
+<!--        <field name="view_id" ref="tree_smtp_configuration"/>-->
+    </record>
+
+    <menuitem name="Payout"
+              id="menu_payout"
+              sequence="100"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_payout_configuration"
+              name="Payout Account"
+              action="action_payout"
+              parent="affiliate_management.configuration_submenu_root"
+              sequence="5"/>
+<!--                  parent="menu_payout"-->
+
+    <record id="view_bank_details" model="ir.ui.view">
+        <field name="name">bank.details.form</field>
+        <field name="model">bank.details</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Configuration">
+                <sheet>
+                    <group>
+                        <field name="bank_name"/>
+                        <field name="institution_number"/>
+                        <field name="branch_transit_id">
+                            <tree string="Bank">
+                                <field name="transit_number"/>
+                                <field name="address1"/>
+                                <field name="address2"/>
+                                <field name="city"/>
+                                <field name="province"/>
+                                <field name="postal_code"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <record id="tree_bank_details" model="ir.ui.view">
+        <field name="name">bank.details</field>
+        <field name="model">bank.details</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Bank">
+                <field name="bank_name"/>
+                <field name="institution_number"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_bank" model="ir.actions.act_window">
+        <field name="name">Bank Account</field>
+        <field name="res_model">bank.details</field>
+        <field name="view_mode">tree,form</field>
+<!--        <field name="view_id" ref="tree_smtp_configuration"/>-->
+    </record>
+
+    <menuitem id="menu_bank_configuration"
+              name="Add Bank"
+              action="action_bank"
+              parent="affiliate_management.configuration_submenu_root"
+              sequence="6"/>
+</odoo>

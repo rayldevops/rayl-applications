@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="affiliate_visit__view_tree_draft">
+			<field name="name">affiliate.visit.tree.draft</field>
+			<field name="model">affiliate.visit</field>
+			<field name="arch" type="xml">
+				<tree>
+                    <header><button string="Export Payout List" type="object" name="action_export_data"/></header>
+					<!-- <field name="id"/> -->
+					<field name="name"/>
+					<field name="affiliate_method" />
+					<field name="payout_no" />
+					<!-- <field name="affiliate_type" /> -->
+					<field name="is_converted" />
+					<!-- <field name="type_id" /> -->
+					<field name="affiliate_key" />
+					<field name="affiliate_partner_id" />
+					<field name="parent_affiliate_partner_id" />
+					<field name="create_date" string="Date"/>
+					<field name="commission_amt" />
+					<field name="state" />
+
+
+				</tree>
+			</field>
+	    </record>
+
+		<record model="ir.ui.view" id="affiliate_visit__view_tree_confirm">
+			<field name="name">affiliate.visit.tree.confirm</field>
+			<field name="model">affiliate.visit</field>
+			<field name="arch" type="xml">
+				<tree>
+                    <header><button string="Reset to Draft" type="object" name="action_reset_draft"/></header>
+					<!-- <field name="id"/> -->
+					<field name="name"/>
+					<field name="affiliate_method" />
+                    <field name="payout_no" />
+					<!-- <field name="affiliate_type" /> -->
+					<field name="is_converted" />
+					<!-- <field name="type_id" /> -->
+					<field name="affiliate_key" />
+					<field name="affiliate_partner_id" />
+					<field name="parent_affiliate_partner_id" />
+					<field name="create_date" string="Date"/>
+					<field name="commission_amt" />
+					<field name="state" />
+
+				</tree>
+			</field>
+	    </record>
+
+		<record model="ir.ui.view" id="affiliate_visit__view_tree_paid">
+			<field name="name">affiliate.visit.tree.paid</field>
+			<field name="model">affiliate.visit</field>
+			<field name="arch" type="xml">
+				<tree>
+					<!-- <field name="id"/> -->
+					<field name="name"/>
+					<field name="affiliate_method" />
+                    <field name="payout_no" />
+					<!-- <field name="affiliate_type" /> -->
+					<field name="is_converted" />
+					<!-- <field name="type_id" /> -->
+					<field name="affiliate_key" />
+					<field name="affiliate_partner_id" />
+                    <field name="parent_affiliate_partner_id" />
+					<field name="create_date" string="Date"/>
+					<field name="commission_amt" />
+					<field name="state" />
+				</tree>
+			</field>
+	    </record>
+
+    <record id="action_list_commission_draft" model="ir.actions.act_window">
+        <field name="name">Draft Commission</field>
+        <field name="res_model">affiliate.visit</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="affiliate_visit__view_tree_draft"/>
+        <!--            <field name="search_view_id" ref="affiliate_management.affiliate_visit__view_tree"/>-->
+        <field name="domain">[('state','=', 'draft')]</field>
+        <field name="context">{'default_state': 'draft'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a customer invoice
+            </p>
+            <p>
+                Create invoices, register payments and keep track of the discussions with your customers.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_list_commission_confirm" model="ir.actions.act_window">
+        <field name="name">Confirm Commission</field>
+        <field name="res_model">affiliate.visit</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="affiliate_visit__view_tree_confirm"/>
+        <!--            <field name="search_view_id" ref="affiliate_management.affiliate_visit__view_filter"/>-->
+        <field name="domain">[('state','=', 'confirm')]</field>
+        <field name="context">{'default_state': 'confirm'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a customer invoice
+            </p>
+            <p>
+                Create invoices, register payments and keep track of the discussions with your customers.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_list_commission_paid" model="ir.actions.act_window">
+        <field name="name">Paid Commission</field>
+        <field name="res_model">affiliate.visit</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="affiliate_visit__view_tree_paid"/>
+        <!--            <field name="search_view_id" ref="affiliate_management.affiliate_visit__view_filter"/>-->
+        <field name="domain">[('state','=', 'paid')]</field>
+        <field name="context">{'default_state': 'paid'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a customer invoice
+            </p>
+            <p>
+                Create invoices, register payments and keep track of the discussions with your customers.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="commission_payout_menu_inherit"
+              name="Commission Payout"
+              parent="affiliate_management.affiliate_manager_menu_base_root"
+              sequence="3"/>
+
+    <menuitem name="Draft"
+              id="menu_draft"
+              action="action_list_commission_draft"
+              parent="commission_payout_menu_inherit"
+              sequence="4"/>
+
+    <menuitem name="Confirm"
+              id="menu_confirm"
+              action="action_list_commission_confirm"
+              parent="commission_payout_menu_inherit"
+              sequence="5"/>
+
+    <menuitem name="Paid"
+              id="menu_paid"
+              action="action_list_commission_paid"
+              parent="commission_payout_menu_inherit"
+              sequence="6"/>
+
+<!--    <record id="view_out_invoice_tree_inherit_export" model="ir.ui.view">-->
+<!--            <field name="name">account.out.invoice.tree.inherit</field>-->
+<!--            <field name="model">account.move</field>-->
+<!--            <field name="inherit_id" ref="account.view_out_invoice_tree"/>-->
+<!--            &lt;!&ndash; <field name="mode">primary</field>&ndash;&gt;-->
+<!--            <field name="arch" type="xml">-->
+<!--                  <xpath expr="//button" position="after">-->
+<!--                    <button string="Export" name="action_export_data" type="object"-->
+<!--                        class="oe_highlight"/>-->
+<!--                  </xpath>-->
+<!--            </field>-->
+<!--    </record>-->
+
+<!--    <record id="view_out_invoice_tree_inherit" model="ir.ui.view">-->
+<!--            <field name="name">account.out.invoice.tree.inherit</field>-->
+<!--            <field name="model">account.move</field>-->
+<!--            <field name="inherit_id" ref="account.view_out_invoice_tree"/>-->
+<!--            &lt;!&ndash; <field name="mode">primary</field>&ndash;&gt;-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//button" position="after">-->
+<!--                    <button string="Run Automate Billing" name="automate_stripe_scheduler" type="object" class="oe_highlight"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--    <record id="affiliate_visit__view_tree_inherited" model="ir.ui.view">-->
+<!--        <field name="name">affiliate.visit.view.tree.inherited</field>-->
+<!--        <field name="model">affiliate.visit</field>-->
+<!--        <field name="inherit_id" ref="affiliate_management.affiliate_visit__view_tree"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//tree" position="inside">-->
+<!--                <header>-->
+<!--                    -->
+<!--                </header>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="commission_payout_export" model="ir.ui.view">-->
+<!--            <field name="name">commission.payout.export</field>-->
+<!--            <field name="model">commission.payout</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form string="Export Draft">-->
+<!--                    <footer>-->
+<!--                        <button name="action_export_data" string="Export Draft" type="object" class="oe_highlight"/>-->
+<!--                    </footer>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+<!--       <record id="action_export_draft" model="ir.actions.act_window">-->
+<!--            <field name="name">Export Draft Invoice</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">commission.payout</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="target">new</field>-->
+<!--           <field name="binding_model_id" ref="affiliate_management.model_affiliate_visit" />-->
+<!--            <field name="binding_view_types">list</field>-->
+<!--        </record>-->
+</odoo>

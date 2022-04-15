@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="saas_security_category" model="ir.module.category">
+            <field name="name">Instance Category</field>
+        </record>
+
+        <record id="saas_security_user_group" model="res.groups">
+            <field name="name">User Settings</field>
+            <field name="category_id" ref="saas_security_category"/>
+        </record>
+
+        <record id="saas_security_manager_group" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="saas_security_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin')), (4, ref('base.group_erp_manager'))]"/>
+        </record>
+
+    </data>
+
+</odoo>

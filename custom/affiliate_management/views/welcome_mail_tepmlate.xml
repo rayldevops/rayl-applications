@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+
+    <record id="welcome_affiliate_email" model="mail.template">
+          <field name="name">Affiliate welcome mail Connection</field>
+          <field name="model_id" ref="affiliate_management.model_affiliate_request"/>
+          <field name="email_from">${object.partner_id.company_id.email or 'message@rayl.cloud'}</field>
+          <field name="email_to">${object.name|safe}</field>
+          <field name="subject"> Welcome on Affiliate Program</field>
+          <field name="body_html"><![CDATA[
+
+          <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+          <p>Dear ${object.name},</p>
+          <p>Welcome to the RAYL Ambassador Program!</p>
+          </br>
+          <p>We are excited for you to join us and develop business opportunities and empower your business with powerful automation tools.</p>
+          </br>
+          <p>A fully integrated business suite of applications providing a single platform running all day-to-day programs for a merchant or business owner. This includes dozens of productivity and automation modules for your business into one platform.</p>
+              <div style="text-align: center; margin-top: 16px;">
+                   <a href="affiliate" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#102A87; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #102A87; border: 1px solid #102A87; border-radius:3px">For Log In to Affiliate Program</a>
+              </div>
+              <p>Best regards,</p>
+              <p>RAYL Ambassador Support</p>
+              <p>+1 (604) 837-7990</p>
+              </br>
+              <p>RAYL Business Solutions Inc.</p>
+              <p>Suite 520 – 470 Granville St.</p>
+              <p>Vancouver, B.C. V6C 1V5</p>
+              <p>Canada</p>
+
+          </div>
+          ]]>
+          </field>
+
+      </record>
+
+  </data>
+</odoo>
+

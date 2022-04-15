@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template>
+    <t t-name="ThemeSlider" >
+        <li groups="website.group_website_designer" class="o_mail_navbar_item o_theme_manager">
+            <a href="#" title="Theme Slider" class="dropdown-toggle oe_theme_button o-no-caret"  data-toggle="dropdown">
+                <span class="fa fa-phone"/>
+            </a>
+            <div class="theme_content dropdown-menu dropdown-menu-right"  role="menu">
+                <div class="container o_mail_navbar_dropdown_top">
+                    <div class="row" style="width:240px;height:180px;"  >
+                        <div class="o_apps" align="center" style="padding-right: 10px;">
+                            <h1>Meeting</h1>
+                            <div class="oe_highlight" align="left" style="padding-left: 10px;">
+                                <input type="int"  id="meeting_id_url" name="meeting_id_url" required="True" class="search-query form-control oe_search_box" placeholder="Meeting ID Or Meeting URL"/>
+                                <div style="padding-bottom: 12px;"></div>
+                                <input type="datetime-local" id="meeting_date_time" name="meeting date time" placeholder="Meeting Date And Time"/>
+<!--                                <div style="padding-bottom: 12px;"></div>-->
+
+<!--                                <div class="o_invite_user" align="center">-->
+<!--                                    <button name="%(open_wizard_action_invite_user)d"-->
+<!--                                            type="action"-->
+<!--                                            class="oe_highlight"-->
+<!--                                            style="background-color: #4d7828;color:white;"-->
+<!--                                    >Invite Participant</button>-->
+<!--                                </div>-->
+<!--                                <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />-->
+<!--                                <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>-->
+<!--                                 <div class="form-group">-->
+<!--                                     <field name="participants" widget="many2many_checkboxes"/>-->
+<!--&lt;!&ndash;                                     <label for="user">Users:</label>&ndash;&gt;-->
+<!--                                  <select class="invite_user" name='user_ids' id="invite_user_id" multiple="multiple">-->
+<!--                                      <option value='1'>none</option>-->
+<!--                                      <option value='2'>demo</option>-->
+
+<!--                                            <t t-foreach='user_ids' t-as='user'>-->
+
+<!--                                                    <option t-att-value='user.id'>-->
+
+<!--                                                        <t t-esc='user.name'/>-->
+
+<!--                                                    </option>-->
+<!--                                            </t>-->
+
+<!--                                  </select>-->
+<!--                                 </div>-->
+                            </div>
+
+                            <div style="padding-bottom: 10px;"></div>
+                                <div class="o_create_meeting" style="display:inline-block; padding-left: 5px;">
+                                    <button type="button"
+                                            style="background-color: #4d7828;color:white;"
+                                            t-on-click="_onClickCreateMeeting"
+                                            class="oe_highlight"
+                                            name="search_value"
+                                    >Create Meeting</button>
+                                </div>
+                                <div class="o_join_meeting" style="display:inline-block;">
+                                    <button type="button"
+                                            style="background-color: #4d7828;color:white;"
+                                            t-on-click="_onClickJoinMeeting"
+                                            class="oe_highlight" name="search_value"
+                                    >Join Meeting</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container o_mail_navbar_dropdown_channels"/>
+            </div>
+        </li>
+    </t>
+
+    <t t-name="ThemeSlider.Colors">
+        <t t-set="available" t-value="0"/>
+        <!--        <div class="row color_wrapper">-->
+        <!--            <t t-foreach="colors" t-as="color">-->
+        <!--                <div class="col-md-6 col-12">-->
+        <!--                    <div class="theme_item color" data-type="color" t-att-data-primary_color_value="color.color_primary" t-att-data-color_id="color.id" role="group">-->
+        <!--                        <span t-att-style="'background-color:' + color.color_primary "/>-->
+        <!--&lt;!&ndash;                        <i t-if="color.default" class='check fa fa-check-circle-o'/>&ndash;&gt;-->
+        <!--                        &lt;!&ndash; <i t-if='web_color_id==color.id' style='color:white; line-height:2.5em' class="fa fa-check-circle-o"/> &ndash;&gt;-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <t t-set="available" t-value="1"/>-->
+        <!--            </t>-->
+        <!--        </div>-->
+        <!--        <div t-if="available == 0"><b>No Colors Available <t t-esc="colors"/></b></div>-->
+    </t>
+</template>
