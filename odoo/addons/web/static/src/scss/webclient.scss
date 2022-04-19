@@ -1,0 +1,693 @@
+//----------------------------------------------------------------
+//
+//----------------------------------------------------------------
+.o_survey_form .o_survey_choice_btn, .o_survey_print .o_survey_choice_btn, .o_survey_session_manage .o_survey_choice_btn, .o_survey_quick_access .o_survey_choice_btn{
+    color: #606060 !important;
+}
+
+/*** Works on common browsers ***/
+::selection {
+    background-color: #EFF1F5 !important;
+}
+
+/*** Mozilla based browsers ***/
+::-moz-selection {
+    background-color: #EFF1F5 !important;
+}
+
+/***For Other Browsers ***/
+::-o-selection {
+    background-color: #EFF1F5 !important;
+}
+
+::-ms-selection {
+    background-color: #EFF1F5 !important;
+}
+
+/*** For Webkit ***/
+::-webkit-selection {
+    background-color: #EFF1F5 !important;
+}
+
+::selection {
+  background: #EFF1F5 !important; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #EFF1F5 !important; /* Gecko Browsers */
+}
+//----------------------------------------------------------------
+.o_main_navbar1 {
+	position: relative;
+	height: 60px;
+	//background-color: #2A7AB8;
+	color: #000;
+}
+
+.o_main_navbar1>a,
+.o_main_navbar1>button {
+	float: left;
+	height: 46px;
+	border: none;
+	padding: 0 12px 0 16px;
+	line-height: 46px;
+	background-color: transparent;
+	text-align: center;
+	color: inherit;
+	font-size: 18px;
+	user-select: none;
+}
+
+.o_main_navbar1>a:hover,
+.o_main_navbar1>a:focus,
+.o_main_navbar1>button:hover,
+.o_main_navbar1>button:focus {
+	background-color: #512e90;
+	color: inherit;
+}
+
+.o_main_navbar1>a:focus,
+.o_main_navbar1>a:active,
+.o_main_navbar1>a:focus:active,
+.o_main_navbar1>button:focus,
+.o_main_navbar1>button:active,
+.o_main_navbar1>button:focus:active {
+	outline: none;
+}
+
+.o_main_navbar>a:hover,
+.o_main_navbar>a:focus,
+.o_main_navbar>button:hover,
+.o_main_navbar>button:focus{
+    background-color: #4195CA !important;
+}
+
+.o_main_navbar > ul > li > a:hover, .o_main_navbar > ul > li > label:hover {
+    background-color: #4195CA !important;
+}
+
+.o_MessagingMenu_counter {
+    background-color: #4d7828 !important;
+    color: #fff !important;
+}
+
+.o_tooltip::before{
+    background: radial-gradient(#80CCFC , #80CCFC);
+}
+
+.o_searchview .o_searchview_facet .o_searchview_facet_label {
+    background-color: #2A7AB8 !important;
+}
+
+.o_searchview .o_searchview_facet{
+    background: none !important;
+}
+
+.o_mail_systray_item .o_notification_counter{
+    background: #4d7828 !important;
+}
+
+.o_main_navbar1 .o_app {
+	cursor: pointer;
+}
+
+.o_main_navbar1>.o_menu_brand {
+	display: block;
+	float: left;
+	margin-right: 35px;
+	user-select: none;
+	color: #000;
+	font-size: 22px;
+	font-weight: 500;
+	line-height: 46px;
+	cursor: pointer;
+}
+
+.o_main_navbar1>.o_menu_toggle {
+	margin-right: 5px;
+}
+
+.o_main_navbar1>ul {
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 7px;
+	list-style: none;
+}
+
+.o_main_navbar1>ul>li {
+	position: relative;
+	display: block;
+	float: right;
+}
+
+.o_main_navbar1>ul>li>a {
+	display: block;
+}
+
+.o_main_navbar1>ul>li>a:focus,
+.o_main_navbar1>ul>li>a:active,
+.o_main_navbar1>ul>li>a:focus:active {
+	outline: none;
+}
+
+.o_main_navbar1>ul>li>a,
+.o_main_navbar1>ul>li>a:hover,
+.o_main_navbar1>ul>li>a:focus {
+	text-decoration: none;
+}
+
+.o_main_navbar1>ul>li>a,
+.o_main_navbar1>ul>li>label {
+	height: 46px;
+	padding: 0 10px;
+	color: #000;
+	line-height: 46px;
+}
+
+.o_main_navbar1>ul>li>a:hover,
+.o_main_navbar1>ul>li>label:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.o_main_navbar1>ul>li.o_extra_menu_items>a {
+	width: 46px;
+	text-align: center;
+}
+
+.o_main_navbar1>ul>li.o_extra_menu_items.show>ul {
+	padding: 0;
+}
+
+.o_main_navbar1>ul>li.o_extra_menu_items.show>ul>li>a {
+	background-color: #2A7AB8;
+	color: #000;
+	border-bottom: 1px solid #e2e2e0;
+}
+
+.o_main_navbar1>ul>li.o_extra_menu_items.show>ul>li>a.dropdown-toggle {
+	background-color: #916dd1;
+	pointer-events: none;
+}
+
+.o_main_navbar1>ul>li.o_extra_menu_items.show>ul>li>.dropdown-menu {
+	position: static;
+	float: none;
+	display: block;
+	border: none;
+	box-shadow: none;
+	max-height: none;
+}
+
+.o_main_navbar1>ul.o_menu_systray {
+	//float: right;
+}
+
+.o_main_navbar1 .dropdown-menu.show {
+	max-height: 90vh;
+	min-width: 100%;
+	overflow: auto;
+	margin-top: 0;
+}
+
+.o_main_navbar1 .dropdown-menu.show .o_menu_header_lvl_3,
+.o_main_navbar1 .dropdown-menu.show .o_menu_entry_lvl_3 {
+	padding-left: 32px;
+}
+
+.o_main_navbar1 .dropdown-menu.show .o_menu_header_lvl_4,
+.o_main_navbar1 .dropdown-menu.show .o_menu_entry_lvl_4 {
+	padding-left: 44px;
+}
+
+.o_main_navbar1 .dropdown-menu.show .o_menu_header_lvl_5,
+.o_main_navbar1 .dropdown-menu.show .o_menu_entry_lvl_5 {
+	padding-left: 56px;
+}
+
+.o_main_navbar1 .show .dropdown-toggle {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.o_main_navbar1 .o_user_menu {
+	margin-left: 6px;
+}
+
+.o_main_navbar1 .o_user_menu>a {
+	padding-right: 16px;
+}
+
+.o_main_navbar1 .o_user_menu .oe_topbar_avatar {
+	height: 26px;
+	width: 26px;
+	object-fit: cover;
+	transform: translateY(-2px);
+}
+.dropdown-menu-right{
+    left: 0 !important;
+    right: auto !important;
+}
+///////////////////////Nav 2 ////////////////////////
+.btn-fill-primary, .btn-primary{
+    background-color: #606060 !important;
+    border-color: #606060 !important;
+}
+///////////////////////Logo ////////////////////////
+.company_name{
+    float:right;
+    padding: 7px;
+}
+
+.compane_name_p1{
+    font-size: 30px;
+    font-weight: bold;
+    color: #2983bf;
+    font-family: Lato;
+    font-style: normal !important;
+}
+.company_name_p2{
+    font-size: 30px;
+    font-weight: bold;
+    color: #4d7828;
+    font-family: Lato;
+    font-style: normal !important;
+}
+///////////////////////Body ////////////////////////
+body{
+    font-family:Lato !important;
+    font-size:15px !important;
+}
+////////////////////////ICON/////////////////////////////
+.fa-chevron-right:before{
+      content: "\f0a9" !important;
+}
+.fa-chevron-left:before{
+        content: "\f0a8" !important;
+}
+.fa-clock-o:before{
+        content: "\f073" !important;
+}
+.fa-paperclip:before{
+        content: "\f196" !important;
+}
+.fa-check:before{
+    content: "\f234" !important;
+}
+.fa-user:before{
+    content: "\f0c0" !important;
+}
+////////////////////////Nav Tab////////////////////////////
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+    border-top: none !important;
+    border-left:none !important;
+    border-right:none !important;
+    border-bottom:4px solid #32A0E8;
+}
+///////////////////////Nav1 ////////////////////////
+.o_main_navbar{
+    background: linear-gradient(270deg, #32A0E8 0%, #226FA1 100%) !important;
+    border:none !important;
+    height:56px;
+    padding-top: 4px;
+}
+.o_menu_header_lvl_1,.o_menu_entry_lvl_1{
+    border-right: 1px solid #fff;
+}
+///////////////////////Title ////////////////////////
+
+.o_control_panel .breadcrumb > li{
+    margin-left: 30px;
+}
+
+.o_control_panel .breadcrumb > li > a {
+    height: 24px;
+  width: 251px;
+  color: #1A2633;
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+.o_control_panel{
+    padding-left: 0px !important;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ":";
+}
+////////////////////////Top Button ////////////////////////////
+.o_cp_float_right{
+    display: flex;
+    margin-left: auto;
+}
+
+////////////////////////////Pagination/////////////////////////////////
+
+///////////////////////////////All Button/////////////////////////////////////////
+.o_pager_previous,.o_pager_next,.o_form_button_create,.o_dropdown_toggler_btn,.btn-primary:enabled,.btn-secondary:enabled{
+  color: #2A7AB8 !important;
+  font-weight: bold !important;
+  letter-spacing: 0 !important;
+  line-height: 18px !important;
+  box-sizing: border-box !important;
+  height: 30px !important;
+  border: 1px solid #D8D8D8 !important;
+  border-radius: 1px !important;
+  background-color: #FFFFFF !important;
+  box-shadow: 0 1px 3px 1px rgba(0,0,0,0.15) !important;
+  margin: 5px;
+}
+////////////////////////////////////Sheet 1/////////////////////////////////////////////
+.o_form_view .o_form_sheet_bg{
+    border-bottom:none !important;
+    background : none !important;
+}
+.o_form_view .o_form_sheet_bg > .o_form_sheet{
+    max-width: 1000px !important;
+    width:70% !important;
+    border-top: 5px solid #32A0E8 !important;
+    margin-top: 2% !important;
+}
+////////////////////////////////////Sheet 2/////////////////////////////////////////////
+.o_FormRenderer_chatterContainer{
+    //max-width: 1000px !important;
+    max-width: none !important;
+    padding:0 !important;
+//     width:70% !important;
+//     border: 1px solid #c8c8d3;
+//     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+//     background: white;
+    //margin-top: -155px !important;
+}
+///////////////////////////////////Left Column////////////////////////////////////////////////////
+.o_form_view .o_form_statusbar > .o_statusbar_buttons {
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    position: relative;
+    //top: 32%;
+    //z-index: 999;
+    background: #ffff;
+    //width: 142px;
+    //left:0px;
+    //right: 85%;
+    border: 1px solid #c8c8d3;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-top: 5px solid #32A0E8;
+    justify-content:center;
+    width: 13%;
+    //margin-top: 2%;
+}
+.o_form_view .o_form_statusbar{
+    border-bottom :none !important;
+    margin:0px !important;
+    padding:0px !important;
+    padding-left:0px !important;
+    position: absolute !important;
+    width: 100% !important;
+}
+//////////////////////////////////////////Right Column///////////////////////////////////////////////////////
+.o_form_view .oe_button_box {
+    position: absolute !important;
+    display: block;
+    margin-bottom: 24px;
+    margin-top: -24px;
+    margin-left: -16px;
+    margin-right: -16px;
+    text-align: right;
+    box-shadow: inset 0 -1px 0 #ced4da;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    //right: 0px;
+    border: 1px solid #c8c8d3 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    border-top: 5px solid #32A0E8 !important;
+    //left: 92%;
+    //width: 10%;
+    background: #fff;
+    //top:238px;
+    //top: -96px;
+    margin-top: 0px !important;
+    left: 1000px;
+    right: auto;
+}
+.o_form_view .oe_button_box .btn.oe_stat_button {
+    color: #4c4c4c;
+    height:auto !important;
+    padding: auto !important;
+    text-align: center !important;
+    white-space: normal !important;
+    background-color: none !important;
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    align-content: space-around;
+}
+///////////////////////////////////////// Status bar//////////////////////////////////////////////////////////////////
+
+button[data-value="1"].btn.o_arrow_button.btn-secondary.disabled:before,button[data-value="sent"].btn.o_arrow_button.btn-secondary.disabled:after,button[data-value="sent"].btn.o_arrow_button.btn-primary.disabled:after {
+    content: ">";
+    padding-left: 18px;
+    padding-right: 4px;
+    color: #000;
+}
+button[data-value="1"].btn.o_arrow_button.btn-secondary.disabled:before,button[data-value="sent"].btn.o_arrow_button.btn-secondary.disabled:before,button[data-value="sent"].btn.o_arrow_button.btn-primary.disabled:before {
+    content: ">";
+    //padding-left: 18px;
+    padding-right: 18px;
+    color: #000;
+}
+button.btn.o_arrow_button.btn-primary.disabled{
+    color:#2A7AB8 !important;
+    background:none !important;
+    border:none !important;
+}
+.o_statusbar_status.o_field_widget.o_readonly_modifier {
+    display: flex;
+    justify-content: flex-end;
+    flex-flow: row-reverse wrap-reverse;
+    top: 170px;
+    position: fixed !important;
+}
+.o_statusbar_status.o_field_widget{
+    display: flex;
+    justify-content: flex-end;
+    flex-flow: row-reverse wrap-reverse;
+    top: 170px;
+    position: fixed !important;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////left column sheet2////////////////////////////////////////////////
+.o_ChatterTopbar_actions{
+    position: relative;
+    //position: absolute;
+    //right: auto;
+    //left: 0%;
+    //top: 65%;
+    //width: 11%;
+    //width: 170px;
+    border: 1px solid #c8c8d3 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    border-top: 5px solid #32A0E8 !important;
+    //width: 14%;
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////Right Column Sheet2 //////////////////////////////
+.o_ChatterTopbar_rightSection{
+     //width: 100%;
+     justify-content:center;
+//     display:inline-block !important;
+//     position: absolute;
+//     //left: auto;
+//     //right: 0;
+//     border: 1px solid #c8c8d3 !important;
+//     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+//     border-top: 5px solid blue !important;
+//     width: 100%;
+//     left: 905px;
+}
+.o_ChatterTopbar{
+    min-height: 0 !important;
+    margin: 0 auto;
+    max-width: 1000px !important;
+    width: 70%;
+    margin-bottom: 12px;
+}
+.o_Chatter_scrollPanel{
+    max-width: 1000px !important;
+    border: 1px solid #c8c8d3;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    background: white;
+    margin: 0 auto;
+    width: 70%;
+    border: 1px solid #c8c8d3;
+    border-top: 5px solid #32A0E8 !important;
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////Setting////////////////////////////////////////////////
+.o_base_settings
+.o_control_panel
+.o_panel
+.title,
+.o_base_settings
+.o_control_panel
+.o_panel
+.o_setting_search{
+    margin-left: 30px !important;
+}
+////////////////////////////Sheet//////////////////////////////////////////////////
+.o_base_settings .o_setting_container{
+    margin-top: 40px !important;
+}
+///////////////////////sdasdasd/////////////////////////////////////////////////////
+html .o_web_client > .o_action_manager > .o_action > .o_content{
+    background-color:white;
+}
+///////////////////////////////////////////////////////////////////////////
+///////////////////////Button/////////////////
+.btn-link{
+    color:#4d7828 !important;
+}
+////////////////////////////////////////////
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+// Custom
+//----------------------------------------------------------------
+:root {
+    font-size: $o-root-font-size;
+}
+
+// ------------------------------------------------------------------
+//  General
+// ------------------------------------------------------------------
+.o_web_client {
+    direction: ltr;
+    position: relative; // normally useless but required by bootstrap-datepicker
+    background-color: $o-webclient-background-color;
+}
+
+// ------------------------------------------------------------------
+// Misc. widgets
+// ------------------------------------------------------------------
+
+// Buttons
+.o_icon_button {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    outline: none;
+}
+
+// Boolean Toggle widget
+div.o_boolean_toggle.custom-control.custom-checkbox {
+    $line-height-computed: $line-height-base * $font-size-base;
+    $slider-width: $line-height-computed * 1.5;
+    $circle-width: $line-height-computed * 0.6;
+
+    display: inline-block;
+    padding-left: $slider-width + 0.25rem;
+
+    > label.custom-control-label {
+        &::before, &::after {
+            content: "";
+            top: 0;
+            left: -($slider-width + 0.25rem);
+        }
+        &::before {
+            width: $slider-width;
+            height: 100%;
+            background-color: #a0a0a0 !important;
+            border-radius: 100px;
+            outline: none !important;
+        }
+        &::after {
+            transform: translate($line-height-computed * 0.2, $line-height-computed * 0.2);
+            width: ceil($circle-width / 1rem * $o-root-font-size);
+            height: ceil($circle-width / 1rem * $o-root-font-size);
+            border-radius: 100px;
+            background-color: $white;
+            cursor: pointer;
+        }
+    }
+    > input.custom-control-input:checked + label.custom-control-label {
+        &::before {
+            background-color: $o-brand-primary !important;
+        }
+        &::after {
+            transform: translate($slider-width - $circle-width - $line-height-computed * 0.2, $line-height-computed * 0.2);
+            background-image: none;
+        }
+    }
+}
+
+// Full bg colors (bootstrap extension)
+.bg-success-full {
+    background-color: theme-color('success');
+}
+.bg-warning-full {
+    background-color: theme-color('warning');
+}
+.bg-danger-full {
+    background-color: theme-color('danger');
+}
+.bg-info-full {
+    background-color: theme-color('info');
+}
+.bg-muted-full {
+    background-color: #dee2e6;
+}
+
+// Light version of contextual bg colors (e.g. bg-danger-light)
+@each $name in ('primary', 'secondary', 'success', 'danger', 'warning', 'info') {
+    @include bg-variant('.bg-#{$name}-light', rgba(theme-color($name), .5), #333);
+}
+
+.o_web_accesskey_overlay {
+    font-family: $font-family-sans-serif;
+}
+
+// Decorations
+.text-bf {
+    font-weight: bold;
+}
+.text-it {
+    font-style: italic;
+}
+
+//== Badges
+.badge {
+    margin: 1px 2px 1px 0;
+}
+
+// Btn-link variations
+.btn-link {
+    font-weight: $btn-font-weight;
+
+    &.btn-secondary {
+        @include o-btn-link-variant($body-color, $headings-color);
+    }
+    &.btn-success, &.text-success {
+        @include o-btn-link-variant($body-color, theme-color('success'));
+    }
+    &.btn-warning, &.text-warning {
+        @include o-btn-link-variant($body-color, theme-color('warning'));
+    }
+    &.btn-danger, &.text-danger {
+        @include o-btn-link-variant($body-color, theme-color('danger'));
+    }
+    &.btn-info, &.text-info {
+        @include o-btn-link-variant($body-color, darken(theme-color('info'), 20%));
+    }
+}
+
+//== Printing improvements
+@media print {
+    .table-responsive {
+        overflow-x: initial;
+    }
+}
+
+//== Action manager
+// ensure special links are styled as pointers even when they don't
+// have an href
+[type="action"], [type="toggle"] {
+  cursor: pointer !important;
+}
