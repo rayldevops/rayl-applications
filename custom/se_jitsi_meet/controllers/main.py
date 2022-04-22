@@ -85,7 +85,8 @@ class JitsiWebhook(http.Controller):
         _logger.info("Webhook called SuccessFully")
         _logger.info(f"Request Parameters {dir(request)}")
         _logger.info(f" Json Request Parameters {request.jsonrequest}")
-        _logger.info(f"HTTP Request Params {request.httprequest.POST}")
+        _logger.info(f"HTTP Request Params {dir(request.session)}")
+        _logger.info(f"HTTP Request Params {request.session}")
         # _logger.info(f"Get Parameters {request.GET}")
         # _logger.info(f"POST Parameters {request.headers}")
         return {"data": "Success"}
