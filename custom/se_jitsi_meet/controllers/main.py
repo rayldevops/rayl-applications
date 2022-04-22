@@ -86,5 +86,5 @@ class JitsiWebhook(http.Controller):
         _logger.info(f"Request Parameters {request}")
         # _logger.info(f" Parameters {request}")
         # _logger.info(f"Get Parameters {request.GET}")
-        # _logger.info(f"POST Parameters {request.POST}")
+        _logger.info(f"POST Parameters {request.POST}")
         return {"data": "Success"}
