@@ -2,6 +2,17 @@
 <odoo noupdate="0">
     <record id="jitsi_meet_url" model="ir.config_parameter">
         <field name="key">jitsi.meet_url</field>
-        <field name="value">meet.jit.si</field>
+        <field name="value">8x8.vc</field>
     </record>
+
+    <record id="jitsi_app_id" model="ir.config_parameter">
+        <field name="key">jitsi.app_id</field>
+        <field name="value">vpaas-magic-cookie-75f0152a70b0454eb524f8a4b18fe214</field>
+    </record>
+
+    <record id="jitsi_kid" model="ir.config_parameter">
+        <field name="key">jitsi.kid</field>
+        <field name="value">vpaas-magic-cookie-75f0152a70b0454eb524f8a4b18fe214/90c0bd</field>
+    </record>
+
 </odoo>
