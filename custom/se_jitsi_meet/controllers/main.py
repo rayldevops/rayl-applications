@@ -83,10 +83,6 @@ class JitsiWebhook(http.Controller):
     def generate_jwt_token(self, **kwargs):
         print("Webhook success")
         _logger.info("Webhook called SuccessFully")
-        _logger.info(f"Request Parameters {dir(request)}")
+        _logger.info(f"Request Parameters {request.__dict__()}")
         _logger.info(f" Json Request Parameters {request.jsonrequest}")
-        _logger.info(f"HTTP Request Params {dir(request.session)}")
-        _logger.info(f"HTTP Request Params {request.session}")
-        # _logger.info(f"Get Parameters {request.GET}")
-        # _logger.info(f"POST Parameters {request.headers}")
         return {"data": "Success"}
