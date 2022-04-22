@@ -79,7 +79,7 @@ class JistiMeet(http.Controller):
 
 class JitsiWebhook(http.Controller):
 
-    @http.route('/jitsi_recording', type='http', auth="public", website=True,  methods=['POST'])
+    @http.route('/jitsi_recording', type='json', auth="public", website=True,  methods=['POST'])
     def generate_jwt_token(self):
         print("Webhook success")
         _logger.info("Webhook called SuccessFully")
