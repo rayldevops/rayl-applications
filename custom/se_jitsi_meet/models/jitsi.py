@@ -1,5 +1,6 @@
 from odoo import models, fields, api,_
 from random import choice
+from odoo.http import request
 
 
 def create_hash():
@@ -7,12 +8,13 @@ def create_hash():
     values = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     p = ''
     p = p.join([choice(values) for i in range(size)])
-    return p
+    app_id = request.env['ir.config_parameter'].sudo().get_param('jitsi.app_id')
+    return f"{app_id}/{p}"
 
 
 class JistiMeet(models.Model):
     _name = 'jitsi.meet'
-    _description = 'Jitsi Meeting'
+    _description = 'RAYL Meeting'
     _order = 'date desc'
     _inherit = 'mail.thread'
 
@@ -38,10 +40,10 @@ class JistiMeet(models.Model):
         string='Is username and password required?',
         required=False, default=False)
     password = fields.Char(
-        string='Password',default='',
+        string='Password', default='',
         required=False)
     user = fields.Char(
-        string='User',default='',
+        string='User', default='',
         required=False)
 
     def _compute_domain(self):
@@ -69,8 +71,8 @@ class JistiMeet(models.Model):
 
     def open(self):
         url = self.env['ir.config_parameter'].sudo().get_param('web.base.url',
-                                                               default='http://localhost:8011')
-        return {'name': 'JITSI MEET',
+                                                               default='http://localhost:8069')
+        return {'name': 'RAYL MEET',
                 'res_model': 'ir.actions.act_url',
                 'type': 'ir.actions.act_url',
                 'target': 'new',
@@ -84,13 +86,14 @@ class JistiMeet(models.Model):
             'jitsi_calendar.meet_url',
             default='https://meet.jit.si/')
         url_site = self.env['ir.config_parameter'].sudo().get_param('web.base.url',
-                                                                    default='http://localhost:8011')
+                                                                    default='http://localhost:8069')
         for r in self:
             if not r.hash:
                 r.hash = create_hash()
             if r.hash and r.name and r.id:
                 r.url = config_url + r.hash
                 r.url_to_link = url_site + "/meet/" + str(r.id)
+                print(r.url)
 
     def send_mail(self):
         for record in self.participants:
@@ -101,7 +104,7 @@ class JistiMeet(models.Model):
                 '<a href="%s">JOIN MEETING</a>'
                 ' </p>')
             if self.is_password_required:
-                mail_content=_(
+                mail_content = _(
                 '<div><p>You have been invited to a meeting</p>'
                 ' <p>Please join us on  %s by clicking on the followin link: </p>'
                 ' <p>'
@@ -110,14 +113,14 @@ class JistiMeet(models.Model):
                 '<p>Credentials </p>'
                 ' <p>User: %s</p>'
                 '<p>Password:  %s</p>'
-                 '<p>Thank you,</p></div>')% ( self.date_formated, self.url_to_link, str(self.user), str(self.password))
+                 '<p>Thank you,</p></div>') % (self.date_formated, self.url_to_link, str(self.user), str(self.password))
             else:
-                mail_content+='<p>Thank you,</p></div>'
+                mail_content +='<p>Thank you,</p></div>'
                 mail_content = (mail_content) % (self.date_formated, self.url_to_link)
             main_content = {
-                'subject': "Jitsi Meet Invitation",
+                'subject': "RAYL Meet Invitation",
                 'author_id': self.env.user.partner_id.id,
-                'body_html':mail_content,
+                'body_html': mail_content,
                 'email_to': record.email,
             }
             self.env['mail.mail'].create(main_content).send()

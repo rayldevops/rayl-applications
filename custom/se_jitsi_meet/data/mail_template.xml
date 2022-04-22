@@ -5,7 +5,7 @@
     <data >
         <!--Email template -->
         <record id="email_template_edi_se_jitsi_meet" model="mail.template">
-            <field name="name">Rayl Meet Invitation</field>
+            <field name="name">RAYL Meet Invitation</field>
              <field name="email_from">${object.company_id and object.company_id.email or ''}</field>
             <field name="email_to">${object.name}</field>
             <field name="subject">${object.name}</field>
