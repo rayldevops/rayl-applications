@@ -83,20 +83,21 @@ class JitsiWebhook(http.Controller):
     def generate_jwt_token(self, **kwargs):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
+        download_link = data.get('data').get('preAuthenticatedLink')
         _logger.info(f" Json Request Parameters {data}")
-        _logger.info(f" Download Link {data.get('data').get('preAuthenticatedLink')}")
+        _logger.info(f" Download Link {download_link}")
         body = _(
             '<div>'
             ' <p>Please click on the below link for downloading the meeting recording</p>'
             '<a href="%s" class="btn btn-success">Download Link</a>'
-            '<a href="%s" class="btn btn-success">Download Link 2</a></div>' % (data.get('data').get('preAuthenticatedLink'), data.get('data').get('preAuthenticatedLink')))
+            '%s'
+            '</div>' % (str(download_link), download_link))
         main_content = {
             'subject': "RAYL Meet Download Link",
-            'author_id': request.env.user.partner_id.id,
+            # 'author_id': request.env.user.partner_id.id,
             'email_from': request.env.user.partner_id.id,
             'body_html': body,
             'email_to': "cj@planet-odoo.com",
         }
-        mail_id = request.env['mail.mail'].sudo().create(main_content).sudo().send()
-        mail_id.sudo().process_email_queue()
+        request.env['mail.mail'].sudo().create(main_content).sudo().send()
         return {"data": "Success"}
