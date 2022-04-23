@@ -85,7 +85,9 @@ class JitsiWebhook(http.Controller):
         data = request.jsonrequest
         download_link = data.get('data').get('preAuthenticatedLink')
         mail_server_id = request.env['ir.mail_server'].sudo().search([], limit=1)
-        _logger.info(f" Email {request.env.user.partner_id.email}")
+        _logger.info(f" Email {request.env.user.login}")
+        _logger.info(f" Email Formatted {request.env.user.email_formatted}")
+        _logger.info(f" Email Formatted {request.env.user.email}")
         # _logger.info(f" Download Link {download_link}")
         body = _(
             '<div>'
