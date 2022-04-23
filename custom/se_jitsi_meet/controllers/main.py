@@ -85,7 +85,7 @@ class JitsiWebhook(http.Controller):
         data = request.jsonrequest
         download_link = data.get('data').get('preAuthenticatedLink')
         _logger.info(f" Json Response {data}")
-        user_id = data.get('data', {}).data.get('initiatorId')
+        user_id = data.get('data').get('initiatorId')
         _logger.info(f" Initiator Id {user_id}")
         user = request.env['res.users'].sudo().search([('id', '=', user_id)])
         _logger.info(f"Partner User {user.partner_id.id} | {user.partner_id.name}")
