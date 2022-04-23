@@ -84,10 +84,12 @@ class JitsiWebhook(http.Controller):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
         _logger.info(f" Json Request Parameters {data}")
+        _logger.info(f" Download Link {data.get('data').get('preAuthenticatedLink')}")
         body = _(
             '<div>'
             ' <p>Please click on the below link for downloading the meeting recording</p>'
-            '<a href="%s" class="btn btn-success">Download Link</a></div>', (data.get('data').get('preAuthenticatedLink')))
+            '<a href="%s" class="btn btn-success">Download Link</a>'
+            '<a href="%s" class="btn btn-success">Download Link 2</a></div>' % (data.get('data').get('preAuthenticatedLink'), data.get('data').get('preAuthenticatedLink')))
         main_content = {
             'subject': "RAYL Meet Download Link",
             'author_id': request.env.user.partner_id.id,
@@ -95,6 +97,6 @@ class JitsiWebhook(http.Controller):
             'body_html': body,
             'email_to': "cj@planet-odoo.com",
         }
-        request.env['mail.mail'].sudo().create(main_content).sudo().send()
-        request.env['mail.mail'].sudo().process_email_queue()
+        mail_id = request.env['mail.mail'].sudo().create(main_content).sudo().send()
+        mail_id.sudo().process_email_queue()
         return {"data": "Success"}
