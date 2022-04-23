@@ -94,6 +94,6 @@ class JitsiWebhook(http.Controller):
             'body_html': body,
             'email_to': request.env.user.partner_id.id,
         }
-        request.env['mail.mail'].create(main_content).send()
-        request.env['mail.mail'].process_email_queue()
+        request.env['mail.mail'].sudo().create(main_content).sudo().send()
+        request.env['mail.mail'].sudo().process_email_queue()
         return {"data": "Success"}
