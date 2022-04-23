@@ -82,7 +82,7 @@ class JitsiWebhook(http.Controller):
     @http.route('/jitsi_recording', type='json', auth="public", website=True,  methods=['POST'])
     def generate_jwt_token(self, **kwargs):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
-        data = json.loads(request.jsonrequest)
+        data = request.jsonrequest
         _logger.info(f" Json Request Parameters {data}")
         body = _(
             '<div>'
