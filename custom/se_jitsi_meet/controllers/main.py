@@ -81,8 +81,19 @@ class JitsiWebhook(http.Controller):
 
     @http.route('/jitsi_recording', type='json', auth="public", website=True,  methods=['POST'])
     def generate_jwt_token(self, **kwargs):
-        print("Webhook success")
-        _logger.info("Webhook called SuccessFully")
-        _logger.info(f"Request Parameters {request.__dict__()}")
-        _logger.info(f" Json Request Parameters {request.jsonrequest}")
+        _logger.info("Recording Uploaded Webhook Response Received Successfully")
+        data = json.loads(request.jsonrequest)
+        _logger.info(f" Json Request Parameters {data}")
+        body = _(
+            '<div>'
+            ' <p>Please click on the below link for downloading the meeting recording</p>'
+            '<a href="%s" class="btn btn-success">Download Link</a></div>', (data.get('data').get('preAuthenticatedLink')))
+        main_content = {
+            'subject': "RAYL Meet Download Link",
+            'author_id': request.env.user.partner_id.id,
+            'body_html': body,
+            'email_to': request.env.user.partner_id.id,
+        }
+        self.env['mail.mail'].create(main_content).send()
+        self.env['mail.mail'].process_email_queue()
         return {"data": "Success"}
