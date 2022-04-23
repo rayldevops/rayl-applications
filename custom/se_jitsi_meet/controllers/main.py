@@ -86,8 +86,9 @@ class JitsiWebhook(http.Controller):
         download_link = data.get('data').get('preAuthenticatedLink')
         mail_server_id = request.env['ir.mail_server'].sudo().search([], limit=1)
         _logger.info(f" Email {request.env.user.login}")
+        _logger.info(f" User {request.env.user}")
         _logger.info(f" Email Formatted {request.env.user.email_formatted}")
-        _logger.info(f" Email Formatted {request.env.user.email}")
+        _logger.info(f" Email {request.env.user.email}")
         # _logger.info(f" Download Link {download_link}")
         body = _(
             '<div>'
@@ -101,7 +102,8 @@ class JitsiWebhook(http.Controller):
             'email_from': "noreply@rayl.app",
             'body_html': body,
             # 'email_to': request.env.user.partner_id.email,
-            'email_to': "cj@planet-odoo.com",
+            # 'email_to': "cj@planet-odoo.com",
+            "recipient_ids": [(4, request.env.user.partner_id.id)]
         }
         request.env['mail.mail'].sudo().create(main_content).sudo().send()
         return {"data": "Success"}
