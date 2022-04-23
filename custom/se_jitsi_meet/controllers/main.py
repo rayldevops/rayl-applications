@@ -84,8 +84,8 @@ class JitsiWebhook(http.Controller):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
         download_link = data.get('data').get('preAuthenticatedLink')
-        _logger.info(f" User UID {request.uid}")
-        user = request.env[''].sudo().search([('id', '=', request.uid)], limit=1)
+        _logger.info(f" User UID {request.session.uid}")
+        user = request.env['res.users'].sudo().search([('id', '=', request.session.uid)], limit=1)
         body = _(
             '<div>'
             ' <p>Please click on the below link for downloading the meeting recording</p>'
