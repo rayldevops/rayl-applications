@@ -93,7 +93,7 @@ class JitsiWebhook(http.Controller):
             '</div>' % download_link)
         main_content = {
             'subject': "RAYL Meet Download Link",
-            'author_id': request.env.user.partner_id.email,
+            # 'author_id': request.env.user.partner_id.email,
             'email_from': "noreply@rayl.app",
             'body_html': body,
             'email_to': request.env.user.partner_id.email,
