@@ -84,7 +84,7 @@ class JitsiWebhook(http.Controller):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
         download_link = data.get('data').get('preAuthenticatedLink')
-        mail_server_id = request.env['ir.mail_server'].search([], limit=1)
+        mail_server_id = request.env['ir.mail_server'].sudo().search([], limit=1)
         # _logger.info(f" Json Request Parameters {data}")
         # _logger.info(f" Download Link {download_link}")
         body = _(
