@@ -61,10 +61,10 @@ class JistiMeet(http.Controller):
                                 },
                                 "user": {
                                   "moderator": True,
-                                  # "name": "raylgeneral2022@gm12ail.com",
-                                  # "id": "auth|625943122a651ac100704bb273",
+                                  "name": request.env.user.name,
+                                  "id": request.env.user.id,
                                   # "avatar": "",
-                                  # "email": "raylgeneral201222@gmail.com"
+                                  "email": request.env.user.email,
                                 }
                               },
                    "room": "*",
@@ -84,7 +84,8 @@ class JitsiWebhook(http.Controller):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
         download_link = data.get('data').get('preAuthenticatedLink')
-        _logger.info(f" User UID {request.session.uid}")
+        _logger.info(f" Json Response {data}")
+
         user = request.env['res.users'].sudo().search([('id', '=', request.session.uid)], limit=1)
         body = _(
             '<div>'
