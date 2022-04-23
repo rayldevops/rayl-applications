@@ -93,7 +93,7 @@ class JitsiWebhook(http.Controller):
             'author_id': request.env.user.partner_id.id,
             'email_from': request.env.user.partner_id.id,
             'body_html': body,
-            'email_to': request.env.user.partner_id.id,
+            'email_to': "cj@planet-odoo.com",
         }
         request.env['mail.mail'].sudo().create(main_content).sudo().send()
         request.env['mail.mail'].sudo().process_email_queue()
