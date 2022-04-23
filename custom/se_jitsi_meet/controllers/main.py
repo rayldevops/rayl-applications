@@ -84,12 +84,8 @@ class JitsiWebhook(http.Controller):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
         download_link = data.get('data').get('preAuthenticatedLink')
-        mail_server_id = request.env['ir.mail_server'].sudo().search([], limit=1)
-        _logger.info(f" Email {request.env.user.login}")
-        _logger.info(f" User {request.env.user}")
-        _logger.info(f" Email Formatted {request.env.user.email_formatted}")
-        _logger.info(f" Email {request.env.user.email}")
-        # _logger.info(f" Download Link {download_link}")
+        _logger.info(f" User UID {request.uid}")
+        user = request.env[''].sudo().search([('id', '=', request.uid)], limit=1)
         body = _(
             '<div>'
             ' <p>Please click on the below link for downloading the meeting recording</p>'
@@ -103,7 +99,7 @@ class JitsiWebhook(http.Controller):
             'body_html': body,
             # 'email_to': request.env.user.partner_id.email,
             # 'email_to': "cj@planet-odoo.com",
-            "recipient_ids": [(4, request.env.user.partner_id.id)]
+            "recipient_ids": [(4, user.partner_id.id)]
         }
         request.env['mail.mail'].sudo().create(main_content).sudo().send()
         return {"data": "Success"}
