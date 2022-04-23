@@ -84,6 +84,7 @@ class JitsiWebhook(http.Controller):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
         download_link = data.get('data').get('preAuthenticatedLink')
+        mail_server_id = request.env['ir.mail_server'].search([], limit=1)
         # _logger.info(f" Json Request Parameters {data}")
         # _logger.info(f" Download Link {download_link}")
         body = _(
@@ -94,6 +95,7 @@ class JitsiWebhook(http.Controller):
         main_content = {
             'subject': "RAYL Meet Download Link",
             # 'author_id': request.env.user.partner_id.email,
+            'mail_server_id': mail_server_id.id,
             'email_from': "noreply@rayl.app",
             'body_html': body,
             'email_to': request.env.user.partner_id.email,
