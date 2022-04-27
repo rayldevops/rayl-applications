@@ -13,7 +13,7 @@
     "depends": ['base', 'mail'],
     "data": [
         'security/ir.model.access.csv',
-        'views/ir_mail_server.xml',
+        'views/mail_server_settings.xml',
     ],
     'images': [],
     'installable': True,

@@ -62,7 +62,7 @@ class JistiMeet(http.Controller):
                                 "user": {
                                   "moderator": True,
                                   "name": request.env.user.name,
-                                  "id": request.env.user.id,
+                                  "id": request.env.user.email,
                                   # "avatar": "",
                                   "email": request.env.user.email,
                                 }
@@ -83,14 +83,10 @@ class JitsiWebhook(http.Controller):
     def generate_jwt_token(self, **kwargs):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
+        _logger.info(data)
         download_link = data.get('data').get('preAuthenticatedLink')
-        _logger.info(f" Json Response {data}")
         user_id = data.get('data').get('initiatorId')
-        _logger.info(f" Initiator Id {user_id}")
-        user = request.env['res.users'].sudo().search([('id', '=', user_id)])
-        _logger.info(f"Partner User {user.partner_id.id} | {user.partner_id.name}")
-        _logger.info(f"User {user} | {user.email} | {user.name}")
-        _logger.info(f" User Partner ID Email {user.partner_id.email}")
+        # user = request.env['res.users'].sudo().search([('id', '=', user_id)])
         body = _(
             '<div>'
             ' <p>Please click on the below link for downloading the meeting recording</p>'
@@ -100,8 +96,8 @@ class JitsiWebhook(http.Controller):
             'subject': "RAYL Meet Download Link",
             'email_from': "noreply@rayl.app",
             'body_html': body,
-            'email_to': user.partner_id.email,
-            # "recipient_ids": [(4, user.partner_id.id)]
+            'email_to': user_id,
         }
+        _logger.info(main_content)
         request.env['mail.mail'].sudo().create(main_content).sudo().send()
         return {"data": "Success"}
