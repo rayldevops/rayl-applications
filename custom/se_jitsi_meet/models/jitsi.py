@@ -1,15 +1,31 @@
 from odoo import models, fields, api,_
 from random import choice
 from odoo.http import request
+from cryptography.fernet import Fernet
+from simplecrypt import encrypt
+import logging
+from base64 import b64encode, b64decode
+_logger = logging.getLogger(__name__)
 
 
 def create_hash():
     size = 32
     values = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    _logger.info(values)
+
     p = ''
     p = p.join([choice(values) for i in range(size)])
     app_id = request.env['ir.config_parameter'].sudo().get_param('jitsi.app_id')
-    return f"{app_id}/{p}"
+    login=request.env.user.login
+    # key = Fernet.generate_key()
+    fernet = Fernet(b'zo8pSXpoDDnvdw0dzyEX5j5FtTJ6vYFZClmdg8EH5y4=')
+    encMessage = fernet.encrypt(login.encode())
+    str_messages = encMessage.decode("utf-8")
+    str_message= str(str_messages)
+    _logger.info(str_message)
+    str_message=str_message.lower()
+    _logger.info(str_message)
+    return f"{app_id}/{str_message}"
 
 
 class JistiMeet(models.Model):
@@ -60,6 +76,8 @@ class JistiMeet(models.Model):
     @api.model
     def create(self, vals):
         vals['hash'] = create_hash()
+        _logger.info(vals['hash'])
+        _logger.info(vals)
         res = super(JistiMeet, self).create(vals)
         return res
 
@@ -100,7 +118,7 @@ class JistiMeet(models.Model):
             mail_content = _(
                 '<div><p>You have been invited to a meeting</p>'
                 ' <p>Please join us on  %s by clicking on the followin link: </p>'
-                ' <p>'
+                  ' <p>'
                 '<a href="%s">JOIN MEETING</a>'
                 ' </p>')
             if self.is_password_required:

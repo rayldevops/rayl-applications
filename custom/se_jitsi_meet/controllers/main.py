@@ -18,12 +18,14 @@ from odoo.http import request
 from authlib.jose import jwt
 import os
 import logging
+from simplecrypt import decrypt
+from base64 import b64encode, b64decode
+from cryptography.fernet import Fernet
 
 _logger = logging.getLogger(__name__)
 
 
 class JistiMeet(http.Controller):
-
     exp_time = 7200  # 7200 Seconds = 2 Hours
     nbf_seconds = 10  # Seconds
 
@@ -41,7 +43,7 @@ class JistiMeet(http.Controller):
         else:
             return request.render("se_jitsi_meet.meet_closed")
 
-    @http.route('/get-jwt-token', type='http', auth="public", website=True,  methods=['GET'])
+    @http.route('/get-jwt-token', type='http', auth="public", website=True, methods=['GET'])
     def generate_jwt_token(self):
         app_id = request.env['ir.config_parameter'].sudo().get_param('jitsi.app_id')
         header = {"kid": request.env['ir.config_parameter'].sudo().get_param('jitsi.kid'),
@@ -52,21 +54,21 @@ class JistiMeet(http.Controller):
                    "exp": int(_time + JistiMeet.exp_time),
                    "nbf": int(_time - JistiMeet.nbf_seconds),
                    "context": {
-                                "features": {
-                                  "livestreaming": True,
-                                  "outbound-call": True,
-                                  "sip-outbound-call": False,
-                                  "transcription": True,
-                                  "recording": True
-                                },
-                                "user": {
-                                  "moderator": True,
-                                  "name": request.env.user.name,
-                                  "id": request.env.user.email,
-                                  # "avatar": "",
-                                  "email": request.env.user.email,
-                                }
-                              },
+                       "features": {
+                           "livestreaming": True,
+                           "outbound-call": True,
+                           "sip-outbound-call": False,
+                           "transcription": True,
+                           "recording": True
+                       },
+                       "user": {
+                           "moderator": True,
+                           "name": request.env.user.name,
+                           "id": request.env.user.email,
+                           # "avatar": "",
+                           "email": request.env.user.email,
+                       }
+                   },
                    "room": "*",
                    "sub": app_id
                    }
@@ -79,7 +81,7 @@ class JistiMeet(http.Controller):
 
 class JitsiWebhook(http.Controller):
 
-    @http.route('/jitsi_recording', type='json', auth="public", website=True,  methods=['POST'])
+    @http.route('/jitsi_recording', type='json', auth="public", website=True, methods=['POST'])
     def generate_jwt_token(self, **kwargs):
         _logger.info("Recording Uploaded Webhook Response Received Successfully")
         data = request.jsonrequest
@@ -101,3 +103,59 @@ class JitsiWebhook(http.Controller):
         _logger.info(main_content)
         request.env['mail.mail'].sudo().create(main_content).sudo().send()
         return {"data": "Success"}
+
+    @http.route('/jitsi-chat-uploaded', type='json', auth="public", website=True, methods=['POST'])
+    def generate_jwt_chat_uploaded(self, **kwargs):
+        _logger.info("Chat Uploaded Webhook Response Received Successfully")
+        data = request.jsonrequest
+        _logger.info(data)
+        download_link = data.get('data').get('preAuthenticatedLink')
+        email_to = data.get('fqn').split('/')[1]
+        email_to = email_to + '='
+        _logger.info(email_to)
+        # key = Fernet.generate_key()
+        fernet = Fernet(b'zo8pSXpoDDnvdw0dzyEX5j5FtTJ6vYFZClmdg8EH5y4=')
+        email_to = bytes(str(email_to), 'UTF-8')
+
+        decMessage = fernet.decrypt(email_to).decode()
+        print(decMessage)
+        _logger.info('Email', decMessage)
+        # user = request.env['res.users'].sudo().search([('id', '=', user_id)])
+        body = _(
+            '<div>'
+            ' <p>Please click on the below link for downloading the meeting chats</p>'
+            '%s'
+            '</div>' % download_link)
+        main_content = {
+            'subject': "RAYL Meet Chat",
+            'email_from': "noreply@rayl.app",
+            'body_html': body,
+            'email_to': decMessage,
+        }
+        _logger.info(main_content)
+        request.env['mail.mail'].sudo().create(main_content).sudo().send()
+        return {"data": "Success"}
+
+    # @http.route('/jitsi-poll-answer', type='json', auth="public", website=True, methods=['POST'])
+    # def generate_poll_answer(self, **kwargs):
+    #     _logger.info("Recording Uploaded Webhook Response Received Successfully")
+    #     data = request.jsonrequest
+    #     _logger.info(data)
+    #     poll_response = data.get('data')
+    #     email_to = data.get('fqn').split('/')[1]
+    #
+    #     # user = request.env['res.users'].sudo().search([('id', '=', user_id)])
+    #     body = _(
+    #         '<div>'
+    #         ' <p>Below are the list of Polls</p>'
+    #         '%s'
+    #         '</div>' % poll_response)
+    #     main_content = {
+    #         'subject': "RAYL Meet Poll Response",
+    #         'email_from': "noreply@rayl.app",
+    #         'body_html': body,
+    #         'email_to': email_to,
+    #     }
+    #     _logger.info(main_content)
+    #     request.env['mail.mail'].create(main_content).send()
+    #     return {"data": "Success"}
